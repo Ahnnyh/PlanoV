@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PlanoV - Agenda</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --verde: #3a5f1e;
+  --laranja: #e07a1c;
+  --laranja-range: #f0a050;
+  --bg: #f7f4ee;
+  --branco: #ffffff;
+  --texto: #1a1a1a;
+  --muted: #777;
+  --borda: #e0ddd6;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #d4cfc4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.frame {
+  width: 390px;
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER com imagem de fundo superior */
+.header {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  inset: 0;
+  /* IMAGEM SUPERIOR: substitua 'superior.jpg' pelo nome correto do seu arquivo */
+  background-image: url('img/superior.png');
+  background-size: cover;
+  background-position: left;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 20px 18px;
+}
+
+.btn-icon {
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.btn-icon svg { width: 22px; height: 22px; stroke: #2d4f14; }
+
+.logo-wrap {
+  display: flex; align-items: center; gap: 8px;
+}
+
+.logo-wrap img {
+  height: 38px;
+  /* IMAGEM LOGO: substitua 'logo.png' pelo nome correto do seu arquivo */
+  content: url('img/logo.png');
+}
+
+/* BODY AREA */
+.body {
+  background: var(--bg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* PAGE TITLE */
+.page-title {
+  display: flex; align-items: center; gap: 10px;
+  padding: 18px 20px 0;
+}
+
+.title-icon {
+  font-size: 22px;
+}
+
+.page-title h1 {
+  font-size: 20px; font-weight: 700;
+  color: var(--verde);
+}
+
+/* SAUDACAO */
+.saudacao {
+  padding: 12px 20px 0;
+}
+
+.saudacao h2 {
+  font-size: 15px; font-weight: 700; color: var(--texto);
+}
+
+.saudacao p {
+  font-size: 13px; color: var(--muted); margin-top: 1px;
+}
+
+/* CALENDAR CARD */
+.cal-card {
+  margin: 16px 16px 0;
+  background: var(--branco);
+  border-radius: 16px;
+  padding: 14px 12px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+}
+
+.cal-nav {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cal-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; color: var(--texto); padding: 2px 6px;
+}
+
+.cal-selects {
+  display: flex; gap: 6px;
+}
+
+.cal-selects select {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px; font-weight: 500;
+  border: 1px solid var(--borda);
+  border-radius: 6px; padding: 4px 24px 4px 8px;
+  color: var(--texto);
+  background: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 7px center;
+  cursor: pointer;
+}
+
+/* DIAS DA SEMANA */
+.week-days {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  text-align: center; margin-bottom: 6px;
+}
+
+.week-days span {
+  font-size: 11px; font-weight: 500; color: var(--muted);
+  padding: 3px 0;
+}
+
+/* GRID DE DIAS */
+.days-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 400; color: var(--texto);
+  cursor: pointer; border-radius: 50%;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.day.other { color: #ccc; cursor: default; }
+.day.blank { cursor: default; }
+
+.day.range {
+  background: var(--laranja-range);
+  color: var(--branco);
+  font-weight: 600;
+  border-radius: 0;
+}
+
+.day.range-start {
+  background: var(--laranja);
+  color: var(--branco);
+  font-weight: 700;
+  border-radius: 50% 0 0 50%;
+}
+
+.day.range-end {
+  background: var(--laranja);
+  color: var(--branco);
+  font-weight: 700;
+  border-radius: 0 50% 50% 0;
+}
+
+.day:not(.other):not(.blank):not(.range):not(.range-start):not(.range-end):hover {
+  background: #f0ede5;
+}
+
+/* EVENT CARD */
+.event-card {
+  margin: 12px 16px 0;
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.event-name {
+  font-size: 15px; font-weight: 700; color: var(--texto);
+  margin-bottom: 4px;
+}
+
+.event-row {
+  font-size: 13px; color: var(--texto);
+  margin-bottom: 2px;
+}
+
+.event-row span.label {
+  font-weight: 700;
+}
+
+/* IMAGEM INFERIOR */
+.bottom-img {
+  margin-top: 16px;
+  height: 140px;
+  /* IMAGEM INFERIOR: substitua 'inferior.jpg' pelo nome correto do seu arquivo */
+  background-image: url('img/inferior.png');
+  background-size: cover;
+  background-position: bottom;
+  border-radius: 0 0 44px 44px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- HEADER com bg de céu / superior -->
+  <div class="header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <button class="btn-icon" aria-label="Voltar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="logo-wrap">
+        <img alt="PlanoV logo">
+      </div>
+
+      <button class="btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Título Agenda -->
+    <div class="page-title">
+      <span class="title-icon">📅</span>
+      <h1>Agenda</h1>
+    </div>
+
+    <!-- Saudação -->
+    <div class="saudacao">
+      <h2>Olá João Silva!</h2>
+      <p>Organize seus compromissos.</p>
+    </div>
+
+    <!-- Calendário -->
+    <div class="cal-card">
+      <div class="cal-nav">
+        <button class="cal-btn" id="prev">&#8249;</button>
+        <div class="cal-selects">
+          <select id="month-sel">
+            <option value="0">Jan</option><option value="1">Fev</option>
+            <option value="2">Mar</option><option value="3">Abr</option>
+            <option value="4">Mai</option><option value="5">Jun</option>
+            <option value="6">Jul</option><option value="7">Ago</option>
+            <option value="8" selected>Sep</option><option value="9">Out</option>
+            <option value="10">Nov</option><option value="11">Dez</option>
+          </select>
+          <select id="year-sel"></select>
+        </div>
+        <button class="cal-btn" id="next">&#8250;</button>
+      </div>
+
+      <div class="week-days">
+        <span>Su</span><span>Mo</span><span>Tu</span>
+        <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+      </div>
+
+      <div class="days-grid" id="grid"></div>
+    </div>
+
+    <!-- Card de evento -->
+    <div class="event-card" id="ev-card" style="display:none">
+      <div class="event-name" id="ev-name">Fazenda Marina</div>
+      <div class="event-row"><span class="label">Serviço:</span> <span id="ev-service">Colheita e Plantação</span></div>
+      <div class="event-row"><span class="label">Tempo:</span> <span id="ev-time">5 diárias</span></div>
+    </div>
+
+  </div>
+
+  <!-- Imagem inferior fazenda -->
+  <div class="bottom-img"></div>
+
+</div>
+
+<script>
+// Eventos cadastrados para o range de 9 a 13 de setembro de 2025
+const events = {
+  '2025-8-9':  { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+  '2025-8-10': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+  '2025-8-11': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+  '2025-8-12': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+  '2025-8-13': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+};
+
+// Range destacado: 9 a 13 de Setembro (mês 8)
+const RANGE_START = 9, RANGE_END = 13;
+
+let year = 2025, month = 8;
+
+// Popular anos
+const yearSel = document.getElementById('year-sel');
+for (let y = 2024; y <= 2027; y++) {
+  const o = document.createElement('option');
+  o.value = y; o.textContent = y;
+  if (y === 2025) o.selected = true;
+  yearSel.appendChild(o);
+}
+
+function render() {
+  document.getElementById('month-sel').value = month;
+  document.getElementById('year-sel').value = year;
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const prevDays = new Date(year, month, 0).getDate();
+
+  // Dias do mês anterior
+  for (let i = firstDay - 1; i >= 0; i--) {
+    const d = div('other');
+    d.textContent = prevDays - i;
+    grid.appendChild(d);
+  }
+
+  // Dias do mês atual
+  for (let day = 1; day <= daysInMonth; day++) {
+    let cls = '';
+    if (month === 8 && year === 2025) {
+      if (day === RANGE_START) cls = 'range-start';
+      else if (day === RANGE_END) cls = 'range-end';
+      else if (day > RANGE_START && day < RANGE_END) cls = 'range';
+    }
+    const d = div(cls);
+    d.textContent = day;
+    d.dataset.day = day;
+    if (!cls) d.addEventListener('click', () => selectDay(day));
+    grid.appendChild(d);
+  }
+
+  // Completar semana
+  const total = firstDay + daysInMonth;
+  const rem = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 1; i <= rem; i++) {
+    const d = div('other');
+    d.textContent = i;
+    grid.appendChild(d);
+  }
+
+  // Mostrar evento do range por padrão (dia 9)
+  if (month === 8 && year === 2025) showEvent(events['2025-8-9']);
+  else hideEvent();
+}
+
+function div(cls) {
+  const el = document.createElement('div');
+  el.className = 'day' + (cls ? ' ' + cls : '');
+  return el;
+}
+
+function selectDay(day) {
+  const key = year + '-' + month + '-' + day;
+  if (events[key]) showEvent(events[key]);
+  else hideEvent();
+}
+
+function showEvent(ev) {
+  document.getElementById('ev-name').textContent = ev.name;
+  document.getElementById('ev-service').textContent = ev.service;
+  document.getElementById('ev-time').textContent = ev.time;
+  document.getElementById('ev-card').style.display = 'block';
+}
+
+function hideEvent() {
+  document.getElementById('ev-card').style.display = 'none';
+}
+
+// Controles de navegação
+document.getElementById('prev').addEventListener('click', () => {
+  month--; if (month < 0) { month = 11; year--; } render();
+});
+document.getElementById('next').addEventListener('click', () => {
+  month++; if (month > 11) { month = 0; year++; } render();
+});
+document.getElementById('month-sel').addEventListener('change', e => {
+  month = parseInt(e.target.value); render();
+});
+document.getElementById('year-sel').addEventListener('change', e => {
+  year = parseInt(e.target.value); render();
+});
+
+render();
+</script>
+</body>
+</html>
