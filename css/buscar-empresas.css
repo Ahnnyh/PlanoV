@@ -1,0 +1,339 @@
+/* ===== EMPRESAS (BUSCAR EMPRESAS) – ESTILOS ===== */
+
+/* ===== RESET GLOBAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== VARIÁVEIS ===== */
+:root {
+  --verde:        #3a5f1e;
+  --verde-btn:    #2d5016;
+  --verde-claro:  #E7F9E5;   /* fundo do título */
+  --verde-escuro: #1F491D;   /* usado nos botões e busca */
+  --laranja:      #e07a1c;
+  --laranja-mid:  #f0a050;
+  --bg:           #f7f4ee;
+  --branco:       #ffffff;
+  --texto:        #1a1a1a;
+  --muted:        #888;
+  --borda:        #dedad2;
+  --star-color:   #f5a623;
+}
+
+/* ===== CORPO / FUNDO EXTERNO ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #cdc8bc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ===== FRAME PRINCIPAL ===== */
+.frame {
+  width: 390px;
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ===== HEADER COM IMAGEM DE FUNDO ===== */
+.header {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.header-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* BARRA DO TOPO (VOLTAR, LOGO, MENU) */
+.header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 20px 18px;
+}
+
+/* BOTÕES DE ÍCONE */
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  border-radius: 50%;
+  color: #2d4f14;
+}
+.btn-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #2d4f14;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-linejoin: round;
+}
+.btn-icon:hover {
+  background: rgba(45, 79, 20, 0.1);
+}
+.logo-wrap img {
+  height: 38px;
+  display: block;
+}
+
+/* ===== BARRA DE PESQUISA ===== */
+.search-wrap {
+  position: relative;
+  z-index: 1;
+  padding: 18px 20px 28px;
+  background: var(--verde-escuro);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+}
+.section-title-wrap {
+  margin-top: -8px;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--verde-escuro);
+  border-radius: 40px;
+  padding: 4px 4px 4px 16px;
+  gap: 8px;
+}
+.search-icon {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(255,255,255,0.8);
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+.search-bar input {
+  flex: 1;
+  background: var(--branco);
+  border: none;
+  border-radius: 30px;
+  padding: 10px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+  color: var(--texto);
+}
+.search-bar input::placeholder {
+  color: #aaa;
+}
+
+/* ===== FAIXA TÍTULO "EMPRESAS" ===== */
+.title-bar {
+  background: var(--verde-claro);
+  padding: 14px 20px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(31,73,29,0.1);
+}
+.title-bar h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--verde-escuro);
+  letter-spacing: 0.2px;
+}
+
+/* ===== CORPO COM SCROLL ===== */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 24px;
+  scrollbar-width: none;
+  position: relative;
+  max-height: calc(100vh - 200px);
+}
+.body::-webkit-scrollbar { display: none; }
+
+/* ===== LISTA DE CARDS ===== */
+.cards-wrap {
+  padding: 16px 16px 24px;
+}
+.card-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* CARD INDIVIDUAL */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--branco);
+  border-radius: 30px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 12px rgba(31, 73, 29, 0.12);
+  border: 1px solid rgba(31, 73, 29, 0.07);
+  transition: transform 0.18s, box-shadow 0.18s;
+  animation: fadeUp 0.4s ease both;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(31, 73, 29, 0.18);
+}
+
+/* FOTO DO CARD (CIRCULAR) */
+.card-foto-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2.5px solid var(--verde-claro);
+  box-shadow: 0 2px 8px rgba(31, 73, 29, 0.2);
+}
+.card-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* INFORMAÇÕES DO CARD */
+.card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.card-nome {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--texto);
+  line-height: 1.2;
+}
+.card-prod {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a6b48;
+  line-height: 1.3;
+}
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.card-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.star {
+  width: 14px;
+  height: 14px;
+  fill: var(--star-color);
+}
+.card-nota {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+/* BOTÃO VISUALIZAR */
+.btn-visualizar {
+  background: var(--verde-escuro);
+  color: var(--branco);
+  border: none;
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.btn-visualizar:hover {
+  background: #163814;
+  transform: scale(1.04);
+}
+.btn-visualizar:active {
+  transform: scale(1);
+}
+
+/* MENSAGEM QUANDO NÃO HÁ RESULTADOS */
+.empty-msg {
+  display: none;
+  text-align: center;
+  color: #7a9a78;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 32px 0;
+}
+.empty-msg.visible {
+  display: block;
+}
+
+/* ===== AVATAR CSS (SUBSTITUI AS IMAGENS EXTERNAS) ===== */
+.card-foto-wrap {
+  background: linear-gradient(135deg, #5a8f3c, #2d5016); /* fundo padrão */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: white;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Cores diferentes para cada empresa (usando nth-child) */
+.card-list li:nth-child(1) .card-foto-wrap {
+  background: linear-gradient(135deg, #6a9e3c, #3a6b1e);
+}
+.card-list li:nth-child(2) .card-foto-wrap {
+  background: linear-gradient(135deg, #e08e2e, #b5620a);
+}
+.card-list li:nth-child(3) .card-foto-wrap {
+  background: linear-gradient(135deg, #3c7a5e, #1e4a3a);
+}
+
+/* Remove a antiga regra que escondia a imagem (caso ainda exista) */
+.card-foto {
+  display: none; /* garante que a imagem não apareça */
+}
+
+/* ===== ANIMAÇÃO fadeUp ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ATRASOS PARA CADA CARD */
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.12s; }
+.card:nth-child(3) { animation-delay: 0.19s; }
+.card:nth-child(4) { animation-delay: 0.26s; }
+.card:nth-child(5) { animation-delay: 0.33s; }

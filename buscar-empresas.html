@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- METADADOS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PlanoV – Empresas</title>
+
+  <!-- ESTILOS EXTERNOS -->
+  <link rel="stylesheet" href="css/buscar-empresas.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ===== CONTAINER PRINCIPAL (FRAME) ===== -->
+<div class="frame">
+
+  <!-- ===== HEADER COM IMAGEM DE FUNDO ===== -->
+  <div class="header">
+    <img src="IMG/superior.png" alt="" class="header-bg" />
+
+    <!-- BARRA DO TOPO (VOLTAR / LOGO / MENU) -->
+    <div class="header-content">
+      <!-- Botão voltar -->
+      <button class="btn-icon" onclick="history.back()" aria-label="Voltar">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="logo-wrap">
+        <img src="IMG/logo.png" alt="PlanoV Logo" />
+      </div>
+      <!-- Menu hambúrguer -->
+      <button class="btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- BARRA DE BUSCA -->
+    <div class="search-wrap">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="search-input" placeholder="Buscar empresa..." autocomplete="off" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FAIXA TÍTULO "EMPRESAS" ===== -->
+  <div class="title-bar">
+    <h2>Empresas</h2>
+  </div>
+
+  <!-- ===== CORPO COM LISTA DE CARDS ===== -->
+  <div class="body">
+    <div class="cards-wrap">
+      <ul class="card-list" id="card-list">
+
+<!-- CARD: FAZENDA LUZIA -->
+<li class="card" data-nome="Fazenda Luzia" data-prod="Produz soja e milho" data-nota="4.8">
+  <div class="card-foto-wrap">
+    <!-- Substituído por avatar CSS -->
+    <span class="avatar-inicial">F</span>
+  </div>
+  <div class="card-info">
+    <span class="card-nome">Fazenda Luzia</span>
+    <span class="card-prod">Produz soja e milho</span>
+    <div class="card-bottom">
+      <div class="card-rating">
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="card-nota">4,8</span>
+      </div>
+      <button class="btn-visualizar" data-nome="Fazenda Luzia">Visualizar</button>
+    </div>
+  </div>
+</li>
+
+<!-- CARD: FAZENDA ALVAREZ -->
+<li class="card" data-nome="Fazenda Alvarez" data-prod="Especialista em plantação" data-nota="4.8">
+  <div class="card-foto-wrap">
+    <span class="avatar-inicial">A</span>
+  </div>
+  <div class="card-info">
+    <span class="card-nome">Fazenda Alvarez</span>
+    <span class="card-prod">Especialista em plantação</span>
+    <div class="card-bottom">
+      <div class="card-rating">
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="card-nota">4,8</span>
+      </div>
+      <button class="btn-visualizar" data-nome="Fazenda Alvarez">Visualizar</button>
+    </div>
+  </div>
+</li>
+
+<!-- CARD: PAULO ALMEIDA -->
+<li class="card" data-nome="Paulo Almeida" data-prod="Especialista em maquinário" data-nota="3.5">
+  <div class="card-foto-wrap">
+    <span class="avatar-inicial">P</span>
+  </div>
+  <div class="card-info">
+    <span class="card-nome">Paulo Almeida</span>
+    <span class="card-prod">Especialista em maquinário</span>
+    <div class="card-bottom">
+      <div class="card-rating">
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="card-nota">3,5</span>
+      </div>
+      <button class="btn-visualizar" data-nome="Paulo Almeida">Visualizar</button>
+    </div>
+  </div>
+</li>
+
+        <!-- Mais cards podem ser adicionados seguindo o mesmo padrão -->
+      </ul>
+
+      <!-- MENSAGEM QUANDO NÃO HÁ RESULTADOS -->
+      <div class="empty-msg" id="empty-msg">Nenhuma empresa encontrada.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT EXTERNO ===== -->
+<script src="Javascripct/buscar-empresas.js"></script>
+
+</body>
+</html>
