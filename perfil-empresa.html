@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- METADADOS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PlanoV – Perfil da Empresa</title>
+
+  <!-- FONTES E ESTILOS EXTERNOS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/perfil-empresa.css" />
+</head>
+<body>
+
+<!-- ===== CONTAINER PRINCIPAL (FRAME) ===== -->
+<div class="frame">
+
+  <!-- ===== HEADER COM IMAGEM DE CAPA ===== -->
+  <div class="header">
+    <img src="IMG/capa_fazenda.png" alt="Fazenda" class="header-bg">
+
+    <!-- BARRA DO TOPO (VOLTAR / LOGO / MENU) -->
+    <div class="header-top">
+      <button class="btn-icon" onclick="history.back()">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="logo-wrap"><img src="IMG/logo.png" alt="PlanoV"></div>
+      <button class="btn-icon">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- NOME DA FAZENDA (SOBRE A IMAGEM) -->
+    <div class="fazenda-nome-wrap"><h1 class="fazenda-nome">Fazenda Luzia</h1></div>
+  </div>
+
+  <!-- ===== CORPO COM SCROLL ===== -->
+  <div class="body">
+
+    <!-- SEÇÃO: SOBRE -->
+    <div class="section sobre-card">
+      <div class="section-header">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="8" y1="6" x2="21" y2="6"/>
+          <line x1="8" y1="12" x2="21" y2="12"/>
+          <line x1="8" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="3.01" y2="6"/>
+          <line x1="3" y1="12" x2="3.01" y2="12"/>
+          <line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+        <span class="section-label">Sobre</span>
+      </div>
+      <p class="sobre-texto">Empresa focada na produção de soja e milho, com atuação a mais de 10 anos no mercado agrícola.</p>
+    </div>
+
+    <!-- SEÇÃO: SERVIÇOS QUE CONTRATA -->
+    <div class="section">
+      <h2 class="section-title">Serviços que contrata</h2>
+      <div class="tags-wrap">
+        <span class="tag">Colheita</span>
+        <span class="tag">Pulverização</span>
+        <span class="tag">Plantação</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SEÇÃO: AVALIAÇÃO MÉDIA -->
+    <div class="section rating-section">
+      <div class="avg-rating">
+        <svg class="star-big" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="avg-number">4,8</span>
+        <span class="avg-label">avaliação média</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SEÇÃO: LISTA DE AVALIAÇÕES EXISTENTES -->
+    <div class="section">
+      <ul class="reviews-list" id="reviewsList">
+
+        <!-- AVALIAÇÃO 1 -->
+        <li class="review-card">
+          <div class="review-header">
+            <div class="review-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="review-author-info">
+              <span class="review-author">Mario Alvarez – Fazenda Alvarez</span>
+              <div class="review-stars">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+            </div>
+          </div>
+          <p class="review-text">Ótimo no que faz, foi super profissional e rápido, bastante eficiente.</p>
+        </li>
+
+        <!-- AVALIAÇÃO 2 -->
+        <li class="review-card">
+          <div class="review-header">
+            <div class="review-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="review-author-info">
+              <span class="review-author">Lucia Alves – Fazenda Alves</span>
+              <div class="review-stars">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+            </div>
+          </div>
+          <p class="review-text">Serviço muito bem feito, nada a reclamar.</p>
+        </li>
+
+        <!-- AVALIAÇÃO 3 -->
+        <li class="review-card">
+          <div class="review-header">
+            <div class="review-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="review-author-info">
+              <span class="review-author">Carlos Mendes – AgroTech</span>
+              <div class="review-stars">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="star half" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+            </div>
+          </div>
+          <p class="review-text">Equipe comprometida e pontual. Recomendo sem hesitar.</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ===== CARD DE AVALIAÇÃO (ACCORDION) ===== -->
+    <div class="nova-avaliacao-section" id="avaliacaoAccordion">
+      <!-- CABEÇALHO CLICÁVEL -->
+      <div class="avaliacao-header-click" id="accordionHeader">
+        <div class="section-header">
+          <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <span class="section-label">Avaliar esta empresa</span>
+        </div>
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+
+      <!-- CONTEÚDO DO ACCORDION (INICIALMENTE RECOLHIDO) -->
+      <div class="avaliacao-content" id="avaliacaoContent">
+        <!-- ESTRELAS DE AVALIAÇÃO -->
+        <div class="rating-input-wrap">
+          <div class="stars-input" id="starsInput">
+            <svg class="star-input" data-value="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="3" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="4" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <span class="rating-feedback" id="ratingFeedback">Clique nas estrelas para avaliar</span>
+        </div>
+
+        <!-- CAMPO DE COMENTÁRIO -->
+        <textarea id="reviewComment" class="review-textarea" placeholder="Escreva seu comentário (opcional)..." rows="3"></textarea>
+
+        <!-- BOTÃO ENVIAR -->
+        <button class="btn-enviar-avaliacao" id="btnEnviarAvaliacao">Enviar avaliação</button>
+      </div>
+    </div>
+
+  </div><!-- /.body -->
+</div><!-- /.frame -->
+
+<!-- ===== SCRIPT EXTERNO ===== -->
+<script src="Javascripct/perfil-empresa.js"></script>
+
+</body>
+</html>

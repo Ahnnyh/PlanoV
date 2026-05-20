@@ -1,0 +1,332 @@
+/* ===== RECUPERAR SENHA – ESTILOS ===== */
+
+/* ===== VARIÁVEIS ===== */
+:root {
+  --bg:           #F3FFF3;
+  --card:         #1C3D04;
+  --white:        #ffffff;
+  --white-70:     rgba(255, 255, 255, 0.7);
+  --white-40:     rgba(255, 255, 255, 0.4);
+  --input-bg:     rgba(255, 255, 255, 0.12);
+  --input-border: rgba(255, 255, 255, 0.3);
+  --input-focus:  rgba(255, 255, 255, 0.6);
+}
+
+/* ===== RESET GLOBAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== CORPO / FUNDO EXTERNO ===== */
+body {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background: #cdc8bc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ===== FRAME PRINCIPAL (CARD PRINCIPAL) ===== */
+.frame {
+  width: 100%;
+  max-width: 390px;
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== IMAGEM DE FUNDO (AGRÍCOLA) ===== */
+.bg-image-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.70;
+  display: block;
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 52px 24px 28px;
+  min-height: 100vh;
+}
+
+/* ===== BOTÃO VOLTAR ===== */
+.back-btn {
+  align-self: flex-start;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #1C3D04;
+  margin-bottom: 18px;
+  transition: background 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(28, 61, 4, 0.1);
+}
+
+/* ===== LOGO ===== */
+.logo-wrap {
+  margin-bottom: 30px;
+  animation: fadeDown 0.5s ease both;
+}
+
+.logo-img {
+  height: 56px;
+  width: auto;
+  mix-blend-mode: multiply;
+  filter: contrast(1.05);
+}
+
+/* ===== CARD DE FORMULÁRIO ===== */
+.card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--card);
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 16px 48px rgba(28, 61, 4, 0.35);
+  animation: fadeUp 0.55s ease 0.1s both;
+}
+
+.card-title {
+  color: var(--white);
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== CAMPOS DO FORMULÁRIO ===== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--white-70);
+  pointer-events: none;
+}
+
+.field input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 12px;
+  padding: 13px 14px 13px 40px;
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.field input::placeholder {
+  color: var(--white-40);
+  font-weight: 400;
+}
+
+.field input:focus {
+  border-color: var(--input-focus);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.field input.error {
+  border-color: rgba(255, 100, 100, 0.8);
+}
+
+/* ===== TEXTO DE APOIO ===== */
+.helper-text {
+  color: var(--white-70);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== BOTÃO ENVIAR (LARANJA) ===== */
+.btn-send {
+  width: 100%;
+  background: #8F4800;
+  color: var(--white);
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(143, 72, 0, 0.45);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-send:hover {
+  background: #643302;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(143, 72, 0, 0.55);
+}
+
+.btn-send:active {
+  transform: translateY(0);
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVIDADE (TELAS < 430px) ===== */
+@media (max-width: 430px) {
+  body {
+    padding: 0;
+  }
+  .frame {
+    border-radius: 0;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+  }
+  .content {
+    min-height: 100vh;
+  }
+}
+
+/* ===== MODAL DE CONFIRMAÇÃO ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-card {
+  width: 92%;
+  max-width: 340px;
+  border-radius: 28px;
+  padding: 34px 28px;
+  background: radial-gradient(circle at top, #DDF7D8 0%, #D3F1CE 45%, #C9EAC4 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  transform: scale(0.88) translateY(20px);
+  opacity: 0;
+  transition: transform 0.28s ease, opacity 0.25s ease;
+}
+
+.modal-overlay.show .modal-card {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal-logo-img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 28px;
+  mix-blend-mode: multiply;
+}
+
+.modal-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: #23410A;
+  text-align: center;
+}
+
+.modal-btn-fechar {
+  margin-top: 28px;
+  background: #8F4800;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.modal-btn-fechar:hover {
+  background: #643302;
+  transform: translateY(-1px);
+}
+
+.modal-btn-fechar:active {
+  transform: scale(0.98);
+}
