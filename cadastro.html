@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PlanoV - Cadastro</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --verde: #3a5f1e;
+  --verde-btn: #2d5016;
+  --bg: #f7f4ee;
+  --branco: #ffffff;
+  --texto: #1a1a1a;
+  --muted: #888;
+  --borda: #dedad2;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #cdc8bc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.frame {
+  width: 390px;
+  min-height: 780px;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+
+/* IMAGEM DE FUNDO COBRINDO TELA TODA */
+.bg-full {
+  position: absolute;
+  inset: 0;
+  background-image: url('img/img_login.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.10) 0%,
+    rgba(0,0,0,0.15) 35%,
+    rgba(0,0,0,0.55) 65%,
+    rgba(0,0,0,0.75) 100%
+  );
+  z-index: 1;
+}
+
+/* HEADER */
+.header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 20px 18px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.logo-wrap img {
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+}
+
+/* BODY SCROLL */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 20px 30px;
+  scrollbar-width: none;
+  position: relative;
+  z-index: 2;
+}
+
+.body::-webkit-scrollbar { display: none; }
+
+/* CARD ARREDONDADO */
+.form-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 20px 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+}
+
+/* TÍTULO DENTRO DO CARD */
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--verde);
+  text-align: center;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
+}
+
+/* CAMPOS */
+.field-group {
+  margin-bottom: 14px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.input-field {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: var(--texto);
+  background: var(--bg);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border 0.15s, box-shadow 0.15s;
+}
+
+.input-field::placeholder { color: #b0aba2; }
+
+.input-field:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(58, 95, 30, 0.12);
+}
+
+select.input-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+
+/* CHECKBOX */
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 12px 14px;
+  background: rgba(58,95,30,0.07);
+  border: 1.5px dashed rgba(58,95,30,0.35);
+  border-radius: 10px;
+}
+
+.check-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--verde);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.check-label {
+  font-size: 12.5px;
+  color: var(--texto);
+  line-height: 1.4;
+}
+
+.check-label a {
+  color: var(--verde);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* BOTÃO */
+.btn-wrap {
+  padding: 16px 0 0;
+}
+
+.btn-cadastrar {
+  width: 100%;
+  background: var(--verde-btn);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-cadastrar:hover { background: #3a6620; }
+.btn-cadastrar:active { transform: scale(0.98); }
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- FUNDO COBRINDO TELA TODA -->
+  <div class="bg-full"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <button class="btn-icon" aria-label="Voltar" onclick="history.back()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="logo-wrap">
+      <img src="img/logo.png" alt="PlanoV">
+    </div>
+    <div style="width:36px"></div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- CARD ARREDONDADO COM TÍTULO DENTRO -->
+    <div class="form-card">
+
+      <div class="card-title">Cadastro</div>
+
+      <div class="field-group">
+        <label class="field-label">Nome</label>
+        <input type="text" class="input-field" id="nome" placeholder="Insira o primeiro nome">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Sobrenome</label>
+        <input type="text" class="input-field" id="sobrenome" placeholder="Insira o último nome">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input type="email" class="input-field" id="email" placeholder="exemplo@gmail.com">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Endereço</label>
+        <input type="text" class="input-field" id="endereco" placeholder="Casa 5 rua ...">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Qual o tipo de usuário?</label>
+        <select class="input-field" id="tipo">
+          <option value="">Selecione...</option>
+          <option value="empresa" selected>Empresa</option>
+          <option value="prestador">Prestador de Serviço</option>
+          <option value="produtor">Produtor Rural</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Senha</label>
+        <input type="password" class="input-field" id="senha" placeholder="......">
+      </div>
+
+      <!-- Concordo -->
+      <div class="check-row">
+        <input type="checkbox" id="concordo">
+        <label class="check-label" for="concordo">
+          Concordo — <a href="#">Você concorda com os nossos termos de uso?</a>
+        </label>
+      </div>
+
+      <!-- Botão -->
+      <div class="btn-wrap">
+        <button class="btn-cadastrar" onclick="cadastrar()">Cadastre-se</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function cadastrar() {
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const senha = document.getElementById('senha').value.trim();
+  const concordo = document.getElementById('concordo').checked;
+
+  if (!nome || !email || !senha) {
+    alert('Preencha todos os campos obrigatórios.');
+    return;
+  }
+  if (!concordo) {
+    alert('Você precisa concordar com os termos de uso.');
+    return;
+  }
+  window.location.href = 'home.html';
+}
+</script>
+</body>
+</html>

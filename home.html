@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PlanoV - Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --verde: #3a5f1e;
+  --verde-btn: #2d5016;
+  --bg: #f7f4ee;
+  --branco: #ffffff;
+  --texto: #1a1a1a;
+  --muted: #777;
+  --borda: #e0ddd6;
+  --azul-card: #dbeeff;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #d4cfc4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.frame {
+  width: 390px;
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER COM IMAGEM — igual agenda.html */
+.header {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.header-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('img/superior.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 20px 18px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #2d4f14;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.logo-wrap img {
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+
+/* BODY */
+.body {
+  flex: 1;
+  background: var(--bg);
+  padding: 24px 18px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* SAUDAÇÃO */
+.saudacao {
+  margin-bottom: 18px;
+}
+
+.saudacao h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.saudacao p {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* CARD BRANCO GRANDE COM BORDA ARREDONDADA */
+.cards-wrapper {
+  background: var(--branco);
+  border-radius: 24px;
+  padding: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* CARDS DE MENU — fundo azul claro */
+.menu-card {
+  background: var(--azul-card);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  gap: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+  border: 1px solid rgba(100,160,220,0.25);
+}
+
+.menu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+}
+
+.menu-card:active { transform: scale(0.98); }
+
+/* Ícone do card — imagem jpg/png */
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: rgba(255,255,255,0.7);
+}
+
+.card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.card-icon-emoji { font-size: 26px; }
+
+.card-text { flex: 1; }
+
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 2px;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* FLECHA — maior e verde escuro */
+.card-arrow {
+  font-size: 28px;
+  color: var(--verde-btn);
+  font-weight: 700;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* IMAGEM INFERIOR — igual agenda.html */
+.bottom-img {
+  height: 140px;
+  background-image: url('img/inferior.png');
+  background-size: cover;
+  background-position: bottom;
+  border-radius: 0 0 44px 44px;
+  flex-shrink: 0;
+  margin-top: 16px;
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <button class="btn-icon" aria-label="Voltar" onclick="history.back()">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="logo-wrap">
+        <img src="img/logo.png" alt="PlanoV">
+      </div>
+      <button class="btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <div class="saudacao">
+      <h2>Olá, João Silva 🌱</h2>
+      <p>O que você deseja fazer hoje?</p>
+    </div>
+
+    <div class="cards-wrapper">
+
+      <a class="menu-card" href="buscar-empresas.html">
+        <div class="card-icon">
+          <img src="img/icone_empresa.png" alt="Buscar Empresa">
+        </div>
+        <div class="card-text">
+          <div class="card-title">Buscar Empresa</div>
+          <div class="card-sub">Encontre um prestador de serviço</div>
+        </div>
+        <span class="card-arrow">›</span>
+      </a>
+
+      <a class="menu-card" href="meu_perfil.html">
+        <div class="card-icon">
+          <img src="img/icone_perfil.png" alt="Meu Perfil">
+        </div>
+        <div class="card-text">
+          <div class="card-title">Meu Perfil</div>
+          <div class="card-sub">Atualize suas informações</div>
+        </div>
+        <span class="card-arrow">›</span>
+      </a>
+
+      <a class="menu-card" href="agenda.html">
+        <div class="card-icon">
+          <img src="img/icone_agenda.png" alt="Minha Agenda">
+        </div>
+        <div class="card-text">
+          <div class="card-title">Minha Agenda</div>
+          <div class="card-sub">Visualize seus compromissos</div>
+        </div>
+        <span class="card-arrow">›</span>
+      </a>
+
+      <a class="menu-card" href="agendar_servico.html">
+        <div class="card-icon">
+          <img src="img/icone_prestador.png" alt="Registrar Servico">
+        </div>
+        <div class="card-text">
+          <div class="card-title">Registrar Serviço</div>
+          <div class="card-sub">Agende um novo serviço</div>
+        </div>
+        <span class="card-arrow">›</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- IMAGEM INFERIOR -->
+  <div class="bottom-img"></div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PlanoV</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --verde: #3a5f1e;
+  --verde-btn: #2d5016;
+  --laranja: #e07a1c;
+  --bg: #f7f4ee;
+  --branco: #ffffff;
+  --texto: #1a1a1a;
+  --borda: #e0ddd6;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #cdc8bc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.frame {
+  width: 390px;
+  min-height: 780px;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* IMAGEM DE FUNDO FULL */
+.bg-full {
+  position: absolute;
+  inset: 0;
+  background-image: url('img/primeira_imagem.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+/* Overlay */
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.08) 0%,
+    rgba(0,0,0,0.10) 40%,
+    rgba(0,0,0,0.45) 65%,
+    rgba(0,0,0,0.62) 100%
+  );
+  z-index: 1;
+}
+
+/* CONTEÚDO */
+.content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 28px 52px;
+}
+
+/* LOGO */
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.logo-area img {
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+}
+
+/* Texto hero - espaçamento reduzido para aproximar os botões */
+.hero-text {
+  text-align: center;
+  margin-bottom: 30px; /* Espaço pequeno entre o texto e os botões */
+}
+ 
+.hero-text h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  margin-bottom: 8px;
+}
+ 
+.hero-text p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.90);
+  font-weight: 400;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  line-height: 1.4;
+  max-width: 280px;
+  margin: 0 auto;
+}
+ 
+/* BOTÕES - sem margem extra */
+.btn-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 0;
+}
+ 
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s, background 0.15s;
+  letter-spacing: 0.2px;
+  background: rgba(25, 70, 15, 0.50);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+ 
+.btn:active { transform: scale(0.97); }
+.btn:hover { background: rgba(25, 70, 15, 0.70); }
+
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="bg-full"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="content">
+
+    <!-- Logo -->
+    <div class="logo-area">
+      <img src="img/logo.png" alt="PlanoV">
+    </div>
+
+    <!-- Texto hero -->
+    <div class="hero-text">
+      <h1>Bem-vindo ao Plano V</h1>
+      <p>Conectando serviços e oportunidades no campo.</p>
+    </div>
+
+    <!-- Botões - agora bem próximos do texto como na prototipação -->
+    <div class="btn-group">
+      <button class="btn btn-criar" onclick="window.location.href='cadastro.html'">Criar Conta</button>
+      <button class="btn btn-login" onclick="window.location.href='login.html'">Fazer login</button>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
