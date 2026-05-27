@@ -39,6 +39,8 @@ body {
   box-shadow: 0 40px 100px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
+  position: relative;
+  min-height: 700px;
 }
 
 /* ── HEADER ── */
@@ -58,7 +60,10 @@ body {
   background: none; border: none; cursor: pointer;
   width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
 }
+.btn-icon:active { background: rgba(0,0,0,0.05); }
 .btn-icon svg { width: 22px; height: 22px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
 .logo-wrap img { height: 38px; content: url('img/logo.png'); }
 
@@ -252,23 +257,191 @@ body {
 
 /* Upload avatar */
 #avatar-input { display: none; }
+
+/* ========= MENU LATERAL (DRAWER) ========= */
+.menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+
+.menu-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--branco);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  overflow-y: auto;        /* AGORA O DRAWER INTEIRO ROLA */
+  border-radius: 20px 0 0 20px;
+  display: block;          /* remove flex para não atrapalhar */
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.menu-overlay.open .menu-drawer {
+  transform: translateX(0);
+}
+
+/* Conteúdo do menu - sem flex específico */
+.menu-header {
+  padding: 28px 20px 20px;
+  background: linear-gradient(135deg, #3a5f1e, #2d5016);
+  color: white;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.menu-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.menu-avatar {
+  width: 48px;
+  height: 48px;
+  background: #e0a55b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(145deg, #d48f3b, #b56a1a);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.menu-user-info h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.menu-user-info p {
+  font-size: 11px;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.menu-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+}
+.menu-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: white;
+  stroke-width: 2;
+}
+
+.menu-nav {
+  padding: 12px 0 20px;   /* sem overflow, sem flex */
+}
+
+/* resto dos estilos do menu permanecem iguais */
+.menu-section { margin-bottom: 8px; }
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--texto);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.menu-item:hover, .menu-item:active { background: #f0ede7; }
+.menu-item .menu-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 18px;
+}
+.menu-item .menu-text { flex: 1; }
+.divider {
+  height: 1px;
+  background: var(--borda);
+  margin: 8px 16px;
+}
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  padding: 12px 20px 4px;
+  text-transform: uppercase;
+}
+.machine-list {
+  padding-left: 38px;
+  margin: 4px 0 8px;
+}
+.machine-list li {
+  list-style: none;
+  font-size: 13px;
+  padding: 6px 0;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.machine-list li::before {
+  content: "•";
+  color: var(--laranja);
+  font-weight: bold;
+}
+.menu-sobre-text {
+  font-size: 12px;
+  color: #555;
+  padding: 6px 20px 12px 20px;
+  line-height: 1.5;
+  border-bottom: 1px solid var(--borda);
+  margin-bottom: 4px;
+}
+.footer-menu {
+  border-top: 1px solid var(--borda);
+  margin-top: 8px;
+  padding: 8px 0;
+}
 </style>
 </head>
 <body>
 
-<div class="frame">
+<div class="frame" id="appFrame">
 
   <!-- HEADER -->
   <div class="header">
     <div class="header-bg"></div>
     <div class="header-content">
-      <button class="btn-icon" aria-label="Voltar">
+      <button class="btn-icon" id="backButton" aria-label="Voltar">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="logo-wrap">
         <img alt="PlanoV">
       </div>
-      <button class="btn-icon" aria-label="Menu">
+      <button class="btn-icon" id="menuButton" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
@@ -297,7 +470,7 @@ body {
   </div>
 
   <!-- BODY -->
-  <div class="body">
+  <div class="body" id="mainBody">
 
     <!-- Nome / localização editáveis -->
     <div class="perfil-nome">
@@ -361,9 +534,208 @@ jsilva@email.com</textarea>
     <button class="btn-salvar" onclick="salvar()">Salvar alterações</button>
   </div>
 
+  <!-- MENU DRAWER -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-drawer">
+      <button class="menu-close" id="closeMenuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar">🌾</div>
+          <div class="menu-user-info">
+            <h4 id="menuFazendaNome">Fazenda Luzia</h4>
+            <p>🌱 AgroConectada</p>
+          </div>
+        </div>
+      </div>
+      <div class="menu-nav">
+        <!-- Navegação principal -->
+        <div class="menu-item" data-nav="inicio">
+          <div class="menu-icon">🏠</div>
+          <div class="menu-text">Início</div>
+        </div>
+        <div class="menu-item" data-nav="empresas">
+          <div class="menu-icon">🏢</div>
+          <div class="menu-text">Empresas</div>
+        </div>
+        <div class="menu-item" data-nav="agenda">
+          <div class="menu-icon">📅</div>
+          <div class="menu-text">Minha Agenda</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Informações dinâmicas -->
+        <div class="section-title">INFORMAÇÃO</div>
+        <div class="menu-item" style="pointer-events: none;">
+          <div class="menu-icon">🛠️</div>
+          <div class="menu-text"><strong>Serviços:</strong> <span id="menuServicosValor">Colheita e Plantação</span></div>
+        </div>
+        <div class="menu-item" style="pointer-events: none;">
+          <div class="menu-icon">⏳</div>
+          <div class="menu-text"><strong>Experiência:</strong> <span id="menuExperienciaValor">8 anos</span></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Máquinas -->
+        <div class="section-title">MÁQUINAS</div>
+        <div class="menu-item" style="pointer-events: none;">
+          <div class="menu-icon">🚜</div>
+          <div class="menu-text"><strong>Meu equipamento</strong></div>
+        </div>
+        <ul class="machine-list" id="menuMachineList">
+          <li>Trator John Deere</li>
+          <li>Colheitadeira</li>
+        </ul>
+
+        <!-- Sobre -->
+        <div class="section-title">SOBRE</div>
+        <div class="menu-sobre-text" id="menuSobreTexto">
+          Especialista em operação de tratores e preparo do solo. atuo com eficiencia em serviços agricolas
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Configurações e ajuda -->
+        <div class="menu-item" data-nav="configuracoes">
+          <div class="menu-icon">⚙️</div>
+          <div class="menu-text">Configurações</div>
+        </div>
+        <div class="menu-item" data-nav="ajuda">
+          <div class="menu-icon">❓</div>
+          <div class="menu-text">Ajuda</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Perfil e Sair -->
+        <div class="footer-menu">
+          <div class="menu-item" data-nav="perfil">
+            <div class="menu-icon">👤</div>
+            <div class="menu-text">Perfil</div>
+          </div>
+          <div class="menu-item" data-nav="sair" id="menuSairBtn">
+            <div class="menu-icon">🚪</div>
+            <div class="menu-text">Sair</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /frame -->
 
 <script>
+// ----- elementos do DOM -----
+const menuOverlay = document.getElementById('menuOverlay');
+const menuBtn = document.getElementById('menuButton');
+const closeMenuBtn = document.getElementById('closeMenuBtn');
+const backButton = document.getElementById('backButton');
+
+// ---- Função para atualizar o menu com dados atuais do perfil ----
+function updateMenuFromProfile() {
+  // Captura valores dos campos editáveis
+  const servicos = document.getElementById('servicos').value.trim() || "Não informado";
+  const experiencia = document.getElementById('experiencia').value.trim() || "Não informado";
+  const maquinasRaw = document.getElementById('maquinas').value;
+  const sobreTexto = document.getElementById('sobre').value.trim() || "Sem descrição";
+  
+  // Atualiza textos simples
+  const menuServicosSpan = document.getElementById('menuServicosValor');
+  const menuExpSpan = document.getElementById('menuExperienciaValor');
+  const menuSobreDiv = document.getElementById('menuSobreTexto');
+  if (menuServicosSpan) menuServicosSpan.innerText = servicos;
+  if (menuExpSpan) menuExpSpan.innerText = experiencia;
+  if (menuSobreDiv) menuSobreDiv.innerText = sobreTexto;
+  
+  // Atualiza lista de máquinas (divide por quebras de linha, ignora linhas vazias)
+  const lines = maquinasRaw.split(/\r?\n/).filter(l => l.trim().length > 0);
+  const machineListUl = document.getElementById('menuMachineList');
+  if (machineListUl) {
+    machineListUl.innerHTML = '';
+    if (lines.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'Nenhuma máquina cadastrada';
+      machineListUl.appendChild(li);
+    } else {
+      lines.forEach(line => {
+        const li = document.createElement('li');
+        li.textContent = line.trim();
+        machineListUl.appendChild(li);
+      });
+    }
+  }
+}
+
+// Abrir/fechar menu
+function openMenu() {
+  updateMenuFromProfile();
+  menuOverlay.classList.add('open');
+  // NÃO bloqueia o scroll do body/frame
+}
+
+function closeMenu() {
+  menuOverlay.classList.remove('open');
+}
+
+// Eventos do menu
+if (menuBtn) menuBtn.addEventListener('click', openMenu);
+if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
+  if (e.target === menuOverlay) closeMenu();
+});
+
+// Ações dos itens do menu (navegação)
+document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const nav = item.getAttribute('data-nav');
+    if (nav === 'sair') {
+      if (confirm('Deseja realmente sair da sua conta?')) {
+        alert('Você saiu do sistema. (Função de logout simulada)');
+        // Simular logout: recarregar para tela inicial (apenas demonstração)
+        // window.location.href = 'login.html';
+      }
+      closeMenu();
+    } 
+    else if (nav === 'perfil') {
+      // Já está na tela de perfil, apenas fecha o menu
+      closeMenu();
+    }
+    else {
+      // Demais navegações (inicio, empresas, agenda, configuracoes, ajuda)
+      let msg = '';
+      if (nav === 'inicio') msg = 'Navegar para Início';
+      else if (nav === 'empresas') msg = 'Navegar para Empresas';
+      else if (nav === 'agenda') msg = 'Navegar para Minha Agenda';
+      else if (nav === 'configuracoes') msg = 'Abrir Configurações';
+      else if (nav === 'ajuda') msg = 'Central de Ajuda';
+      alert(`🔜 ${msg} (simulação)`);
+      closeMenu();
+    }
+  });
+});
+
+// Botão voltar (seta)
+if (backButton) {
+  backButton.addEventListener('click', () => {
+    alert('Voltar para tela anterior (simulação)');
+    // history.back() se quiser navegação real;
+  });
+}
+
+// Função salvar (já existente, mas adaptada p/ possíveis sync)
+function salvar() {
+  const nome = document.getElementById('nome').value.trim();
+  if (!nome) { alert('Informe seu nome.'); return; }
+  // Atualiza também o menu em background, caso fique aberto depois
+  updateMenuFromProfile();
+  alert('Perfil salvo com sucesso!\n\n' + nome);
+}
+
+// Avatar upload
 document.getElementById('avatar-input').addEventListener('change', function() {
   const file = this.files[0];
   if (!file) return;
@@ -377,11 +749,23 @@ document.getElementById('avatar-input').addEventListener('change', function() {
   reader.readAsDataURL(file);
 });
 
-function salvar() {
-  const nome = document.getElementById('nome').value.trim();
-  if (!nome) { alert('Informe seu nome.'); return; }
-  alert('Perfil salvo com sucesso!\n\n' + nome);
-}
+// Ao editar campos que afetam menu, não precisa abrir, mas o menu sempre atualiza ao abrir
+// também atualiza quando salvar, mas para garantir, ouvimos mudanças em blur de campos principais
+const camposDinamicos = ['servicos', 'experiencia', 'maquinas', 'sobre'];
+camposDinamicos.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('change', updateMenuFromProfile);
+    el.addEventListener('blur', updateMenuFromProfile);
+  }
+});
+
+// Mantém nome da fazenda fixo como "Fazenda Luzia", mas pode vir de dados futuros
+// Sincronização inicial
+updateMenuFromProfile();
+
+// Previne scroll do frame quando menu aberto
+window.addEventListener('resize', () => {});
 </script>
 </body>
 </html>
