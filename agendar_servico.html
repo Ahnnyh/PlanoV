@@ -2,11 +2,16 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PlanoV - Agendar Serviço</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
 :root {
   --verde:        #3a5f1e;
@@ -31,14 +36,16 @@ body {
 }
 
 .frame {
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   background: var(--bg);
   border-radius: 44px;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   position: relative;
+  margin: 0 auto;
 }
 
 /* ── HEADER ── */
@@ -48,25 +55,46 @@ body {
   flex-shrink: 0;
 }
 .header-bg {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background-image: url('img/superior.png');
   background-size: cover;
   background-position: left;
 }
 .header-content {
-  position: relative; z-index: 1;
-  display: flex; align-items: center; justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 52px 20px 18px;
 }
 .btn-icon {
-  background: none; border: none; cursor: pointer;
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
 }
-.btn-icon svg { width: 22px; height: 22px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
+.btn-icon:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+.btn-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #2d4f14;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-linejoin: round;
+}
 .logo-wrap img {
-  height: 38px;
-  /* O src agora está diretamente na tag HTML, não no CSS */
+  height: 40px;
 }
 
 /* ── FAIXA TÍTULO ── */
@@ -77,7 +105,9 @@ body {
   flex-shrink: 0;
 }
 .title-bar h1 {
-  font-size: 18px; font-weight: 700; color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
   letter-spacing: 0.2px;
 }
 
@@ -89,7 +119,9 @@ body {
   scrollbar-width: none;
   position: relative;
 }
-.body::-webkit-scrollbar { display: none; }
+.body::-webkit-scrollbar {
+  display: none;
+}
 
 /* ── CALENDÁRIO (semana única) ── */
 .cal-card {
@@ -97,123 +129,172 @@ body {
   background: var(--branco);
   border-radius: 16px;
   padding: 14px 12px 16px;
-  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
 }
 .cal-nav {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .cal-btn {
-  background: none; border: none; cursor: pointer;
-  font-size: 20px; color: var(--texto); padding: 2px 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--texto);
+  padding: 4px 12px;
+  border-radius: 40px;
+  transition: background 0.2s;
+}
+.cal-btn:active {
+  background: rgba(0, 0, 0, 0.05);
 }
 .cal-month {
-  font-size: 14px; font-weight: 600; color: var(--texto);
-  border: 1px solid var(--borda); border-radius: 8px;
-  padding: 4px 20px; background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 6px 20px;
+  background: #fff;
 }
 .week-days {
-  display: grid; grid-template-columns: repeat(7, 1fr);
-  text-align: center; margin-bottom: 6px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 8px;
 }
 .week-days span {
-  font-size: 11px; font-weight: 500; color: var(--muted);
-  padding: 2px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 4px 0;
 }
 .week-row {
-  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
 }
 .wday {
   aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 400; color: var(--texto);
-  border-radius: 50%; cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--texto);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s;
 }
-.wday.muted { color: #ccc; cursor: default; }
+.wday.muted {
+  color: #ccc;
+  cursor: default;
+}
 .wday.range {
-  background: var(--laranja-mid); color: #fff;
-  font-weight: 600; border-radius: 0;
+  background: var(--laranja-mid);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0;
 }
 .wday.range-start {
-  background: var(--laranja); color: #fff;
-  font-weight: 700; border-radius: 50% 0 0 50%;
+  background: var(--laranja);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 50% 0 0 50%;
 }
 .wday.range-end {
-  background: var(--laranja); color: #fff;
-  font-weight: 700; border-radius: 0 50% 50% 0;
+  background: var(--laranja);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 50% 50% 0;
 }
 
 /* ── FORM ── */
 .form-body {
   padding: 20px 16px 0;
 }
-
 .field-group {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
-
 .field-label {
-  font-size: 13px; font-weight: 600; color: var(--texto);
-  margin-bottom: 6px; display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 8px;
+  display: block;
 }
-
 .field-row {
-  display: flex; gap: 10px;
+  display: flex;
+  gap: 12px;
 }
-
 .input-wrap {
-  flex: 1; position: relative;
+  flex: 1;
+  position: relative;
 }
-
 .input-wrap input,
 .input-wrap select,
 textarea {
   width: 100%;
   font-family: 'Poppins', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--texto);
   background: var(--branco);
   border: 1px solid var(--borda);
-  border-radius: 10px;
-  padding: 10px 36px 10px 12px;
+  border-radius: 12px;
+  padding: 12px 40px 12px 12px;
   outline: none;
   transition: border 0.15s;
 }
-
 .input-wrap input:focus,
 .input-wrap select:focus,
 textarea:focus {
   border-color: var(--verde);
 }
-
 .input-wrap .ico {
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  font-size: 16px; pointer-events: none; color: var(--muted);
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-input[type="text"].full,
+.input-wrap .ico svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--muted);
+  stroke-width: 1.8;
+  fill: none;
+}
 input[type="text"].full-input {
   width: 100%;
   font-family: 'Poppins', sans-serif;
-  font-size: 13px; color: var(--texto);
+  font-size: 14px;
+  color: var(--texto);
   background: var(--branco);
   border: 1px solid var(--borda);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 12px;
+  padding: 12px;
   outline: none;
   transition: border 0.15s;
 }
-input[type="text"].full-input:focus { border-color: var(--verde); }
-
-/* Textarea com bg da fazenda (imagem inferior) */
+input[type="text"].full-input:focus {
+  border-color: var(--verde);
+}
 .textarea-wrap {
   position: relative;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
 }
 .textarea-wrap .ta-bg {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background-image: url('img/inferior.png');
   background-size: cover;
   background-position: center top;
@@ -221,18 +302,22 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   pointer-events: none;
 }
 .textarea-wrap textarea {
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
   background: transparent;
   resize: vertical;
-  min-height: 90px;
-  padding: 10px 12px;
+  min-height: 100px;
+  padding: 12px;
   border: 1px solid var(--borda);
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 /* ── BOTÃO FIXO ── */
 .btn-footer {
-  position: absolute; bottom: 0; left: 0; right: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 16px 20px 28px;
   background: linear-gradient(to top, var(--bg) 70%, transparent);
 }
@@ -241,15 +326,222 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   background: var(--verde-btn);
   color: #fff;
   font-family: 'Poppins', sans-serif;
-  font-size: 15px; font-weight: 700;
-  border: none; border-radius: 14px;
-  padding: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
   cursor: pointer;
   letter-spacing: 0.3px;
   transition: background 0.15s, transform 0.1s;
 }
-.btn-agendar:hover { background: #3a6620; }
-.btn-agendar:active { transform: scale(0.98); }
+.btn-agendar:active {
+  transform: scale(0.98);
+}
+
+/* ========= MENU LATERAL (DRAWER) ========= */
+.menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+.menu-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(280px, 85%);
+  min-width: 260px;
+  height: 100%;
+  background: var(--branco);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  overflow-y: auto;
+  border-radius: 20px 0 0 20px;
+}
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.menu-overlay.open .menu-drawer {
+  transform: translateX(0);
+}
+.menu-header {
+  padding: 28px 20px 20px;
+  background: linear-gradient(135deg, #3a5f1e, #2d5016);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.menu-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.menu-avatar {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(145deg, #d48f3b, #b56a1a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.menu-avatar svg {
+  width: 30px;
+  height: 30px;
+  stroke: white;
+  stroke-width: 1.8;
+  fill: none;
+}
+.menu-user-info h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.menu-user-info p {
+  font-size: 12px;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.menu-user-info p svg {
+  width: 14px;
+  height: 14px;
+  stroke: white;
+  stroke-width: 2;
+}
+.menu-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.menu-close svg {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  stroke-width: 2;
+}
+.menu-nav {
+  padding: 12px 0 20px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--texto);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.menu-item:hover,
+.menu-item:active {
+  background: #f0ede7;
+}
+.menu-item .menu-icon {
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-item .menu-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.menu-item .menu-text {
+  flex: 1;
+}
+.divider {
+  height: 1px;
+  background: var(--borda);
+  margin: 8px 16px;
+}
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.5px;
+  padding: 12px 20px 4px;
+  text-transform: uppercase;
+}
+.footer-menu {
+  border-top: 1px solid var(--borda);
+  margin-top: 8px;
+  padding: 8px 0;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 380px) {
+  .header-content {
+    padding: 52px 14px 18px;
+  }
+  .title-bar h1 {
+    font-size: 16px;
+  }
+  .cal-card {
+    margin: 12px 12px 0;
+    padding: 12px 8px;
+  }
+  .cal-month {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+  .week-days span {
+    font-size: 10px;
+  }
+  .wday {
+    font-size: 12px;
+  }
+  .field-label {
+    font-size: 13px;
+  }
+  .input-wrap input,
+  .input-wrap select,
+  input[type="text"].full-input {
+    font-size: 13px;
+    padding: 10px 36px 10px 10px;
+  }
+  .input-wrap .ico svg {
+    width: 18px;
+    height: 18px;
+  }
+  .btn-agendar {
+    font-size: 15px;
+    padding: 14px;
+  }
+  .form-body {
+    padding: 16px 12px 0;
+  }
+  .field-row {
+    gap: 8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -260,13 +552,13 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   <div class="header">
     <div class="header-bg"></div>
     <div class="header-content">
-      <button class="btn-icon" aria-label="Voltar">
+      <button class="btn-icon" id="backButton" aria-label="Voltar">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="logo-wrap">
         <img src="img/logo.png" alt="PlanoV">
       </div>
-      <button class="btn-icon" aria-label="Menu">
+      <button class="btn-icon" id="menuButton" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
@@ -283,9 +575,9 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     <!-- Calendário semana única -->
     <div class="cal-card">
       <div class="cal-nav">
-        <button class="cal-btn" id="prev">&#8249;</button>
+        <button class="cal-btn" id="prev">‹</button>
         <div class="cal-month" id="cal-label">Setembro 2026</div>
-        <button class="cal-btn" id="next">&#8250;</button>
+        <button class="cal-btn" id="next">›</button>
       </div>
       <div class="week-days">
         <span>Su</span><span>Mo</span><span>Tu</span>
@@ -294,7 +586,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
       <div class="week-row" id="week-row"></div>
     </div>
 
-    <!-- Formulário -->
+    <!-- Formulário com ícones SVG -->
     <div class="form-body">
 
       <!-- Data de Início -->
@@ -303,11 +595,31 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
         <div class="field-row">
           <div class="input-wrap">
             <input type="date" id="data-inicio" value="2026-09-07">
-            <span class="ico">📅</span>
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <circle cx="12" cy="15" r="1"/>
+                <circle cx="16" cy="15" r="1"/>
+                <circle cx="8" cy="15" r="1"/>
+              </svg>
+            </span>
           </div>
           <div class="input-wrap">
             <input type="date" id="data-fim" value="2026-09-08">
-            <span class="ico">📅</span>
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <circle cx="12" cy="15" r="1"/>
+                <circle cx="16" cy="15" r="1"/>
+                <circle cx="8" cy="15" r="1"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
@@ -318,11 +630,21 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
         <div class="field-row">
           <div class="input-wrap">
             <input type="time" id="hora-inicio" value="07:00">
-            <span class="ico">🕐</span>
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </span>
           </div>
           <div class="input-wrap">
             <input type="time" id="hora-fim" value="17:00">
-            <span class="ico">🕐</span>
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
@@ -330,7 +652,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
       <!-- Tipo de Serviço -->
       <div class="field-group">
         <label class="field-label">Tipo de Serviço</label>
-        <input type="text" class="full-input" id="tipo-servico" placeholder="">
+        <input type="text" class="full-input" id="tipo-servico" placeholder="Ex: Colheita, Pulverização, Plantação...">
       </div>
 
       <!-- Descrição -->
@@ -338,7 +660,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
         <label class="field-label">Descrição do Serviço (opcional)</label>
         <div class="textarea-wrap">
           <div class="ta-bg"></div>
-          <textarea id="descricao" rows="4"></textarea>
+          <textarea id="descricao" rows="4" placeholder="Detalhes adicionais..."></textarea>
         </div>
       </div>
 
@@ -346,70 +668,199 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
 
     <!-- Botão fixo -->
     <div class="btn-footer">
-      <button class="btn-agendar" onclick="agendar()">Agendar Serviço</button>
+      <button class="btn-agendar" id="btnAgendar">Agendar Serviço</button>
     </div>
 
   </div><!-- /body -->
 
+  <!-- MENU LATERAL -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-drawer">
+      <button class="menu-close" id="closeMenuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="menu-user-info">
+            <h4>João Silva</h4>
+            <p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/>
+                <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/>
+                <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/>
+              </svg>
+              Prestador
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="menu-nav">
+        <div class="menu-item" data-nav="inicio">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="menu-text">Início</div>
+        </div>
+        <div class="menu-item" data-nav="empresas">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <div class="menu-text">Empresas</div>
+        </div>
+        <div class="menu-item" data-nav="agenda">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
+          <div class="menu-text">Minha Agenda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="section-title">CONFIGURAÇÕES</div>
+        <div class="menu-item" data-nav="perfil">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="menu-text">Meu Perfil</div>
+        </div>
+        <div class="menu-item" data-nav="configuracoes">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="menu-text">Configurações</div>
+        </div>
+        <div class="menu-item" data-nav="ajuda">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="menu-text">Ajuda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="footer-menu">
+          <div class="menu-item" data-nav="sair">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+            <div class="menu-text">Sair</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div><!-- /frame -->
 
 <script>
-// ── Calendário de semana ──
-const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
-                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  // ── Calendário de semana ──
+  const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                     'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-let weekOffset = 0;
-const BASE_SUN = new Date(2026, 8, 6); // Domingo 6 Set 2026
+  let weekOffset = 0;
+  const BASE_SUN = new Date(2026, 8, 6); // Domingo 6 Set 2026
 
-function renderWeek() {
-  const sun = new Date(BASE_SUN);
-  sun.setDate(sun.getDate() + weekOffset * 7);
+  function renderWeek() {
+    const sun = new Date(BASE_SUN);
+    sun.setDate(sun.getDate() + weekOffset * 7);
 
-  const label = document.getElementById('cal-label');
-  label.textContent = MONTHS_PT[sun.getMonth()] + ' ' + sun.getFullYear();
+    const label = document.getElementById('cal-label');
+    label.textContent = MONTHS_PT[sun.getMonth()] + ' ' + sun.getFullYear();
 
-  const row = document.getElementById('week-row');
-  row.innerHTML = '';
+    const row = document.getElementById('week-row');
+    row.innerHTML = '';
 
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(sun);
-    d.setDate(sun.getDate() + i);
-    const day = d.getDate();
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(sun);
+      d.setDate(sun.getDate() + i);
+      const day = d.getDate();
 
-    const el = document.createElement('div');
-    let cls = '';
-    if (weekOffset === 0) {
-      if (i === 3) cls = 'range-start';
-      else if (i === 6) cls = 'range-end';
-      else if (i > 3 && i < 6) cls = 'range';
+      const el = document.createElement('div');
+      let cls = '';
+      if (weekOffset === 0) {
+        if (i === 3) cls = 'range-start';
+        else if (i === 6) cls = 'range-end';
+        else if (i > 3 && i < 6) cls = 'range';
+      }
+      el.className = 'wday' + (cls ? ' ' + cls : '');
+      el.textContent = day;
+      row.appendChild(el);
     }
-    el.className = 'wday' + (cls ? ' ' + cls : '');
-    el.textContent = day;
-    row.appendChild(el);
   }
-}
 
-document.getElementById('prev').addEventListener('click', () => { weekOffset--; renderWeek(); });
-document.getElementById('next').addEventListener('click', () => { weekOffset++; renderWeek(); });
+  document.getElementById('prev').addEventListener('click', () => { weekOffset--; renderWeek(); });
+  document.getElementById('next').addEventListener('click', () => { weekOffset++; renderWeek(); });
+  renderWeek();
 
-renderWeek();
+  function agendar() {
+    const di = document.getElementById('data-inicio').value;
+    const df = document.getElementById('data-fim').value;
+    const hi = document.getElementById('hora-inicio').value;
+    const hf = document.getElementById('hora-fim').value;
+    const tipo = document.getElementById('tipo-servico').value.trim();
+    const desc = document.getElementById('descricao').value.trim();
 
-function agendar() {
-  const di = document.getElementById('data-inicio').value;
-  const df = document.getElementById('data-fim').value;
-  const hi = document.getElementById('hora-inicio').value;
-  const hf = document.getElementById('hora-fim').value;
-  const tipo = document.getElementById('tipo-servico').value.trim();
-  const desc = document.getElementById('descricao').value.trim();
+    if (!di || !df) { alert('Preencha as datas de início e fim.'); return; }
+    if (!hi || !hf) { alert('Preencha os horários.'); return; }
+    if (!tipo) { alert('Informe o tipo de serviço.'); return; }
 
-  if (!di || !df) { alert('Preencha as datas de início e fim.'); return; }
-  if (!hi || !hf) { alert('Preencha os horários.'); return; }
-  if (!tipo) { alert('Informe o tipo de serviço.'); return; }
+    alert('Serviço agendado com sucesso!\n\nPeríodo: ' + di + ' a ' + df +
+          '\nHorário: ' + hi + ' – ' + hf +
+          '\nServiço: ' + tipo +
+          (desc ? '\nDescrição: ' + desc : ''));
+  }
 
-  alert('Serviço agendado com sucesso!\n\nPeríodo: ' + di + ' a ' + df +
-        '\nHorário: ' + hi + ' – ' + hf +
-        '\nServiço: ' + tipo);
-}
+  document.getElementById('btnAgendar').addEventListener('click', agendar);
+
+  // ========= MENU LATERAL =========
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const backButton = document.getElementById('backButton');
+
+  function openMenu() {
+    menuOverlay.classList.add('open');
+  }
+  function closeMenu() {
+    menuOverlay.classList.remove('open');
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
+    if (e.target === menuOverlay) closeMenu();
+  });
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      alert('Voltar para tela anterior (simulação)');
+    });
+  }
+
+  // Ações dos itens do menu (navegação simulada)
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') {
+        if (confirm('Deseja realmente sair da sua conta?')) {
+          alert('Você saiu do sistema. (Simulação)');
+        }
+        closeMenu();
+      } 
+      else if (nav === 'inicio') {
+        alert('Navegar para Início (simulação)');
+        closeMenu();
+      }
+      else if (nav === 'empresas') {
+        alert('Navegar para Empresas (simulação)');
+        closeMenu();
+      }
+      else if (nav === 'agenda') {
+        alert('Navegar para Minha Agenda (simulação)');
+        closeMenu();
+      }
+      else if (nav === 'perfil') {
+        alert('Navegar para Meu Perfil (simulação)');
+        closeMenu();
+      }
+      else {
+        let msg = '';
+        if (nav === 'configuracoes') msg = 'Abrir Configurações';
+        else if (nav === 'ajuda') msg = 'Central de Ajuda';
+        alert(`🔜 ${msg} (simulação)`);
+        closeMenu();
+      }
+    });
+  });
 </script>
 </body>
 </html>

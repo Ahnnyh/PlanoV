@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PlanoV - Meu Perfil</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -32,7 +32,8 @@ body {
 }
 
 .frame {
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   background: var(--bg);
   border-radius: 44px;
   overflow: hidden;
@@ -41,6 +42,7 @@ body {
   flex-direction: column;
   position: relative;
   min-height: 700px;
+  margin: 0 auto;
 }
 
 /* ── HEADER ── */
@@ -58,14 +60,14 @@ body {
 }
 .btn-icon {
   background: none; border: none; cursor: pointer;
-  width: 36px; height: 36px;
+  width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
   transition: background 0.2s;
 }
 .btn-icon:active { background: rgba(0,0,0,0.05); }
-.btn-icon svg { width: 22px; height: 22px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
-.logo-wrap img { height: 38px; content: url('img/logo.png'); }
+.btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
+.logo-wrap img { height: 40px; content: url('img/logo.png'); }
 
 /* ── FAIXA TÍTULO ── */
 .title-bar {
@@ -180,11 +182,19 @@ body {
   padding: 12px 14px;
 }
 .card-mini-title {
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 700; color: var(--verde-card);
   margin-bottom: 8px;
 }
-.card-mini-title span.emoji { font-size: 16px; }
+.card-mini-title .card-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--verde-card);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .card-mini p {
   font-size: 12px; color: var(--texto);
   line-height: 1.6;
@@ -203,7 +213,7 @@ body {
   min-height: 70px;
 }
 
-/* Avaliação */
+/* Avaliação - mantido o emoji da estrela */
 .avaliacao {
   background: var(--branco);
   border-radius: 14px;
@@ -234,8 +244,11 @@ body {
 /* ── BOTÃO FIXO ── */
 .btn-footer {
   position: fixed;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 390px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 450px;
   padding: 16px 32px 32px;
   background: linear-gradient(to top, var(--bg) 65%, transparent);
   z-index: 20;
@@ -252,13 +265,12 @@ body {
   letter-spacing: 0.3px;
   transition: background 0.15s, transform 0.1s;
 }
-.btn-salvar:hover { background: #3a6620; }
 .btn-salvar:active { transform: scale(0.98); }
 
 /* Upload avatar */
 #avatar-input { display: none; }
 
-/* ========= MENU LATERAL (DRAWER) ========= */
+/* ========= MENU LATERAL (DRAWER) RESPONSIVO ========= */
 .menu-overlay {
   position: absolute;
   top: 0;
@@ -277,16 +289,16 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: 280px;
+  width: min(280px, 85%);
+  min-width: 260px;
   height: 100%;
   background: var(--branco);
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
   z-index: 101;
   transform: translateX(100%);
   transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  overflow-y: auto;        /* AGORA O DRAWER INTEIRO ROLA */
+  overflow-y: auto;
   border-radius: 20px 0 0 20px;
-  display: block;          /* remove flex para não atrapalhar */
 }
 
 .menu-overlay.open {
@@ -297,7 +309,6 @@ body {
   transform: translateX(0);
 }
 
-/* Conteúdo do menu - sem flex específico */
 .menu-header {
   padding: 28px 20px 20px;
   background: linear-gradient(135deg, #3a5f1e, #2d5016);
@@ -310,18 +321,21 @@ body {
   gap: 12px;
 }
 .menu-avatar {
-  width: 48px;
-  height: 48px;
-  background: #e0a55b;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(145deg, #d48f3b, #b56a1a);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  font-weight: 700;
-  color: white;
-  background: linear-gradient(145deg, #d48f3b, #b56a1a);
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.menu-avatar svg {
+  width: 30px;
+  height: 30px;
+  stroke: white;
+  stroke-width: 1.8;
+  fill: none;
 }
 .menu-user-info h4 {
   font-size: 18px;
@@ -329,11 +343,17 @@ body {
   margin-bottom: 4px;
 }
 .menu-user-info p {
-  font-size: 11px;
+  font-size: 12px;
   opacity: 0.85;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+}
+.menu-user-info p svg {
+  width: 14px;
+  height: 14px;
+  stroke: white;
+  stroke-width: 2;
 }
 .menu-close {
   position: absolute;
@@ -341,34 +361,30 @@ body {
   right: 16px;
   background: rgba(255,255,255,0.2);
   border: none;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: white;
 }
 .menu-close svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   stroke: white;
   stroke-width: 2;
 }
 
 .menu-nav {
-  padding: 12px 0 20px;   /* sem overflow, sem flex */
+  padding: 12px 0 20px;
 }
-
-/* resto dos estilos do menu permanecem iguais */
-.menu-section { margin-bottom: 8px; }
 .menu-item {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 12px 20px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--texto);
   transition: background 0.2s;
@@ -376,9 +392,19 @@ body {
 }
 .menu-item:hover, .menu-item:active { background: #f0ede7; }
 .menu-item .menu-icon {
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-item .menu-icon svg {
   width: 22px;
-  text-align: center;
-  font-size: 18px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .menu-item .menu-text { flex: 1; }
 .divider {
@@ -387,7 +413,7 @@ body {
   margin: 8px 16px;
 }
 .section-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--muted);
   letter-spacing: 0.5px;
@@ -424,6 +450,92 @@ body {
   border-top: 1px solid var(--borda);
   margin-top: 8px;
   padding: 8px 0;
+}
+
+/* ===== MEDIA QUERIES RESPONSIVAS ===== */
+@media (max-width: 400px) {
+  .header-content {
+    padding: 52px 16px 14px;
+  }
+  .btn-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .btn-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .logo-wrap img {
+    height: 36px;
+  }
+  .title-bar {
+    padding: 12px 16px;
+  }
+  .title-bar h1 {
+    font-size: 16px;
+  }
+  .perfil-hero {
+    padding-top: 20px;
+    padding-bottom: 35px;
+  }
+  .avatar-wrap {
+    width: 80px;
+    height: 80px;
+  }
+  .badge-prestador {
+    font-size: 10px;
+    padding: 2px 12px;
+  }
+  .perfil-nome {
+    padding: 12px 0 2px;
+  }
+  .perfil-nome input.editable-input {
+    font-size: 18px;
+  }
+  .body {
+    padding: 0 12px 100px;
+  }
+  .card {
+    padding: 12px 14px;
+  }
+  .card-grid {
+    gap: 8px;
+  }
+  .card-mini {
+    padding: 10px 12px;
+  }
+  .btn-footer {
+    padding: 12px 20px 28px;
+  }
+  .btn-salvar {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 340px) {
+  .perfil-nome input.editable-input {
+    font-size: 16px;
+  }
+  .card-title {
+    font-size: 14px;
+  }
+  .info-row {
+    font-size: 12px;
+  }
+  .card-mini-title {
+    font-size: 12px;
+  }
+  .sobre-textarea {
+    font-size: 12px;
+  }
+  .avaliacao span {
+    font-size: 13px;
+  }
+  .btn-salvar {
+    font-size: 13px;
+    padding: 10px;
+  }
 }
 </style>
 </head>
@@ -499,7 +611,14 @@ body {
     <div class="card-grid">
       <div class="card-mini">
         <div class="card-mini-title">
-          <span class="emoji">🚜</span>
+          <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="8" rx="2"/>
+            <rect x="7" y="5" width="10" height="6" rx="1"/>
+            <circle cx="7" cy="17" r="2"/>
+            <circle cx="17" cy="17" r="2"/>
+            <line x1="5" y1="11" x2="5" y2="9"/>
+            <line x1="19" y1="11" x2="19" y2="9"/>
+          </svg>
           <span>Máquinas</span>
         </div>
         <textarea class="sobre-textarea" id="maquinas" rows="2">Trator John Deere
@@ -507,7 +626,9 @@ Colheitadeira</textarea>
       </div>
       <div class="card-mini">
         <div class="card-mini-title">
-          <span class="emoji">📞</span>
+          <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
           <span>Contato</span>
         </div>
         <textarea class="sobre-textarea" id="contato" rows="2">(19) 9 9999-9999
@@ -521,7 +642,7 @@ jsilva@email.com</textarea>
       <textarea class="sobre-textarea" id="sobre" rows="3">Especialista em operação de tratores e preparo do solo. atuo com eficiencia em serviços agricolas</textarea>
     </div>
 
-    <!-- Avaliação -->
+    <!-- Avaliação - mantida a estrela emoji -->
     <div class="avaliacao">
       <span class="star">⭐</span>
       <span id="nota-texto">4,8 avaliação média</span>
@@ -542,82 +663,81 @@ jsilva@email.com</textarea>
       </button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar">🌾</div>
+          <div class="menu-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
           <div class="menu-user-info">
             <h4 id="menuFazendaNome">Fazenda Luzia</h4>
-            <p>🌱 AgroConectada</p>
+            <p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/>
+                <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/>
+                <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/>
+              </svg>
+              AgroConectada
+            </p>
           </div>
         </div>
       </div>
       <div class="menu-nav">
-        <!-- Navegação principal -->
         <div class="menu-item" data-nav="inicio">
-          <div class="menu-icon">🏠</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
           <div class="menu-text">Início</div>
         </div>
         <div class="menu-item" data-nav="empresas">
-          <div class="menu-icon">🏢</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
           <div class="menu-text">Empresas</div>
         </div>
         <div class="menu-item" data-nav="agenda">
-          <div class="menu-icon">📅</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
           <div class="menu-text">Minha Agenda</div>
         </div>
-
         <div class="divider"></div>
-
-        <!-- Informações dinâmicas -->
         <div class="section-title">INFORMAÇÃO</div>
         <div class="menu-item" style="pointer-events: none;">
-          <div class="menu-icon">🛠️</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <div class="menu-text"><strong>Serviços:</strong> <span id="menuServicosValor">Colheita e Plantação</span></div>
         </div>
         <div class="menu-item" style="pointer-events: none;">
-          <div class="menu-icon">⏳</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div class="menu-text"><strong>Experiência:</strong> <span id="menuExperienciaValor">8 anos</span></div>
         </div>
-
         <div class="divider"></div>
-
-        <!-- Máquinas -->
         <div class="section-title">MÁQUINAS</div>
         <div class="menu-item" style="pointer-events: none;">
-          <div class="menu-icon">🚜</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="8" rx="2"/><rect x="7" y="5" width="10" height="6" rx="1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="5" y1="11" x2="5" y2="9"/><line x1="19" y1="11" x2="19" y2="9"/></svg></div>
           <div class="menu-text"><strong>Meu equipamento</strong></div>
         </div>
         <ul class="machine-list" id="menuMachineList">
           <li>Trator John Deere</li>
           <li>Colheitadeira</li>
         </ul>
-
-        <!-- Sobre -->
         <div class="section-title">SOBRE</div>
         <div class="menu-sobre-text" id="menuSobreTexto">
           Especialista em operação de tratores e preparo do solo. atuo com eficiencia em serviços agricolas
         </div>
-
         <div class="divider"></div>
-
-        <!-- Configurações e ajuda -->
         <div class="menu-item" data-nav="configuracoes">
-          <div class="menu-icon">⚙️</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
           <div class="menu-text">Configurações</div>
         </div>
         <div class="menu-item" data-nav="ajuda">
-          <div class="menu-icon">❓</div>
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="menu-text">Ajuda</div>
         </div>
-
         <div class="divider"></div>
-
-        <!-- Perfil e Sair -->
         <div class="footer-menu">
           <div class="menu-item" data-nav="perfil">
-            <div class="menu-icon">👤</div>
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
             <div class="menu-text">Perfil</div>
           </div>
-          <div class="menu-item" data-nav="sair" id="menuSairBtn">
-            <div class="menu-icon">🚪</div>
+          <div class="menu-item" data-nav="sair">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
             <div class="menu-text">Sair</div>
           </div>
         </div>
@@ -625,7 +745,7 @@ jsilva@email.com</textarea>
     </div>
   </div>
 
-</div><!-- /frame -->
+</div>
 
 <script>
 // ----- elementos do DOM -----
@@ -636,13 +756,11 @@ const backButton = document.getElementById('backButton');
 
 // ---- Função para atualizar o menu com dados atuais do perfil ----
 function updateMenuFromProfile() {
-  // Captura valores dos campos editáveis
   const servicos = document.getElementById('servicos').value.trim() || "Não informado";
   const experiencia = document.getElementById('experiencia').value.trim() || "Não informado";
   const maquinasRaw = document.getElementById('maquinas').value;
   const sobreTexto = document.getElementById('sobre').value.trim() || "Sem descrição";
   
-  // Atualiza textos simples
   const menuServicosSpan = document.getElementById('menuServicosValor');
   const menuExpSpan = document.getElementById('menuExperienciaValor');
   const menuSobreDiv = document.getElementById('menuSobreTexto');
@@ -650,7 +768,6 @@ function updateMenuFromProfile() {
   if (menuExpSpan) menuExpSpan.innerText = experiencia;
   if (menuSobreDiv) menuSobreDiv.innerText = sobreTexto;
   
-  // Atualiza lista de máquinas (divide por quebras de linha, ignora linhas vazias)
   const lines = maquinasRaw.split(/\r?\n/).filter(l => l.trim().length > 0);
   const machineListUl = document.getElementById('menuMachineList');
   if (machineListUl) {
@@ -669,7 +786,6 @@ function updateMenuFromProfile() {
   }
 }
 
-// Abrir/fechar menu
 function openMenu() {
   updateMenuFromProfile();
   menuOverlay.classList.add('open');
@@ -679,14 +795,12 @@ function closeMenu() {
   menuOverlay.classList.remove('open');
 }
 
-// Eventos do menu
 if (menuBtn) menuBtn.addEventListener('click', openMenu);
 if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
 if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
   if (e.target === menuOverlay) closeMenu();
 });
 
-// Ações dos itens do menu (navegação)
 document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
   item.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -694,17 +808,13 @@ document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
     if (nav === 'sair') {
       if (confirm('Deseja realmente sair da sua conta?')) {
         alert('Você saiu do sistema. (Função de logout simulada)');
-        // Simular logout: recarregar para tela inicial (apenas demonstração)
-        // window.location.href = 'login.html';
       }
       closeMenu();
     } 
     else if (nav === 'perfil') {
-      // Já está na tela de perfil, apenas fecha o menu
       closeMenu();
     }
     else {
-      // Demais navegações (inicio, empresas, agenda, configuracoes, ajuda)
       let msg = '';
       if (nav === 'inicio') msg = 'Navegar para Início';
       else if (nav === 'empresas') msg = 'Navegar para Empresas';
@@ -717,24 +827,19 @@ document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
   });
 });
 
-// Botão voltar (seta)
 if (backButton) {
   backButton.addEventListener('click', () => {
     alert('Voltar para tela anterior (simulação)');
-    // history.back() se quiser navegação real;
   });
 }
 
-// Função salvar (já existente, mas adaptada p/ possíveis sync)
 function salvar() {
   const nome = document.getElementById('nome').value.trim();
   if (!nome) { alert('Informe seu nome.'); return; }
-  // Atualiza também o menu em background, caso fique aberto depois
   updateMenuFromProfile();
   alert('Perfil salvo com sucesso!\n\n' + nome);
 }
 
-// Avatar upload
 document.getElementById('avatar-input').addEventListener('change', function() {
   const file = this.files[0];
   if (!file) return;
@@ -748,8 +853,6 @@ document.getElementById('avatar-input').addEventListener('change', function() {
   reader.readAsDataURL(file);
 });
 
-// Ao editar campos que afetam menu, não precisa abrir, mas o menu sempre atualiza ao abrir
-// também atualiza quando salvar, mas para garantir, ouvimos mudanças em blur de campos principais
 const camposDinamicos = ['servicos', 'experiencia', 'maquinas', 'sobre'];
 camposDinamicos.forEach(id => {
   const el = document.getElementById(id);
@@ -759,12 +862,7 @@ camposDinamicos.forEach(id => {
   }
 });
 
-// Mantém nome da fazenda fixo como "Fazenda Luzia", mas pode vir de dados futuros
-// Sincronização inicial
 updateMenuFromProfile();
-
-// Previne scroll do frame quando menu aberto
-window.addEventListener('resize', () => {});
 </script>
 </body>
 </html>

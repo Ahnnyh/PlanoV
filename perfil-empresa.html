@@ -3,19 +3,640 @@
 <head>
   <!-- METADADOS -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>PlanoV – Perfil da Empresa</title>
 
   <!-- FONTES E ESTILOS EXTERNOS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/perfil-empresa.css" />
+  
+  <style>
+    /* ===== RESET E VARIÁVEIS ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --verde: #3a5f1e;
+      --verde-btn: #2d5016;
+      --verde-card: #4a7c28;
+      --verde-light: #e8f0df;
+      --laranja: #e07a1c;
+      --laranja-range: #f0a050;
+      --bg: #f7f4ee;
+      --branco: #ffffff;
+      --texto: #1a1a1a;
+      --muted: #777;
+      --borda: #e0ddd6;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #cdc8bc;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* ===== CONTAINER PRINCIPAL (RESPONSIVO) ===== */
+    .frame {
+      width: 100%;
+      max-width: 450px;
+      background: var(--bg);
+      border-radius: 44px;
+      overflow: hidden;
+      border: 1px solid #d4cfc2;
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    /* ===== HEADER COM IMAGEM DE CAPA ===== */
+    .header {
+      position: relative;
+      height: 210px;
+      flex-shrink: 0;
+      overflow: hidden;
+      border-top-left-radius: 44px;
+      border-top-right-radius: 44px;
+    }
+    .header-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .header-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 52px 20px 0;
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+    .btn-icon:active { background: rgba(0,0,0,0.05); }
+    .btn-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #2d4f14;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      fill: none;
+      stroke-linejoin: round;
+    }
+    .logo-wrap img {
+      height: 40px;
+      display: block;
+      content: url('IMG/logo.png');
+    }
+    .fazenda-nome-wrap {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      padding: 6px 16px;
+      border-radius: 40px;
+    }
+    .fazenda-nome {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      margin: 0;
+    }
+
+    /* ===== BODY SCROLL ===== */
+    .body {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: none;
+      background: var(--bg);
+      padding: 20px 16px 40px;
+    }
+    .body::-webkit-scrollbar { display: none; }
+
+    /* Seções */
+    .section {
+      margin-bottom: 24px;
+    }
+    .sobre-card {
+      background: var(--branco);
+      border-radius: 16px;
+      border: 1px solid var(--borda);
+      padding: 16px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .section-icon {
+      width: 20px;
+      height: 20px;
+      stroke: var(--verde-card);
+      stroke-width: 2;
+    }
+    .section-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--verde-card);
+    }
+    .sobre-texto {
+      font-size: 13px;
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--texto);
+      margin-bottom: 12px;
+    }
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tag {
+      background: var(--verde-light);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--verde-card);
+    }
+    .divider {
+      height: 1px;
+      background: var(--borda);
+      margin: 16px 0;
+    }
+    /* Avaliação média */
+    .rating-section {
+      display: flex;
+      justify-content: center;
+    }
+    .avg-rating {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      background: var(--branco);
+      padding: 10px 20px;
+      border-radius: 60px;
+      border: 1px solid var(--borda);
+    }
+    .star-big {
+      width: 24px;
+      height: 24px;
+      fill: var(--laranja);
+      stroke: none;
+    }
+    .avg-number {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--texto);
+    }
+    .avg-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    /* Lista de avaliações */
+    .reviews-list {
+      list-style: none;
+    }
+    .review-card {
+      background: var(--branco);
+      border-radius: 14px;
+      border: 1px solid var(--borda);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .review-header {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      background: #e0ddd6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .review-avatar svg {
+      width: 22px;
+      height: 22px;
+      stroke: #888;
+    }
+    .review-author-info {
+      flex: 1;
+    }
+    .review-author {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--texto);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .star {
+      width: 14px;
+      height: 14px;
+      fill: var(--laranja);
+      stroke: none;
+    }
+    .star.half {
+      fill: url(#halfGradient);
+    }
+    .review-text {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+      margin-left: 52px;
+    }
+    /* Accordion de nova avaliação */
+    .nova-avaliacao-section {
+      background: var(--branco);
+      border-radius: 16px;
+      border: 1px solid var(--borda);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .avaliacao-header-click {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .avaliacao-header-click:hover {
+      background: #f0ede7;
+    }
+    .toggle-icon {
+      width: 20px;
+      height: 20px;
+      stroke: var(--verde-card);
+      transition: transform 0.3s;
+    }
+    .avaliacao-content {
+      padding: 0 16px 20px;
+      display: none;
+      border-top: 1px solid var(--borda);
+    }
+    .avaliacao-content.open {
+      display: block;
+    }
+    .rating-input-wrap {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .stars-input {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .star-input {
+      width: 32px;
+      height: 32px;
+      fill: #ddd;
+      stroke: none;
+      cursor: pointer;
+      transition: fill 0.2s;
+    }
+    .star-input.active {
+      fill: var(--laranja);
+    }
+    .rating-feedback {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .review-textarea {
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      padding: 12px;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      resize: vertical;
+      margin-bottom: 16px;
+      background: #fefefe;
+    }
+    .btn-enviar-avaliacao {
+      width: 100%;
+      background: var(--verde-btn);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-enviar-avaliacao:active {
+      transform: scale(0.98);
+    }
+
+    /* ========= MENU LATERAL (DRAWER) RESPONSIVO ========= */
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+    .menu-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(280px, 85%);
+      min-width: 260px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      overflow-y: auto;
+      border-radius: 20px 0 0 20px;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .menu-overlay.open .menu-drawer {
+      transform: translateX(0);
+    }
+    .menu-header {
+      padding: 28px 20px 20px;
+      background: linear-gradient(135deg, #3a5f1e, #2d5016);
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .menu-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-avatar {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #d48f3b, #b56a1a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .menu-avatar svg {
+      width: 30px;
+      height: 30px;
+      stroke: white;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .menu-user-info h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .menu-user-info p {
+      font-size: 12px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .menu-user-info p svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .menu-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .menu-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .menu-nav {
+      padding: 12px 0 20px;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .menu-item:hover,
+    .menu-item:active {
+      background: #f0ede7;
+    }
+    .menu-item .menu-icon {
+      width: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-item .menu-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .menu-item .menu-text {
+      flex: 1;
+    }
+    .divider {
+      height: 1px;
+      background: #e0ddd6;
+      margin: 8px 16px;
+    }
+    .section-title-menu {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      letter-spacing: 0.5px;
+      padding: 12px 20px 4px;
+      text-transform: uppercase;
+    }
+    .menu-sobre-text {
+      font-size: 12px;
+      color: #555;
+      padding: 6px 20px 12px 20px;
+      line-height: 1.5;
+      border-bottom: 1px solid #e0ddd6;
+      margin-bottom: 4px;
+    }
+    .footer-menu {
+      border-top: 1px solid #e0ddd6;
+      margin-top: 8px;
+      padding: 8px 0;
+    }
+
+    /* ===== MEDIA QUERIES RESPONSIVAS ===== */
+    @media (max-width: 400px) {
+      .header-top {
+        padding: 45px 16px 0;
+      }
+      .btn-icon {
+        width: 40px;
+        height: 40px;
+      }
+      .btn-icon svg {
+        width: 22px;
+        height: 22px;
+      }
+      .logo-wrap img {
+        height: 36px;
+      }
+      .fazenda-nome {
+        font-size: 16px;
+      }
+      .fazenda-nome-wrap {
+        bottom: 12px;
+        left: 12px;
+        padding: 4px 12px;
+      }
+      .body {
+        padding: 16px 12px 30px;
+      }
+      .sobre-card {
+        padding: 14px;
+      }
+      .section-label {
+        font-size: 14px;
+      }
+      .section-title {
+        font-size: 15px;
+      }
+      .tag {
+        font-size: 12px;
+        padding: 5px 12px;
+      }
+      .avg-number {
+        font-size: 20px;
+      }
+      .avg-label {
+        font-size: 12px;
+      }
+      .review-card {
+        padding: 12px;
+      }
+      .review-author {
+        font-size: 12px;
+      }
+      .review-text {
+        font-size: 11px;
+        margin-left: 48px;
+      }
+      .avaliacao-header-click {
+        padding: 12px 14px;
+      }
+      .star-input {
+        width: 28px;
+        height: 28px;
+      }
+      .btn-enviar-avaliacao {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .header {
+        height: 180px;
+      }
+      .fazenda-nome {
+        font-size: 14px;
+      }
+      .sobre-texto {
+        font-size: 12px;
+      }
+      .section-title {
+        font-size: 14px;
+      }
+      .avg-rating {
+        padding: 8px 16px;
+      }
+      .avg-number {
+        font-size: 18px;
+      }
+      .star-input {
+        width: 24px;
+        height: 24px;
+      }
+      .review-textarea {
+        font-size: 12px;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ===== CONTAINER PRINCIPAL (FRAME) ===== -->
 <div class="frame">
 
-  <!-- ===== HEADER COM IMAGEM DE CAPA ===== -->
+  <!-- HEADER COM IMAGEM DE CAPA -->
   <div class="header">
     <img src="IMG/capa_fazenda.png" alt="Fazenda" class="header-bg">
 
@@ -25,7 +646,7 @@
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="logo-wrap"><img src="IMG/logo.png" alt="PlanoV"></div>
-      <button class="btn-icon">
+      <button class="btn-icon" id="menuButton">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
@@ -34,7 +655,7 @@
     <div class="fazenda-nome-wrap"><h1 class="fazenda-nome">Fazenda Luzia</h1></div>
   </div>
 
-  <!-- ===== CORPO COM SCROLL ===== -->
+  <!-- CORPO COM SCROLL -->
   <div class="body">
 
     <!-- SEÇÃO: SOBRE -->
@@ -79,8 +700,6 @@
     <!-- SEÇÃO: LISTA DE AVALIAÇÕES EXISTENTES -->
     <div class="section">
       <ul class="reviews-list" id="reviewsList">
-
-        <!-- AVALIAÇÃO 1 -->
         <li class="review-card">
           <div class="review-header">
             <div class="review-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -97,8 +716,6 @@
           </div>
           <p class="review-text">Ótimo no que faz, foi super profissional e rápido, bastante eficiente.</p>
         </li>
-
-        <!-- AVALIAÇÃO 2 -->
         <li class="review-card">
           <div class="review-header">
             <div class="review-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -115,8 +732,6 @@
           </div>
           <p class="review-text">Serviço muito bem feito, nada a reclamar.</p>
         </li>
-
-        <!-- AVALIAÇÃO 3 -->
         <li class="review-card">
           <div class="review-header">
             <div class="review-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -136,9 +751,8 @@
       </ul>
     </div>
 
-    <!-- ===== CARD DE AVALIAÇÃO (ACCORDION) ===== -->
+    <!-- CARD DE AVALIAÇÃO (ACCORDION) -->
     <div class="nova-avaliacao-section" id="avaliacaoAccordion">
-      <!-- CABEÇALHO CLICÁVEL -->
       <div class="avaliacao-header-click" id="accordionHeader">
         <div class="section-header">
           <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -150,10 +764,7 @@
           <polyline points="6 9 12 15 18 9"/>
         </svg>
       </div>
-
-      <!-- CONTEÚDO DO ACCORDION (INICIALMENTE RECOLHIDO) -->
       <div class="avaliacao-content" id="avaliacaoContent">
-        <!-- ESTRELAS DE AVALIAÇÃO -->
         <div class="rating-input-wrap">
           <div class="stars-input" id="starsInput">
             <svg class="star-input" data-value="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -164,11 +775,7 @@
           </div>
           <span class="rating-feedback" id="ratingFeedback">Clique nas estrelas para avaliar</span>
         </div>
-
-        <!-- CAMPO DE COMENTÁRIO -->
         <textarea id="reviewComment" class="review-textarea" placeholder="Escreva seu comentário (opcional)..." rows="3"></textarea>
-
-        <!-- BOTÃO ENVIAR -->
         <button class="btn-enviar-avaliacao" id="btnEnviarAvaliacao">Enviar avaliação</button>
       </div>
     </div>
@@ -176,8 +783,191 @@
   </div><!-- /.body -->
 </div><!-- /.frame -->
 
-<!-- ===== SCRIPT EXTERNO ===== -->
-<script src="Javascripct/perfil-empresa.js"></script>
+<!-- MENU LATERAL (DRAWER) -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-drawer">
+    <button class="menu-close" id="closeMenuBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="menu-header">
+      <div class="menu-user">
+        <div class="menu-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+            <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+            <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+            <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+            <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="menu-user-info">
+          <h4>Fazenda Luzia</h4>
+          <p>
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/>
+              <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/>
+              <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/>
+            </svg>
+            Empresa
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="menu-nav">
+      <div class="menu-item" data-nav="inicio">
+        <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="menu-text">Início</div>
+      </div>
+      <div class="menu-item" data-nav="empresas">
+        <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div class="menu-text">Empresas</div>
+      </div>
+      <div class="menu-item" data-nav="agenda">
+        <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
+        <div class="menu-text">Minha Agenda</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-title-menu">INFORMAÇÃO</div>
+      <div class="menu-item" style="pointer-events: none;">
+        <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="menu-text"><strong>Serviços:</strong> <span id="menuServicosValor">Colheita, Pulverização, Plantação</span></div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-title-menu">SOBRE</div>
+      <div class="menu-sobre-text" id="menuSobreTexto">Empresa focada na produção de soja e milho, com atuação a mais de 10 anos no mercado agrícola.</div>
+      <div class="divider"></div>
+      <div class="menu-item" data-nav="configuracoes">
+        <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+        <div class="menu-text">Configurações</div>
+      </div>
+      <div class="menu-item" data-nav="ajuda">
+        <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="menu-text">Ajuda</div>
+      </div>
+      <div class="divider"></div>
+      <div class="footer-menu">
+        <div class="menu-item" data-nav="perfil">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="menu-text">Perfil</div>
+        </div>
+        <div class="menu-item" data-nav="sair">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+          <div class="menu-text">Sair</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========= MENU LATERAL =========
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  
+  function openMenu() {
+    menuOverlay.classList.add('open');
+  }
+  function closeMenu() {
+    menuOverlay.classList.remove('open');
+  }
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
+    if (e.target === menuOverlay) closeMenu();
+  });
+  
+  // Ações dos itens do menu
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') {
+        if (confirm('Deseja realmente sair da sua conta?')) alert('Você saiu do sistema. (Simulação)');
+        closeMenu();
+      } else if (nav === 'perfil') {
+        alert('Você já está no perfil da empresa.');
+        closeMenu();
+      } else {
+        let msg = '';
+        if (nav === 'inicio') msg = 'Navegar para Início';
+        else if (nav === 'empresas') msg = 'Navegar para Empresas';
+        else if (nav === 'agenda') msg = 'Navegar para Minha Agenda';
+        else if (nav === 'configuracoes') msg = 'Abrir Configurações';
+        else if (nav === 'ajuda') msg = 'Central de Ajuda';
+        alert(`🔜 ${msg} (simulação)`);
+        closeMenu();
+      }
+    });
+  });
+
+  // ========= ACCORDION DE AVALIAÇÃO =========
+  const accordionHeader = document.getElementById('accordionHeader');
+  const avaliacaoContent = document.getElementById('avaliacaoContent');
+  const toggleIcon = document.querySelector('.toggle-icon');
+
+  if (accordionHeader) {
+    accordionHeader.addEventListener('click', () => {
+      const isOpen = avaliacaoContent.classList.contains('open');
+      if (isOpen) {
+        avaliacaoContent.classList.remove('open');
+        toggleIcon.style.transform = 'rotate(0deg)';
+      } else {
+        avaliacaoContent.classList.add('open');
+        toggleIcon.style.transform = 'rotate(180deg)';
+      }
+    });
+  }
+
+  // ========= ESTRELAS DE AVALIAÇÃO =========
+  const stars = document.querySelectorAll('.star-input');
+  let currentRating = 0;
+  const ratingFeedback = document.getElementById('ratingFeedback');
+
+  function setStars(rating) {
+    stars.forEach((star, index) => {
+      if (index < rating) star.classList.add('active');
+      else star.classList.remove('active');
+    });
+  }
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      const value = parseInt(star.getAttribute('data-value'));
+      currentRating = value;
+      setStars(currentRating);
+      ratingFeedback.textContent = `Você selecionou ${currentRating} estrela${currentRating > 1 ? 's' : ''}`;
+    });
+    star.addEventListener('mouseenter', () => {
+      const value = parseInt(star.getAttribute('data-value'));
+      setStars(value);
+    });
+    star.addEventListener('mouseleave', () => {
+      setStars(currentRating);
+    });
+  });
+
+  // ========= ENVIAR AVALIAÇÃO =========
+  const btnEnviar = document.getElementById('btnEnviarAvaliacao');
+  const reviewComment = document.getElementById('reviewComment');
+
+  if (btnEnviar) {
+    btnEnviar.addEventListener('click', () => {
+      if (currentRating === 0) {
+        alert('Por favor, selecione uma classificação em estrelas.');
+        return;
+      }
+      const comment = reviewComment.value.trim();
+      alert(`Avaliação enviada!\nNota: ${currentRating} estrelas\nComentário: ${comment || 'Sem comentário'}`);
+      // Reset do formulário
+      currentRating = 0;
+      setStars(0);
+      reviewComment.value = '';
+      ratingFeedback.textContent = 'Clique nas estrelas para avaliar';
+      avaliacaoContent.classList.remove('open');
+      if (toggleIcon) toggleIcon.style.transform = 'rotate(0deg)';
+    });
+  }
+</script>
 
 </body>
 </html>

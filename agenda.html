@@ -2,11 +2,16 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PlanoV - Agenda</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
 :root {
   --verde: #3a5f1e;
@@ -30,11 +35,12 @@ body {
 }
 
 .frame {
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   background: var(--bg);
   border-radius: 44px;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -49,7 +55,6 @@ body {
 .header-bg {
   position: absolute;
   inset: 0;
-  /* IMAGEM SUPERIOR: substitua 'superior.jpg' pelo nome correto do seu arquivo */
   background-image: url('img/superior.png');
   background-size: cover;
   background-position: left;
@@ -65,20 +70,40 @@ body {
 }
 
 .btn-icon {
-  background: none; border: none; cursor: pointer;
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
 }
 
-.btn-icon svg { width: 22px; height: 22px; stroke: #2d4f14; }
+.btn-icon:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #2d4f14;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-linejoin: round;
+}
 
 .logo-wrap {
-  display: flex; align-items: center; gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .logo-wrap img {
-  height: 38px;
-  /* IMAGEM LOGO: substitua 'logo.png' pelo nome correto do seu arquivo */
+  height: 40px;
   content: url('img/logo.png');
 }
 
@@ -88,102 +113,148 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding-bottom: 4px;
 }
 
 /* PAGE TITLE */
 .page-title {
-  display: flex; align-items: center; gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 18px 20px 0;
 }
 
 .title-icon {
-  font-size: 22px;
+  width: 26px;
+  height: 26px;
+  stroke: var(--verde);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .page-title h1 {
-  font-size: 20px; font-weight: 700;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--verde);
 }
 
-/* SAUDACAO */
+/* SAUDAÇÃO */
 .saudacao {
   padding: 12px 20px 0;
 }
 
 .saudacao h2 {
-  font-size: 15px; font-weight: 700; color: var(--texto);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--texto);
 }
 
 .saudacao p {
-  font-size: 13px; color: var(--muted); margin-top: 1px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
 }
 
 /* CALENDAR CARD */
 .cal-card {
   margin: 16px 16px 0;
   background: var(--branco);
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 14px 12px;
-  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
 }
 
 .cal-nav {
-  display: flex; align-items: center;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .cal-btn {
-  background: none; border: none; cursor: pointer;
-  font-size: 20px; color: var(--texto); padding: 2px 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--texto);
+  padding: 4px 12px;
+  border-radius: 40px;
+  transition: background 0.2s;
+}
+
+.cal-btn:active {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .cal-selects {
-  display: flex; gap: 6px;
+  display: flex;
+  gap: 8px;
 }
 
 .cal-selects select {
   font-family: 'Poppins', sans-serif;
-  font-size: 13px; font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
   border: 1px solid var(--borda);
-  border-radius: 6px; padding: 4px 24px 4px 8px;
+  border-radius: 8px;
+  padding: 6px 28px 6px 12px;
   color: var(--texto);
   background: #fff;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 6 6-6z' fill='%23555'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 7px center;
+  background-position: right 10px center;
   cursor: pointer;
 }
 
 /* DIAS DA SEMANA */
 .week-days {
-  display: grid; grid-template-columns: repeat(7, 1fr);
-  text-align: center; margin-bottom: 6px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 8px;
 }
 
 .week-days span {
-  font-size: 11px; font-weight: 500; color: var(--muted);
-  padding: 3px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 6px 0;
 }
 
 /* GRID DE DIAS */
 .days-grid {
-  display: grid; grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
 }
 
 .day {
-  aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 400; color: var(--texto);
-  cursor: pointer; border-radius: 50%;
-  transition: background 0.15s;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--texto);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.15s;
   position: relative;
 }
 
-.day.other { color: #ccc; cursor: default; }
-.day.blank { cursor: default; }
+.day.other {
+  color: #ccc;
+  cursor: default;
+}
+
+.day.blank {
+  cursor: default;
+}
 
 .day.range {
   background: var(--laranja-range);
@@ -212,21 +283,24 @@ body {
 
 /* EVENT CARD */
 .event-card {
-  margin: 12px 16px 0;
+  margin: 16px 16px 0;
   background: var(--branco);
-  border-radius: 14px;
-  padding: 14px 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .event-name {
-  font-size: 15px; font-weight: 700; color: var(--texto);
-  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 6px;
 }
 
 .event-row {
-  font-size: 13px; color: var(--texto);
-  margin-bottom: 2px;
+  font-size: 13px;
+  color: var(--texto);
+  margin-bottom: 4px;
 }
 
 .event-row span.label {
@@ -235,14 +309,258 @@ body {
 
 /* IMAGEM INFERIOR */
 .bottom-img {
-  margin-top: 16px;
-  height: 140px;
-  /* IMAGEM INFERIOR: substitua 'inferior.jpg' pelo nome correto do seu arquivo */
+  margin-top: 20px;
+  height: clamp(100px, 20vw, 140px);
   background-image: url('img/inferior.png');
   background-size: cover;
   background-position: bottom;
   border-radius: 0 0 44px 44px;
   flex-shrink: 0;
+}
+
+/* ========= MENU LATERAL (DRAWER) ========= */
+.menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+
+.menu-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(280px, 85%);
+  min-width: 260px;
+  height: 100%;
+  background: var(--branco);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  overflow-y: auto;
+  border-radius: 20px 0 0 20px;
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-overlay.open .menu-drawer {
+  transform: translateX(0);
+}
+
+.menu-header {
+  padding: 28px 20px 20px;
+  background: linear-gradient(135deg, #3a5f1e, #2d5016);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-avatar {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(145deg, #d48f3b, #b56a1a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-avatar svg {
+  width: 30px;
+  height: 30px;
+  stroke: white;
+  stroke-width: 1.8;
+  fill: none;
+}
+
+.menu-user-info h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.menu-user-info p {
+  font-size: 12px;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu-user-info p svg {
+  width: 14px;
+  height: 14px;
+  stroke: white;
+  stroke-width: 2;
+}
+
+.menu-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.menu-close svg {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  stroke-width: 2;
+}
+
+.menu-nav {
+  padding: 12px 0 20px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--texto);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.menu-item:hover,
+.menu-item:active {
+  background: #f0ede7;
+}
+
+.menu-item .menu-icon {
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-item .menu-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.menu-item .menu-text {
+  flex: 1;
+}
+
+.divider {
+  height: 1px;
+  background: var(--borda);
+  margin: 8px 16px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  padding: 12px 20px 4px;
+  text-transform: uppercase;
+}
+
+.footer-menu {
+  border-top: 1px solid var(--borda);
+  margin-top: 8px;
+  padding: 8px 0;
+}
+
+/* ===== MEDIA QUERIES RESPONSIVAS ===== */
+/* Telas muito pequenas (até 360px) */
+@media (max-width: 360px) {
+  .header-content {
+    padding: 52px 14px 18px;
+  }
+
+  .page-title {
+    padding: 12px 14px 0;
+  }
+
+  .page-title h1 {
+    font-size: 20px;
+  }
+
+  .saudacao {
+    padding: 8px 14px 0;
+  }
+
+  .saudacao h2 {
+    font-size: 15px;
+  }
+
+  .cal-card {
+    margin: 12px 12px 0;
+    padding: 12px 8px;
+  }
+
+  .day {
+    font-size: 12px;
+  }
+
+  .week-days span {
+    font-size: 10px;
+  }
+
+  .cal-btn {
+    font-size: 22px;
+    padding: 2px 8px;
+  }
+
+  .cal-selects select {
+    font-size: 12px;
+    padding: 4px 24px 4px 8px;
+  }
+
+  .event-card {
+    margin: 12px 12px 0;
+    padding: 12px;
+  }
+
+  .event-name {
+    font-size: 15px;
+  }
+
+  .bottom-img {
+    margin-top: 12px;
+  }
+}
+
+/* Telas médias (entre 450px e 600px) mantém largura máxima de 450px centralizada */
+@media (min-width: 451px) {
+  .frame {
+    margin: 0 auto;
+  }
 }
 </style>
 </head>
@@ -254,7 +572,7 @@ body {
   <div class="header">
     <div class="header-bg"></div>
     <div class="header-content">
-      <button class="btn-icon" aria-label="Voltar">
+      <button class="btn-icon" id="backButton" aria-label="Voltar">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6"/>
         </svg>
@@ -264,7 +582,7 @@ body {
         <img alt="PlanoV logo">
       </div>
 
-      <button class="btn-icon" aria-label="Menu">
+      <button class="btn-icon" id="menuButton" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
@@ -277,9 +595,17 @@ body {
   <!-- BODY -->
   <div class="body">
 
-    <!-- Título Agenda -->
+    <!-- Título Agenda com ícone SVG -->
     <div class="page-title">
-      <span class="title-icon">📅</span>
+      <svg class="title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+        <circle cx="12" cy="15" r="1"/>
+        <circle cx="16" cy="15" r="1"/>
+        <circle cx="8" cy="15" r="1"/>
+      </svg>
       <h1>Agenda</h1>
     </div>
 
@@ -292,19 +618,19 @@ body {
     <!-- Calendário -->
     <div class="cal-card">
       <div class="cal-nav">
-        <button class="cal-btn" id="prev">&#8249;</button>
+        <button class="cal-btn" id="prev">‹</button>
         <div class="cal-selects">
           <select id="month-sel">
             <option value="0">Jan</option><option value="1">Fev</option>
             <option value="2">Mar</option><option value="3">Abr</option>
             <option value="4">Mai</option><option value="5">Jun</option>
             <option value="6">Jul</option><option value="7">Ago</option>
-            <option value="8" selected>Sep</option><option value="9">Out</option>
+            <option value="8" selected>Set</option><option value="9">Out</option>
             <option value="10">Nov</option><option value="11">Dez</option>
           </select>
           <select id="year-sel"></select>
         </div>
-        <button class="cal-btn" id="next">&#8250;</button>
+        <button class="cal-btn" id="next">›</button>
       </div>
 
       <div class="week-days">
@@ -327,117 +653,251 @@ body {
   <!-- Imagem inferior fazenda -->
   <div class="bottom-img"></div>
 
+  <!-- MENU LATERAL -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-drawer">
+      <button class="menu-close" id="closeMenuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="menu-user-info">
+            <h4>João Silva</h4>
+            <p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/>
+                <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/>
+                <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/>
+              </svg>
+              Prestador
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="menu-nav">
+        <div class="menu-item" data-nav="inicio">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="menu-text">Início</div>
+        </div>
+        <div class="menu-item" data-nav="empresas">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <div class="menu-text">Empresas</div>
+        </div>
+        <div class="menu-item" data-nav="agenda">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
+          <div class="menu-text">Minha Agenda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="section-title">CONFIGURAÇÕES</div>
+        <div class="menu-item" data-nav="perfil">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="menu-text">Meu Perfil</div>
+        </div>
+        <div class="menu-item" data-nav="configuracoes">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="menu-text">Configurações</div>
+        </div>
+        <div class="menu-item" data-nav="ajuda">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="menu-text">Ajuda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="footer-menu">
+          <div class="menu-item" data-nav="sair">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+            <div class="menu-text">Sair</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// Eventos cadastrados para o range de 9 a 13 de setembro de 2025
-const events = {
-  '2025-8-9':  { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
-  '2025-8-10': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
-  '2025-8-11': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
-  '2025-8-12': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
-  '2025-8-13': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
-};
+  // ========= MENU LATERAL =========
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const backButton = document.getElementById('backButton');
 
-// Range destacado: 9 a 13 de Setembro (mês 8)
-const RANGE_START = 9, RANGE_END = 13;
-
-let year = 2025, month = 8;
-
-// Popular anos
-const yearSel = document.getElementById('year-sel');
-for (let y = 2024; y <= 2027; y++) {
-  const o = document.createElement('option');
-  o.value = y; o.textContent = y;
-  if (y === 2025) o.selected = true;
-  yearSel.appendChild(o);
-}
-
-function render() {
-  document.getElementById('month-sel').value = month;
-  document.getElementById('year-sel').value = year;
-
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const prevDays = new Date(year, month, 0).getDate();
-
-  // Dias do mês anterior
-  for (let i = firstDay - 1; i >= 0; i--) {
-    const d = div('other');
-    d.textContent = prevDays - i;
-    grid.appendChild(d);
+  function openMenu() {
+    menuOverlay.classList.add('open');
+  }
+  function closeMenu() {
+    menuOverlay.classList.remove('open');
   }
 
-  // Dias do mês atual
-  for (let day = 1; day <= daysInMonth; day++) {
-    let cls = '';
-    if (month === 8 && year === 2025) {
-      if (day === RANGE_START) cls = 'range-start';
-      else if (day === RANGE_END) cls = 'range-end';
-      else if (day > RANGE_START && day < RANGE_END) cls = 'range';
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
+    if (e.target === menuOverlay) closeMenu();
+  });
+
+  // Navegação do menu (simulada)
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') {
+        if (confirm('Deseja realmente sair da sua conta?')) {
+          alert('Você saiu do sistema. (Simulação)');
+        }
+        closeMenu();
+      } 
+      else if (nav === 'inicio') {
+        window.location.href = 'index.html';
+      }
+      else if (nav === 'empresas') {
+        window.location.href = 'buscar-empresas.html';
+      }
+      else if (nav === 'agenda') {
+        alert('Você já está na página de agenda.');
+        closeMenu();
+      }
+      else if (nav === 'perfil') {
+        window.location.href = 'meu_perfil.html';
+      }
+      else {
+        let msg = '';
+        if (nav === 'configuracoes') msg = 'Abrir Configurações';
+        else if (nav === 'ajuda') msg = 'Central de Ajuda';
+        alert(`🔜 ${msg} (simulação)`);
+        closeMenu();
+      }
+    });
+  });
+
+  // Botão voltar
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      alert('Voltar para tela anterior (simulação)');
+    });
+  }
+
+  // ========= CALENDÁRIO E EVENTOS (ORIGINAL) =========
+  const events = {
+    '2025-8-9':  { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+    '2025-8-10': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+    '2025-8-11': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+    '2025-8-12': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+    '2025-8-13': { name: 'Fazenda Marina', service: 'Colheita e Plantação', time: '5 diárias' },
+  };
+
+  const RANGE_START = 9, RANGE_END = 13;
+  let year = 2025, month = 8;
+
+  const yearSel = document.getElementById('year-sel');
+  for (let y = 2024; y <= 2027; y++) {
+    const o = document.createElement('option');
+    o.value = y;
+    o.textContent = y;
+    if (y === 2025) o.selected = true;
+    yearSel.appendChild(o);
+  }
+
+  function render() {
+    document.getElementById('month-sel').value = month;
+    document.getElementById('year-sel').value = year;
+
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const prevDays = new Date(year, month, 0).getDate();
+
+    // Dias do mês anterior
+    for (let i = firstDay - 1; i >= 0; i--) {
+      const d = document.createElement('div');
+      d.className = 'day other';
+      d.textContent = prevDays - i;
+      grid.appendChild(d);
     }
-    const d = div(cls);
-    d.textContent = day;
-    d.dataset.day = day;
-    if (!cls) d.addEventListener('click', () => selectDay(day));
-    grid.appendChild(d);
+
+    // Dias do mês atual
+    for (let day = 1; day <= daysInMonth; day++) {
+      let cls = '';
+      if (month === 8 && year === 2025) {
+        if (day === RANGE_START) cls = 'range-start';
+        else if (day === RANGE_END) cls = 'range-end';
+        else if (day > RANGE_START && day < RANGE_END) cls = 'range';
+      }
+      const d = document.createElement('div');
+      d.className = 'day' + (cls ? ' ' + cls : '');
+      d.textContent = day;
+      d.dataset.day = day;
+      if (!cls) d.addEventListener('click', () => selectDay(day));
+      grid.appendChild(d);
+    }
+
+    // Dias do próximo mês para completar a semana
+    const total = firstDay + daysInMonth;
+    const rem = total % 7 === 0 ? 0 : 7 - (total % 7);
+    for (let i = 1; i <= rem; i++) {
+      const d = document.createElement('div');
+      d.className = 'day other';
+      d.textContent = i;
+      grid.appendChild(d);
+    }
+
+    if (month === 8 && year === 2025) showEvent(events['2025-8-9']);
+    else hideEvent();
   }
 
-  // Completar semana
-  const total = firstDay + daysInMonth;
-  const rem = total % 7 === 0 ? 0 : 7 - (total % 7);
-  for (let i = 1; i <= rem; i++) {
-    const d = div('other');
-    d.textContent = i;
-    grid.appendChild(d);
+  function selectDay(day) {
+    const key = year + '-' + month + '-' + day;
+    if (events[key]) showEvent(events[key]);
+    else hideEvent();
   }
 
-  // Mostrar evento do range por padrão (dia 9)
-  if (month === 8 && year === 2025) showEvent(events['2025-8-9']);
-  else hideEvent();
-}
+  function showEvent(ev) {
+    document.getElementById('ev-name').textContent = ev.name;
+    document.getElementById('ev-service').textContent = ev.service;
+    document.getElementById('ev-time').textContent = ev.time;
+    document.getElementById('ev-card').style.display = 'block';
+  }
 
-function div(cls) {
-  const el = document.createElement('div');
-  el.className = 'day' + (cls ? ' ' + cls : '');
-  return el;
-}
+  function hideEvent() {
+    document.getElementById('ev-card').style.display = 'none';
+  }
 
-function selectDay(day) {
-  const key = year + '-' + month + '-' + day;
-  if (events[key]) showEvent(events[key]);
-  else hideEvent();
-}
+  document.getElementById('prev').addEventListener('click', () => {
+    month--;
+    if (month < 0) {
+      month = 11;
+      year--;
+    }
+    render();
+  });
+  document.getElementById('next').addEventListener('click', () => {
+    month++;
+    if (month > 11) {
+      month = 0;
+      year++;
+    }
+    render();
+  });
+  document.getElementById('month-sel').addEventListener('change', e => {
+    month = parseInt(e.target.value);
+    render();
+  });
+  document.getElementById('year-sel').addEventListener('change', e => {
+    year = parseInt(e.target.value);
+    render();
+  });
 
-function showEvent(ev) {
-  document.getElementById('ev-name').textContent = ev.name;
-  document.getElementById('ev-service').textContent = ev.service;
-  document.getElementById('ev-time').textContent = ev.time;
-  document.getElementById('ev-card').style.display = 'block';
-}
-
-function hideEvent() {
-  document.getElementById('ev-card').style.display = 'none';
-}
-
-// Controles de navegação
-document.getElementById('prev').addEventListener('click', () => {
-  month--; if (month < 0) { month = 11; year--; } render();
-});
-document.getElementById('next').addEventListener('click', () => {
-  month++; if (month > 11) { month = 0; year++; } render();
-});
-document.getElementById('month-sel').addEventListener('change', e => {
-  month = parseInt(e.target.value); render();
-});
-document.getElementById('year-sel').addEventListener('change', e => {
-  year = parseInt(e.target.value); render();
-});
-
-render();
+  render();
 </script>
 </body>
 </html>

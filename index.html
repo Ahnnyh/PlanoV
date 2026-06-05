@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PlanoV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>PlanoV - Boas-vindas</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -29,7 +29,8 @@ body {
 }
 
 .frame {
-  width: 390px;
+  width: 100%;
+  max-width: 450px;
   min-height: 780px;
   border-radius: 44px;
   overflow: hidden;
@@ -37,6 +38,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 /* FUNDO */
@@ -69,28 +71,28 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 100px 28px 40px;   /* aumentei o topo de 20px para 40px */
+  padding: 100px 28px 40px;
 }
 
 /* LOGO - no topo, com margem inferior zero */
 .logo-area {
   text-align: center;
-  margin-bottom: 0;          /* sem margem extra abaixo da logo */
+  margin-bottom: 0;
 }
 
 .logo-area img {
-  height: 86px;              /* logo maior conforme solicitado */
+  height: clamp(60px, 15vw, 86px);
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
 }
 
-/* BLOCO CENTRAL (texto + botões) - será empurrado para o meio usando margin auto */
+/* BLOCO CENTRAL (texto + botões) - centralizado verticalmente */
 .center-block {
-  flex: 1;                   /* ocupa o espaço restante */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* centraliza verticalmente o conteúdo deste bloco */
-  gap: 70px;                /* espaço entre o texto e os botões */
+  justify-content: center;
+  gap: clamp(40px, 12vw, 70px);
 }
 
 .hero-text {
@@ -98,7 +100,7 @@ body {
 }
 
 .hero-text h1 {
-  font-size: 24px;
+  font-size: clamp(20px, 6vw, 28px);
   font-weight: 700;
   color: #fff;
   text-shadow: 0 2px 12px rgba(0,0,0,0.4);
@@ -106,8 +108,8 @@ body {
 }
 
 .hero-text p {
-  font-size: 14px;
-  color: rgba(255,255,255,0.90);
+  font-size: clamp(12px, 4vw, 14px);
+  color: rgba(255,255,255,0.92);
   font-weight: 400;
   text-shadow: 0 1px 6px rgba(0,0,0,0.3);
   line-height: 1.4;
@@ -127,7 +129,7 @@ body {
   padding: 14px;
   border-radius: 50px;
   font-family: 'Poppins', sans-serif;
-  font-size: 15px;
+  font-size: clamp(14px, 4vw, 16px);
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.12s, background 0.15s;
@@ -138,9 +140,33 @@ body {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
-
 .btn:active { transform: scale(0.97); }
 .btn:hover { background: rgba(25, 70, 15, 0.70); }
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 400px) {
+  .content {
+    padding: 80px 20px 30px;
+  }
+  .btn-group {
+    gap: 10px;
+  }
+  .btn {
+    padding: 12px;
+  }
+}
+@media (max-width: 340px) {
+  .hero-text h1 {
+    font-size: 18px;
+  }
+  .hero-text p {
+    font-size: 11px;
+  }
+  .btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
 </style>
 </head>
 <body>
@@ -155,7 +181,7 @@ body {
       <img src="img/logo.png" alt="PlanoV">
     </div>
 
-    <!-- Bloco que será centralizado verticalmente -->
+    <!-- Bloco centralizado verticalmente -->
     <div class="center-block">
       <div class="hero-text">
         <h1>Bem-vindo ao Plano V</h1>

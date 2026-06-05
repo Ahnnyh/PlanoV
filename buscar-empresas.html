@@ -1,40 +1,495 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- METADADOS -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>PlanoV – Empresas</title>
-
-  <!-- ESTILOS EXTERNOS -->
-  <link rel="stylesheet" href="css/buscar-empresas.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET E VARIÁVEIS ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --verde: #3a5f1e;
+      --verde-btn: #2d5016;
+      --laranja: #e07a1c;
+      --bg: #f7f4ee;
+      --branco: #ffffff;
+      --texto: #1a1a1a;
+      --muted: #777;
+      --borda: #e0ddd6;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #cdc8bc;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* ===== CONTAINER PRINCIPAL (RESPONSIVO) ===== */
+    .frame {
+      width: 100%;
+      max-width: 450px;
+      background: var(--bg);
+      border-radius: 44px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER COM IMAGEM DE FUNDO ===== */
+    .header {
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .header-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 52px 20px 18px;
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+    .btn-icon:active {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .btn-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #2d4f14;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      fill: none;
+      stroke-linejoin: round;
+    }
+    .logo-wrap img {
+      height: 40px;
+      display: block;
+    }
+    /* BARRA DE BUSCA */
+    .search-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 0 20px 20px;
+    }
+    .search-bar {
+      background: var(--branco);
+      border-radius: 40px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--borda);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      stroke: var(--muted);
+      stroke-width: 2.5;
+      flex-shrink: 0;
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+    .search-bar input::placeholder {
+      color: var(--muted);
+    }
+
+    /* ===== FAIXA TÍTULO "EMPRESAS" ===== */
+    .title-bar {
+      background: var(--verde);
+      padding: 14px 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .title-bar h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.2px;
+    }
+
+    /* ===== CORPO COM LISTA DE CARDS ===== */
+    .body {
+      flex: 1;
+      background: var(--bg);
+      padding: 20px 16px 30px;
+      overflow-y: auto;
+    }
+    .cards-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    /* CARD INDIVIDUAL */
+    .card {
+      background: var(--branco);
+      border-radius: 18px;
+      border: 1px solid var(--borda);
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .card:active {
+      transform: scale(0.99);
+    }
+    .card-foto-wrap {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #c8a96e, #b58d4a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .avatar-inicial {
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+    }
+    .card-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .card-nome {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--texto);
+    }
+    .card-prod {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+    .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .star {
+      width: 16px;
+      height: 16px;
+      fill: var(--laranja);
+      stroke: none;
+    }
+    .card-nota {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--texto);
+    }
+    .btn-visualizar {
+      background: var(--verde-btn);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 6px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-visualizar:active {
+      transform: scale(0.96);
+      background: #3a6620;
+    }
+    .empty-msg {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 14px;
+      display: none;
+    }
+
+    /* ========= MENU LATERAL (DRAWER) ========= */
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+    .menu-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(280px, 85%);
+      min-width: 260px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      overflow-y: auto;
+      border-radius: 20px 0 0 20px;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .menu-overlay.open .menu-drawer {
+      transform: translateX(0);
+    }
+    .menu-header {
+      padding: 28px 20px 20px;
+      background: linear-gradient(135deg, #3a5f1e, #2d5016);
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .menu-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-avatar {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #d48f3b, #b56a1a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .menu-avatar svg {
+      width: 30px;
+      height: 30px;
+      stroke: white;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .menu-user-info h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .menu-user-info p {
+      font-size: 12px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .menu-user-info p svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .menu-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .menu-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .menu-nav {
+      padding: 12px 0 20px;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .menu-item:hover,
+    .menu-item:active {
+      background: #f0ede7;
+    }
+    .menu-item .menu-icon {
+      width: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-item .menu-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .menu-item .menu-text {
+      flex: 1;
+    }
+    .divider {
+      height: 1px;
+      background: #e0ddd6;
+      margin: 8px 16px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      letter-spacing: 0.5px;
+      padding: 12px 20px 4px;
+      text-transform: uppercase;
+    }
+    .footer-menu {
+      border-top: 1px solid #e0ddd6;
+      margin-top: 8px;
+      padding: 8px 0;
+    }
+
+    /* ===== MEDIA QUERIES RESPONSIVAS ===== */
+    @media (max-width: 400px) {
+      .header-content {
+        padding: 52px 16px 18px;
+      }
+      .search-wrap {
+        padding: 0 16px 16px;
+      }
+      .title-bar {
+        padding: 12px 16px;
+      }
+      .title-bar h2 {
+        font-size: 16px;
+      }
+      .body {
+        padding: 16px 12px 30px;
+      }
+      .card {
+        padding: 12px;
+        gap: 10px;
+      }
+      .card-foto-wrap {
+        width: 52px;
+        height: 52px;
+      }
+      .avatar-inicial {
+        font-size: 24px;
+      }
+      .card-nome {
+        font-size: 15px;
+      }
+      .card-prod {
+        font-size: 12px;
+      }
+      .btn-visualizar {
+        padding: 5px 14px;
+        font-size: 11px;
+      }
+      .star {
+        width: 14px;
+        height: 14px;
+      }
+      .card-nota {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .card-bottom {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-start;
+      }
+      .btn-visualizar {
+        padding: 5px 12px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ===== CONTAINER PRINCIPAL (FRAME) ===== -->
 <div class="frame">
 
-  <!-- ===== HEADER COM IMAGEM DE FUNDO ===== -->
+  <!-- HEADER COM IMAGEM DE FUNDO -->
   <div class="header">
     <img src="IMG/superior.png" alt="" class="header-bg" />
-
-    <!-- BARRA DO TOPO (VOLTAR / LOGO / MENU) -->
     <div class="header-content">
-      <!-- Botão voltar -->
       <button class="btn-icon" onclick="history.back()" aria-label="Voltar">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="logo-wrap">
         <img src="IMG/logo.png" alt="PlanoV Logo" />
       </div>
-      <!-- Menu hambúrguer -->
-      <button class="btn-icon" aria-label="Menu">
+      <button class="btn-icon" id="menuButton" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
-
-    <!-- BARRA DE BUSCA -->
     <div class="search-wrap">
       <div class="search-bar">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -46,82 +501,212 @@
     </div>
   </div>
 
-  <!-- ===== FAIXA TÍTULO "EMPRESAS" ===== -->
+  <!-- FAIXA TÍTULO -->
   <div class="title-bar">
     <h2>Empresas</h2>
   </div>
 
-  <!-- ===== CORPO COM LISTA DE CARDS ===== -->
+  <!-- CORPO COM LISTA DE CARDS -->
   <div class="body">
     <div class="cards-wrap">
       <ul class="card-list" id="card-list">
-
-<!-- CARD: FAZENDA LUZIA -->
-<li class="card" data-nome="Fazenda Luzia" data-prod="Produz soja e milho" data-nota="4.8">
-  <div class="card-foto-wrap">
-    <!-- Substituído por avatar CSS -->
-    <span class="avatar-inicial">F</span>
-  </div>
-  <div class="card-info">
-    <span class="card-nome">Fazenda Luzia</span>
-    <span class="card-prod">Produz soja e milho</span>
-    <div class="card-bottom">
-      <div class="card-rating">
-        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <span class="card-nota">4,8</span>
-      </div>
-      <button class="btn-visualizar" data-nome="Fazenda Luzia">Visualizar</button>
-    </div>
-  </div>
-</li>
-
-<!-- CARD: FAZENDA ALVAREZ -->
-<li class="card" data-nome="Fazenda Alvarez" data-prod="Especialista em plantação" data-nota="4.8">
-  <div class="card-foto-wrap">
-    <span class="avatar-inicial">A</span>
-  </div>
-  <div class="card-info">
-    <span class="card-nome">Fazenda Alvarez</span>
-    <span class="card-prod">Especialista em plantação</span>
-    <div class="card-bottom">
-      <div class="card-rating">
-        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <span class="card-nota">4,8</span>
-      </div>
-      <button class="btn-visualizar" data-nome="Fazenda Alvarez">Visualizar</button>
-    </div>
-  </div>
-</li>
-
-<!-- CARD: PAULO ALMEIDA -->
-<li class="card" data-nome="Paulo Almeida" data-prod="Especialista em maquinário" data-nota="3.5">
-  <div class="card-foto-wrap">
-    <span class="avatar-inicial">P</span>
-  </div>
-  <div class="card-info">
-    <span class="card-nome">Paulo Almeida</span>
-    <span class="card-prod">Especialista em maquinário</span>
-    <div class="card-bottom">
-      <div class="card-rating">
-        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <span class="card-nota">3,5</span>
-      </div>
-      <button class="btn-visualizar" data-nome="Paulo Almeida">Visualizar</button>
-    </div>
-  </div>
-</li>
-
-        <!-- Mais cards podem ser adicionados seguindo o mesmo padrão -->
+        <!-- CARD: FAZENDA LUZIA -->
+        <li class="card" data-nome="Fazenda Luzia" data-prod="Produz soja e milho" data-nota="4.8">
+          <div class="card-foto-wrap"><span class="avatar-inicial">F</span></div>
+          <div class="card-info">
+            <span class="card-nome">Fazenda Luzia</span>
+            <span class="card-prod">Produz soja e milho</span>
+            <div class="card-bottom">
+              <div class="card-rating">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="card-nota">4,8</span>
+              </div>
+              <button class="btn-visualizar" data-nome="Fazenda Luzia">Visualizar</button>
+            </div>
+          </div>
+        </li>
+        <!-- CARD: FAZENDA ALVAREZ -->
+        <li class="card" data-nome="Fazenda Alvarez" data-prod="Especialista em plantação" data-nota="4.8">
+          <div class="card-foto-wrap"><span class="avatar-inicial">A</span></div>
+          <div class="card-info">
+            <span class="card-nome">Fazenda Alvarez</span>
+            <span class="card-prod">Especialista em plantação</span>
+            <div class="card-bottom">
+              <div class="card-rating">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="card-nota">4,8</span>
+              </div>
+              <button class="btn-visualizar" data-nome="Fazenda Alvarez">Visualizar</button>
+            </div>
+          </div>
+        </li>
+        <!-- CARD: PAULO ALMEIDA -->
+        <li class="card" data-nome="Paulo Almeida" data-prod="Especialista em maquinário" data-nota="3.5">
+          <div class="card-foto-wrap"><span class="avatar-inicial">P</span></div>
+          <div class="card-info">
+            <span class="card-nome">Paulo Almeida</span>
+            <span class="card-prod">Especialista em maquinário</span>
+            <div class="card-bottom">
+              <div class="card-rating">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="card-nota">3,5</span>
+              </div>
+              <button class="btn-visualizar" data-nome="Paulo Almeida">Visualizar</button>
+            </div>
+          </div>
+        </li>
       </ul>
-
-      <!-- MENSAGEM QUANDO NÃO HÁ RESULTADOS -->
       <div class="empty-msg" id="empty-msg">Nenhuma empresa encontrada.</div>
+    </div>
+  </div>
+
+  <!-- MENU LATERAL -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-drawer">
+      <button class="menu-close" id="closeMenuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="menu-user-info">
+            <h4>João Silva</h4>
+            <p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/>
+                <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/>
+                <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/>
+              </svg>
+              Prestador
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="menu-nav">
+        <div class="menu-item" data-nav="inicio">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="menu-text">Início</div>
+        </div>
+        <div class="menu-item" data-nav="empresas">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <div class="menu-text">Empresas</div>
+        </div>
+        <div class="menu-item" data-nav="agenda">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
+          <div class="menu-text">Minha Agenda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="section-title">CONFIGURAÇÕES</div>
+        <div class="menu-item" data-nav="perfil">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="menu-text">Meu Perfil</div>
+        </div>
+        <div class="menu-item" data-nav="configuracoes">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="menu-text">Configurações</div>
+        </div>
+        <div class="menu-item" data-nav="ajuda">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="menu-text">Ajuda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="footer-menu">
+          <div class="menu-item" data-nav="sair">
+            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+            <div class="menu-text">Sair</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ===== SCRIPT EXTERNO ===== -->
-<script src="Javascripct/buscar-empresas.js"></script>
+<script>
+  // ========= MENU LATERAL =========
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
 
+  function openMenu() {
+    menuOverlay.classList.add('open');
+  }
+  function closeMenu() {
+    menuOverlay.classList.remove('open');
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
+    if (e.target === menuOverlay) closeMenu();
+  });
+
+  // Ações dos itens do menu (navegação simulada)
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') {
+        if (confirm('Deseja realmente sair da sua conta?')) {
+          alert('Você saiu do sistema. (Simulação)');
+        }
+        closeMenu();
+      } 
+      else if (nav === 'inicio') {
+        window.location.href = 'index.html';
+      }
+      else if (nav === 'empresas') {
+        alert('Você já está na página de empresas.');
+        closeMenu();
+      }
+      else if (nav === 'agenda') {
+        window.location.href = 'agenda.html';
+      }
+      else if (nav === 'perfil') {
+        window.location.href = 'meu_perfil.html';
+      }
+      else {
+        let msg = '';
+        if (nav === 'configuracoes') msg = 'Abrir Configurações';
+        else if (nav === 'ajuda') msg = 'Central de Ajuda';
+        alert(`🔜 ${msg} (simulação)`);
+        closeMenu();
+      }
+    });
+  });
+
+  // ========= FUNCIONALIDADE DE BUSCA (FILTRO) =========
+  const searchInput = document.getElementById('search-input');
+  const cards = document.querySelectorAll('.card');
+  const emptyMsg = document.getElementById('empty-msg');
+
+  function filterCards() {
+    const term = searchInput.value.toLowerCase().trim();
+    let hasVisible = false;
+
+    cards.forEach(card => {
+      const nome = card.getAttribute('data-nome').toLowerCase();
+      const prod = card.getAttribute('data-prod').toLowerCase();
+      const matches = nome.includes(term) || prod.includes(term);
+      if (matches) {
+        card.style.display = '';
+        hasVisible = true;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    emptyMsg.style.display = hasVisible ? 'none' : 'block';
+  }
+
+  searchInput.addEventListener('input', filterCards);
+  filterCards(); // inicializa
+</script>
 </body>
 </html>
