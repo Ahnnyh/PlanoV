@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- METADADOS -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>PlanoV – Recuperar Senha</title>
-
-  <!-- FONTE E ESTILOS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/recuperar-senha.css" />
 </head>
 <body>
 
-<!-- ===== CONTAINER PRINCIPAL (FRAME) ===== -->
 <div class="frame">
-
-  <!-- FUNDO AGRÍCOLA -->
   <div class="bg-image-wrap">
     <img src="IMG/fundo-trator.png" alt="" class="bg-image" />
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <div class="content">
-
-    <!-- BOTÃO VOLTAR -->
     <button class="back-btn" onclick="history.back()" title="Voltar">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5"
@@ -32,16 +23,13 @@
       </svg>
     </button>
 
-    <!-- LOGO -->
     <div class="logo-wrap">
       <img src="IMG/logo.png" alt="PlanoV Logo" class="logo-img" />
     </div>
 
-    <!-- CARD DE RECUPERAÇÃO -->
     <div class="card">
       <h2 class="card-title">Recuperar senha</h2>
 
-      <!-- CAMPO DE EMAIL -->
       <div class="field">
         <label for="email">Confirme seu email de cadastro:</label>
         <div class="input-wrap">
@@ -55,18 +43,12 @@
         </div>
       </div>
 
-      <!-- TEXTO DE APOIO -->
       <p class="helper-text">Enviaremos um email para<br/>redefinição de senha.</p>
-
-      <!-- BOTÃO ENVIAR -->
       <button class="btn-send" id="btn-send">Enviar</button>
     </div>
+  </div>
+</div>
 
-  </div> <!-- /.content -->
-
-</div> <!-- /.frame -->
-
-<!-- ===== MODAL DE CONFIRMAÇÃO ===== -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-card">
     <div class="modal-logo-wrap">
@@ -83,7 +65,6 @@
   </div>
 </div>
 
-<!-- ===== SCRIPT ===== -->
 <script src="Javascripct/recuperar-senha.js"></script>
 </body>
 </html>
