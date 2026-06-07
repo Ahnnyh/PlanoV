@@ -27,8 +27,8 @@ exports.updateProfile = async (req, res) => {
     const userId = req.userId;
     const {
       nome, sobrenome, endereco, cidade, estado, foto_perfil,
-      experiencia, disponibilidade, whatsapp,
-      nicho, cultivo, regiao, sobre
+      experiencia, disponibilidade, whatsapp, especialidade,
+      nicho, cultivo, regiao, sobre, servico, maquinas, servicos_contrata
     } = req.body;
 
     const user = await User.findByPk(userId);
@@ -36,7 +36,9 @@ exports.updateProfile = async (req, res) => {
 
     // Atualiza campos comuns
     await user.update({
-      nome, sobrenome, endereco, cidade, estado, foto_perfil, sobre
+      nome, sobrenome, endereco, cidade, estado, foto_perfil, sobre,
+      especialidade, servico, experiencia, whatsapp, disponibilidade,
+      nicho, cultivo, regiao, maquinas, servicos_contrata
     });
 
     // Atualiza campos específicos
@@ -85,6 +87,30 @@ exports.deleteService = async (req, res) => {
     if (!service) return res.status(404).json({ error: 'Serviço não encontrado' });
     await service.destroy();
     res.json({ message: 'Serviço removido' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const {
+      nome, sobrenome, endereco, cidade, estado, foto_perfil,
+      experiencia, disponibilidade, whatsapp, especialidade,
+      nicho, cultivo, regiao, sobre, servicos, maquinas, servicos_contrata
+    } = req.body;
+
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+
+    await user.update({
+      nome, sobrenome, endereco, cidade, estado, foto_perfil, sobre,
+      especialidade, servicos, experiencia, whatsapp, disponibilidade,
+      nicho, cultivo, regiao, maquinas, servicos_contrata
+    });
+
+    res.json({ message: 'Perfil atualizado com sucesso', user });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

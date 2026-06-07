@@ -7,376 +7,180 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-:root {
-  --verde:       #3a5f1e;
-  --verde-btn:   #2d5016;
-  --verde-card:  #4a7c28;
-  --laranja:     #e07a1c;
-  --laranja-mid: #f0a050;
-  --bg:          #f7f4ee;
-  --branco:      #ffffff;
-  --texto:       #1a1a1a;
-  --muted:       #888;
-  --borda:       #e0ddd6;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #cdc8bc;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.frame {
-  width: 100%;
-  max-width: 450px;
-  background: var(--bg);
-  border-radius: 44px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-height: 700px;
-  margin: 0 auto;
-}
-
+:root { --verde: #3a5f1e; --verde-btn: #2d5016; --verde-card: #4a7c28; --laranja: #e07a1c; --laranja-mid: #f0a050; --bg: #f7f4ee; --branco: #ffffff; --texto: #1a1a1a; --muted: #888; --borda: #e0ddd6; }
+body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
+.frame { width: 100%; max-width: 450px; background: var(--bg); border-radius: 44px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.4); display: flex; flex-direction: column; position: relative; min-height: 700px; margin: 0 auto; }
 /* HEADER */
 .header { position: relative; overflow: hidden; flex-shrink: 0; }
-.header-bg {
-  position: absolute; inset: 0;
-  background-image: url('img/superior.png');
-  background-size: cover;
-  background-position: left;
-}
-.header-content {
-  position: relative; z-index: 1;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 52px 20px 18px;
-}
-.btn-icon {
-  background: none; border: none; cursor: pointer;
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  transition: background 0.2s;
-}
+.header-bg { position: absolute; inset: 0; background-image: url('img/superior.png'); background-size: cover; background-position: left; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 52px 20px 18px; }
+.btn-icon { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
 .btn-icon:active { background: rgba(0,0,0,0.05); }
 .btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
 .logo-wrap img { height: 40px; content: url('img/logo.png'); }
-
-/* FAIXA TÍTULO */
-.title-bar {
-  background: var(--verde);
-  padding: 14px 20px;
-  text-align: center;
-  flex-shrink: 0;
-}
+.title-bar { background: var(--verde); padding: 14px 20px; text-align: center; flex-shrink: 0; }
 .title-bar h1 { font-size: 18px; font-weight: 700; color: #fff; }
+.perfil-hero { position: relative; background-image: url('img/inferior.png'); background-size: cover; background-position: center 30%; padding-top: 24px; padding-bottom: 40px; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.perfil-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg)); }
 
-/* PERFIL HERO */
-.perfil-hero {
-  position: relative;
-  background-image: url('img/inferior.png');
-  background-size: cover;
-  background-position: center 30%;
-  padding-top: 24px;
-  padding-bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-}
-.perfil-hero::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-}
+/* AVATAR REDONDO COM ÍCONE METADE FORA */
 .avatar-wrap {
   position: relative;
   width: 100px;
   height: 100px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  overflow: hidden;
-  background: #c8a96e;
   cursor: pointer;
+  border-radius: 50%;
+  background: #c8a96e;
 }
-.avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.avatar-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
 .avatar-placeholder {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(135deg, #8B6914, #c8a050);
 }
-.avatar-placeholder svg { width: 64px; height: 64px; }
-/* Ícone de + sobre a foto */
+.avatar-placeholder svg {
+  width: 64px;
+  height: 64px;
+}
 .edit-photo-icon {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: -6px;
+  right: -6px;
   background: var(--laranja);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 .edit-photo-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   stroke: white;
   stroke-width: 2;
 }
-.badge-prestador {
-  position: relative; z-index: 1;
-  margin-top: 8px;
-  background: var(--laranja);
-  color: #fff;
-  font-size: 11px; font-weight: 700;
-  padding: 3px 14px;
-  border-radius: 20px;
-  letter-spacing: 0.3px;
-}
+/* FIM AVATAR */
 
-/* BODY SCROLL */
-.body {
-  flex: 1;
-  overflow-y: auto;
-  scrollbar-width: none;
-  padding: 0 16px 100px;
-  background: var(--bg);
-  position: relative;
-}
+.badge-prestador { margin-top: 8px; background: var(--laranja); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 14px; border-radius: 20px; }
+.body { flex: 1; overflow-y: auto; scrollbar-width: none; padding: 0 16px 100px; background: var(--bg); }
 .body::-webkit-scrollbar { display: none; }
-
-/* Estilos gerais para campos editáveis */
-.editable-input {
-  font-family: 'Poppins', sans-serif;
-  color: var(--texto);
-  border: none;
-  border-bottom: 1px dashed var(--borda);
-  background: transparent;
-  outline: none;
-  padding: 2px 0;
-  margin-bottom: 4px;
-  width: 100%;
-}
+.editable-input { font-family: 'Poppins', sans-serif; color: var(--texto); border: none; border-bottom: 1px dashed var(--borda); background: transparent; outline: none; padding: 2px 0; margin-bottom: 4px; width: 100%; }
 .editable-input:focus { border-bottom-color: var(--verde); }
-.edit-icon {
-  width: 14px;
-  height: 14px;
-  stroke: var(--muted);
-  margin-left: 4px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-.info-row {
-  font-size: 13px;
-  color: var(--texto);
-  margin-bottom: 4px;
-  line-height: 1.5;
-}
-.info-row .lbl {
-  font-weight: 700;
-  margin-right: 4px;
-}
-/* Cards */
-.card {
-  background: var(--branco);
-  border-radius: 14px;
-  border: 1px solid var(--borda);
-  padding: 14px 16px;
-  margin-bottom: 12px;
-}
-.card-title {
-  font-size: 15px; font-weight: 700; color: var(--verde-card);
-  margin-bottom: 10px;
-}
-.tags-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 6px;
-}
-.tag {
-  background: #e8f0df;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--verde-card);
-}
-.sobre-textarea {
-  width: 100%;
-  font-family: 'Poppins', sans-serif;
-  font-size: 13px;
-  color: var(--texto);
-  line-height: 1.6;
-  border: none;
-  outline: none;
-  resize: none;
-  background: transparent;
-  padding: 0;
-  min-height: 70px;
-}
-.avaliacao {
-  background: var(--branco);
-  border-radius: 14px;
-  border: 1px solid var(--borda);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+.edit-icon { width: 14px; height: 14px; stroke: var(--muted); margin-left: 4px; vertical-align: middle; cursor: pointer; }
+.info-row { font-size: 13px; color: var(--texto); margin-bottom: 4px; line-height: 1.5; }
+.info-row .lbl { font-weight: 700; margin-right: 4px; }
+.card { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 14px 16px; margin-bottom: 12px; }
+.card-title { font-size: 15px; font-weight: 700; color: var(--verde-card); margin-bottom: 10px; }
+.tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.tag { background: #e8f0df; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--verde-card); }
+.sobre-textarea { width: 100%; font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--texto); line-height: 1.6; border: none; outline: none; resize: none; background: transparent; padding: 0; min-height: 70px; }
+.avaliacao { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 12px 16px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; }
 .avaliacao .star { font-size: 20px; }
 .avaliacao span { font-size: 14px; font-weight: 500; color: var(--texto); }
-
-/* Grid para máquinas e contato (prestador) */
-.card-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 10px; margin-bottom: 12px;
-}
-.card-mini {
-  background: var(--branco);
-  border-radius: 14px;
-  border: 1px solid var(--borda);
-  padding: 12px 14px;
-}
-.card-mini-title {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; font-weight: 700; color: var(--verde-card);
-  margin-bottom: 8px;
-}
-.card-mini-title .card-icon {
-  width: 20px;
-  height: 20px;
-  stroke: var(--verde-card);
-  stroke-width: 1.8;
-  fill: none;
-}
-/* Botão salvar */
-.btn-footer {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 450px;
-  padding: 16px 32px 32px;
-  background: linear-gradient(to top, var(--bg) 65%, transparent);
-  z-index: 20;
-}
-.btn-salvar {
-  width: 100%;
-  background: var(--verde-btn);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  border: none;
-  border-radius: 14px;
-  padding: 14px;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
-}
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.card-mini { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 12px 14px; }
+.card-mini-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--verde-card); margin-bottom: 8px; }
+.card-mini-title .card-icon { width: 20px; height: 20px; stroke: var(--verde-card); stroke-width: 1.8; fill: none; }
+.btn-footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 450px; padding: 16px 32px 32px; background: linear-gradient(to top, var(--bg) 65%, transparent); z-index: 20; }
+.btn-salvar { width: 100%; background: var(--verde-btn); color: #fff; font-size: 15px; font-weight: 700; border: none; border-radius: 14px; padding: 14px; cursor: pointer; }
 .btn-salvar:active { transform: scale(0.98); }
 #avatar-input { display: none; }
-
-/* ========= MENU LATERAL (DRAWER) ========= */
-.menu-overlay { /* ... mesmo CSS do original, mantido */ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
-.menu-drawer { position: absolute; top: 0; right: 0; width: min(280px,85%); min-width:260px; height:100%; background: var(--branco); box-shadow: -8px 0 24px rgba(0,0,0,0.15); z-index:101; transform:translateX(100%); transition:transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1); overflow-y:auto; border-radius:20px 0 0 20px; }
+/* Menu lateral */
+.menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
+.menu-drawer { position: absolute; top: 0; right: 0; width: min(280px,85%); min-width:260px; height:100%; background: var(--branco); box-shadow: -8px 0 24px rgba(0,0,0,0.15); z-index:101; transform:translateX(100%); transition:transform 0.3s; overflow-y:auto; border-radius:20px 0 0 20px; }
 .menu-overlay.open { opacity:1; visibility:visible; }
 .menu-overlay.open .menu-drawer { transform:translateX(0); }
 .menu-header { padding:28px 20px 20px; background:linear-gradient(135deg,#3a5f1e,#2d5016); color:white; border-bottom:1px solid rgba(255,255,255,0.2); }
 .menu-user { display:flex; align-items:center; gap:12px; }
 .menu-avatar { width:52px; height:52px; background:linear-gradient(145deg,#d48f3b,#b56a1a); border-radius:50%; display:flex; align-items:center; justify-content:center; }
-.menu-avatar svg { width:30px; height:30px; stroke:white; stroke-width:1.8; fill:none; }
-.menu-user-info h4 { font-size:18px; font-weight:700; margin-bottom:4px; }
-.menu-user-info p { font-size:12px; opacity:0.85; display:flex; align-items:center; gap:6px; }
-.menu-user-info p svg { width:14px; height:14px; stroke:white; stroke-width:2; }
+.menu-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
+.menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+.menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
 .menu-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.2); border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; }
 .menu-close svg { width:20px; height:20px; stroke:white; stroke-width:2; }
 .menu-nav { padding:12px 0 20px; }
-.menu-item { display:flex; align-items:center; gap:14px; padding:12px 20px; font-size:15px; font-weight:500; color:var(--texto); transition:background 0.2s; cursor:pointer; }
-.menu-item:hover, .menu-item:active { background:#f0ede7; }
+.menu-item { display:flex; align-items:center; gap:14px; padding:12px 20px; font-size:15px; font-weight:500; color:var(--texto); cursor:pointer; }
+.menu-item:hover { background:#f0ede7; }
 .menu-item .menu-icon { width:26px; display:flex; align-items:center; justify-content:center; }
-.menu-item .menu-icon svg { width:22px; height:22px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.menu-item .menu-icon svg { width:22px; height:22px; stroke:currentColor; stroke-width:1.8; fill:none; }
 .menu-item .menu-text { flex:1; }
 .divider { height:1px; background:var(--borda); margin:8px 16px; }
 .section-title { font-size:13px; font-weight:600; color:#888; letter-spacing:0.5px; padding:12px 20px 4px; text-transform:uppercase; }
 .footer-menu { border-top:1px solid var(--borda); margin-top:8px; padding:8px 0; }
-
-@media (max-width: 400px) {
-  .header-content { padding: 52px 16px 14px; }
-  .btn-icon { width: 40px; height: 40px; }
-  .btn-icon svg { width: 22px; height: 22px; }
-  .logo-wrap img { height: 36px; }
-  .title-bar { padding: 12px 16px; }
-  .title-bar h1 { font-size: 16px; }
-  .perfil-hero { padding-top: 20px; padding-bottom: 35px; }
-  .avatar-wrap { width: 80px; height: 80px; }
-  .edit-photo-icon { width: 24px; height: 24px; }
-  .edit-photo-icon svg { width: 14px; height: 14px; }
-  .badge-prestador { font-size: 10px; padding: 2px 12px; }
-  .body { padding: 0 12px 100px; }
-  .card { padding: 12px 14px; }
-  .card-grid { gap: 8px; }
-  .card-mini { padding: 10px 12px; }
-  .btn-footer { padding: 12px 20px 28px; }
-  .btn-salvar { font-size: 14px; padding: 12px; }
+@media (max-width: 400px) { 
+  .header-content { padding: 52px 16px 14px; } 
+  .btn-icon { width: 40px; height: 40px; } 
+  .btn-icon svg { width: 22px; height: 22px; } 
+  .logo-wrap img { height: 36px; } 
+  .title-bar { padding: 12px 16px; } 
+  .title-bar h1 { font-size: 16px; } 
+  .perfil-hero { padding-top: 20px; padding-bottom: 35px; } 
+  .avatar-wrap { width: 80px; height: 80px; } 
+  .edit-photo-icon { width: 26px; height: 26px; bottom: -5px; right: -5px; } 
+  .edit-photo-icon svg { width: 14px; height: 14px; } 
+  .body { padding: 0 12px 100px; } 
+  .card { padding: 12px 14px; } 
+  .card-grid { gap: 8px; } 
+  .btn-footer { padding: 12px 20px 28px; } 
+  .btn-salvar { font-size: 14px; padding: 12px; } 
 }
-@media (max-width: 340px) {
-  .card-title { font-size: 14px; }
-  .info-row { font-size: 12px; }
-  .card-mini-title { font-size: 12px; }
-  .sobre-textarea { font-size: 12px; }
-  .avaliacao span { font-size: 13px; }
-  .btn-salvar { font-size: 13px; padding: 10px; }
+@media (max-width: 340px) { 
+  .card-title { font-size: 14px; } 
+  .info-row { font-size: 12px; } 
+  .sobre-textarea { font-size: 12px; } 
+  .avaliacao span { font-size: 13px; } 
+  .btn-salvar { font-size: 13px; padding: 10px; } 
 }
 </style>
 </head>
 <body>
-
-<div class="frame" id="appFrame">
-
-  <!-- HEADER -->
+<div class="frame">
   <div class="header">
     <div class="header-bg"></div>
     <div class="header-content">
-      <button class="btn-icon" id="backButton" aria-label="Voltar">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
+      <button class="btn-icon" id="backButton"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
       <div class="logo-wrap"><img alt="PlanoV"></div>
-      <button class="btn-icon" id="menuButton" aria-label="Menu">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
+      <button class="btn-icon" id="menuButton"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     </div>
   </div>
-
   <div class="title-bar"><h1>Meu Perfil</h1></div>
-
   <div class="perfil-hero">
     <label for="avatar-input" style="cursor:pointer">
       <div class="avatar-wrap" id="avatar-wrap">
-        <div class="avatar-placeholder">
-          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="20" r="12" fill="#f5d59a"/>
-            <path d="M10 52c0-11 9-18 20-18s20 7 20 18" fill="#4a7c28"/>
-            <ellipse cx="30" cy="10" rx="14" ry="4" fill="#8B5E14"/>
-            <rect x="16" y="6" width="28" height="6" rx="3" fill="#a06820"/>
-          </svg>
+        <div class="avatar-inner">
+          <div class="avatar-placeholder">
+            <svg viewBox="0 0 60 60">
+              <circle cx="30" cy="20" r="12" fill="#f5d59a"/>
+              <path d="M10 52c0-11 9-18 20-18s20 7 20 18" fill="#4a7c28"/>
+              <ellipse cx="30" cy="10" rx="14" ry="4" fill="#8B5E14"/>
+              <rect x="16" y="6" width="28" height="6" rx="3" fill="#a06820"/>
+            </svg>
+          </div>
+          <img id="avatar-img" src="" style="display:none;">
         </div>
-        <img id="avatar-img" src="" alt="Foto" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div class="edit-photo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 5v14M5 12h14"/>
@@ -387,9 +191,7 @@ body {
     <input type="file" id="avatar-input" accept="image/*">
     <div class="badge-prestador" id="tipo-badge">Prestador</div>
   </div>
-
-  <div class="body" id="mainBody">
-    <!-- CAMPOS COMUNS: nome, especialidade, localização (com ícone de edição) -->
+  <div class="body">
     <div class="perfil-nome" style="text-align: center; padding: 12px 0 4px;">
       <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
         <input class="editable-input" id="nome" placeholder="Nome" style="font-size: 20px; font-weight: 700; text-align: center; width: auto;">
@@ -405,7 +207,7 @@ body {
       </div>
     </div>
 
-    <!-- ========== LAYOUT PRESTADOR ========== -->
+    <!-- CAMPOS PRESTADOR -->
     <div id="campos-prestador" style="display: none;">
       <div class="card">
         <div class="card-title">Informações Profissionais</div>
@@ -422,47 +224,24 @@ body {
       </div>
       <div class="card-grid">
         <div class="card-mini">
-          <div class="card-mini-title">
-            <svg class="card-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="8" rx="2"/><rect x="7" y="5" width="10" height="6" rx="1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="5" y1="11" x2="5" y2="9"/><line x1="19" y1="11" x2="19" y2="9"/></svg>
-            <span>Máquinas</span>
-            <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-left: auto;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
-          </div>
+          <div class="card-mini-title"><svg class="card-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="8" rx="2"/><rect x="7" y="5" width="10" height="6" rx="1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="5" y1="11" x2="5" y2="9"/><line x1="19" y1="11" x2="19" y2="9"/></svg><span>Máquinas</span><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-left: auto;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
           <textarea class="sobre-textarea" id="maquinas" rows="2"></textarea>
         </div>
         <div class="card-mini">
-          <div class="card-mini-title">
-            <svg class="card-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span>Contato</span>
-            <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-left: auto;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
-          </div>
+          <div class="card-mini-title"><svg class="card-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Contato</span><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-left: auto;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
           <textarea class="sobre-textarea" id="contato" rows="2"></textarea>
         </div>
       </div>
     </div>
 
-    <!-- ========== LAYOUT EMPRESA ========== -->
+    <!-- CAMPOS EMPRESA -->
     <div id="campos-empresa" style="display: none;">
       <div class="card">
         <div class="card-title">Informações gerais</div>
-        <div class="info-row">
-          <span class="lbl">Nome:</span>
-          <input class="editable-input" id="empresa-nome" readonly style="border-bottom-style:solid; background:#f0f0f0;" disabled>
-        </div>
-        <div class="info-row">
-          <span class="lbl">Tipo:</span>
-          <input class="editable-input" id="tipo-empresa" placeholder="Agronegócio" style="margin-left:8px;">
-          <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
-        </div>
-        <div class="info-row">
-          <span class="lbl">Cultivo:</span>
-          <input class="editable-input" id="cultivo" placeholder="Ex: Soja, Milho" style="margin-left:8px;">
-          <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
-        </div>
-        <div class="info-row">
-          <span class="lbl">Região:</span>
-          <input class="editable-input" id="regiao" placeholder="Ex: Araras - SP" style="margin-left:8px;">
-          <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
-        </div>
+        <div class="info-row"><span class="lbl">Nome:</span><span id="empresa-nome-display"></span></div>
+        <div class="info-row"><span class="lbl">Tipo:</span><input class="editable-input" id="tipo-empresa" placeholder="Agronegócio" style="margin-left:8px;"><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
+        <div class="info-row"><span class="lbl">Cultivo:</span><input class="editable-input" id="cultivo" placeholder="Ex: Soja, Milho" style="margin-left:8px;"><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
+        <div class="info-row"><span class="lbl">Região:</span><input class="editable-input" id="regiao" placeholder="Ex: Araras - SP" style="margin-left:8px;"><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
       </div>
       <div class="card">
         <div class="card-title">Serviços que contrata</div>
@@ -471,27 +250,26 @@ body {
       </div>
     </div>
 
-    <!-- SOBRE (comum) -->
+    <!-- SOBRE -->
     <div class="card">
       <div class="card-title" style="color: var(--laranja);">Sobre</div>
       <textarea class="sobre-textarea" id="sobre" rows="3"></textarea>
-      <div style="text-align:right; margin-top:4px;">
-        <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
-      </div>
+      <div style="text-align:right; margin-top:4px;"><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
     </div>
 
-    <!-- AVALIAÇÃO MÉDIA (dinâmica) -->
+    <!-- AVALIAÇÃO MÉDIA E LISTA DE AVALIAÇÕES -->
     <div class="avaliacao" id="avaliacao-container">
       <span class="star">⭐</span>
-      <span id="nota-texto">4,8 avaliação média</span>
+      <span id="nota-texto">Carregando...</span>
     </div>
+    <div id="minhas-avaliacoes-container" style="margin-top: 12px;"></div>
   </div>
 
   <div class="btn-footer">
     <button class="btn-salvar" id="btnSalvar">Salvar alterações</button>
   </div>
 
-  <!-- MENU DRAWER (mesmo código, resumido para brevidade) -->
+  <!-- MENU DRAWER -->
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
       <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -520,14 +298,14 @@ body {
 <script>
   const API_BASE_URL = 'http://localhost:3000/api';
   let token = localStorage.getItem('token');
-  let user = JSON.parse(localStorage.getItem('user') || '{}');
+  let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-  if (!token || !user.id) {
+  if (!token || !currentUser.id) {
     alert('Você precisa estar logado para acessar esta página.');
     window.location.href = 'login.html';
   }
 
-  // Elementos
+  // ========== ELEMENTOS ==========
   const nomeInput = document.getElementById('nome');
   const especialidadeInput = document.getElementById('especialidade');
   const cidadeInput = document.getElementById('cidade');
@@ -539,49 +317,47 @@ body {
   let currentAvatarBase64 = null;
 
   // Prestador
-  const camposPrestadorDiv = document.getElementById('campos-prestador');
-  const servicosInput = document.getElementById('servicos');
+  const servicosInput = document.getElementById('servicos');  // input simples
   const experienciaInput = document.getElementById('experiencia');
   const maquinasTextarea = document.getElementById('maquinas');
   const contatoTextarea = document.getElementById('contato');
 
   // Empresa
   const camposEmpresaDiv = document.getElementById('campos-empresa');
-  const empresaNomeInput = document.getElementById('empresa-nome');
+  const empresaNomeDisplay = document.getElementById('empresa-nome-display');
   const tipoEmpresaInput = document.getElementById('tipo-empresa');
   const cultivoInput = document.getElementById('cultivo');
   const regiaoInput = document.getElementById('regiao');
-  const servicosTagsContainer = document.getElementById('servicos-tags-empresa');
-  let servicosList = [];
+  const servicosTagsContainerEmpresa = document.getElementById('servicos-tags-empresa');
+  let servicosEmpresaList = [];
 
   // Menu
   const menuNome = document.getElementById('menuNome');
   const menuTipo = document.getElementById('menuTipo');
-  const menuAvatar = document.getElementById('menuAvatar');
+  const menuAvatarDiv = document.getElementById('menuAvatar');
 
   // Avaliação
-  const avaliacaoContainer = document.getElementById('avaliacao-container');
   const notaTextoSpan = document.getElementById('nota-texto');
+  const minhasAvaliacoesContainer = document.getElementById('minhas-avaliacoes-container');
 
-  // Função para atualizar menu
+  // ========== FUNÇÕES AUXILIARES ==========
   function atualizarMenuBasico() {
-    menuNome.innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
-    if (user.tipo_usuario === 'prestador') menuTipo.innerText = 'Prestador';
-    else if (user.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
+    menuNome.innerText = `${currentUser.nome} ${currentUser.sobrenome || ''}`.trim();
+    if (currentUser.tipo_usuario === 'prestador') menuTipo.innerText = 'Prestador';
+    else if (currentUser.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
     else menuTipo.innerText = 'Usuário';
   }
 
-  // Exibir/ocultar campos por tipo
   function configurarCamposPorTipo() {
-    if (user.tipo_usuario === 'prestador') {
+    const camposPrestadorDiv = document.getElementById('campos-prestador');
+    if (currentUser.tipo_usuario === 'prestador') {
       tipoBadge.innerText = 'Prestador';
       camposPrestadorDiv.style.display = 'block';
       camposEmpresaDiv.style.display = 'none';
-    } else if (user.tipo_usuario === 'empresa') {
+    } else if (currentUser.tipo_usuario === 'empresa') {
       tipoBadge.innerText = 'Empresa';
       camposPrestadorDiv.style.display = 'none';
       camposEmpresaDiv.style.display = 'block';
-      empresaNomeInput.value = user.nome || '';
     } else {
       tipoBadge.innerText = 'Produtor Rural';
       camposPrestadorDiv.style.display = 'none';
@@ -589,10 +365,26 @@ body {
     }
   }
 
-  // Carregar avaliação média
-  async function carregarAvaliacaoMedia() {
+  function renderServicosEmpresaTags() {
+    servicosTagsContainerEmpresa.innerHTML = '';
+    servicosEmpresaList.forEach(serv => {
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.innerHTML = `${serv} <span class="remove-tag-empresa" data-serv="${serv}" style="cursor:pointer; margin-left:6px;">✕</span>`;
+      servicosTagsContainerEmpresa.appendChild(tag);
+    });
+    document.querySelectorAll('.remove-tag-empresa').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const serv = el.getAttribute('data-serv');
+        servicosEmpresaList = servicosEmpresaList.filter(s => s !== serv);
+        renderServicosEmpresaTags();
+      });
+    });
+  }
+
+  async function carregarAvaliacoes() {
     try {
-      const response = await fetch(`${API_BASE_URL}/reviews/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/reviews/${currentUser.id}`);
       if (response.ok) {
         const data = await response.json();
         const media = data.media ? parseFloat(data.media) : 0;
@@ -602,70 +394,88 @@ body {
         } else {
           notaTextoSpan.innerText = 'Nenhuma avaliação ainda';
         }
+        minhasAvaliacoesContainer.innerHTML = '';
+        if (data.reviews && data.reviews.length > 0) {
+          data.reviews.forEach(rev => {
+            const starsHtml = Array(5).fill(0).map((_, i) => i < rev.nota ? '★' : '☆').join('');
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.style.cssText = 'background:white; border-radius:14px; border:1px solid #e0ddd6; padding:12px; margin-bottom:10px;';
+            card.innerHTML = `
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                <div style="width:36px;height:36px;background:#ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#aaa"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                </div>
+                <div><strong>${escapeHtml(rev.avaliador.nome)}</strong></div>
+              </div>
+              <div style="margin-bottom:6px;">${starsHtml}</div>
+              <p style="font-size:12px;">${escapeHtml(rev.comentario || '')}</p>
+            `;
+            minhasAvaliacoesContainer.appendChild(card);
+          });
+        } else {
+          minhasAvaliacoesContainer.innerHTML = '<p style="text-align:center; color:#888;">Nenhuma avaliação ainda.</p>';
+        }
       } else {
         notaTextoSpan.innerText = 'Nenhuma avaliação ainda';
+        minhasAvaliacoesContainer.innerHTML = '<p style="text-align:center; color:#888;">Nenhuma avaliação ainda.</p>';
       }
     } catch (err) {
       console.error(err);
-      notaTextoSpan.innerText = 'Nenhuma avaliação ainda';
+      notaTextoSpan.innerText = 'Erro ao carregar avaliações';
     }
   }
 
-  // Carregar perfil
   async function carregarPerfil() {
     try {
-      const response = await fetch(`${API_BASE_URL}/profile/${user.id}`, {
+      const response = await fetch(`${API_BASE_URL}/profile/${currentUser.id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!response.ok) throw new Error('Erro ao carregar perfil');
       const data = await response.json();
       const userData = data.user;
 
-      // Comuns
       nomeInput.value = userData.nome || '';
-      especialidadeInput.value = userData.especialidade || userData.sobre?.substring(0, 50) || '';
+      especialidadeInput.value = userData.especialidade || '';
       let cidadeTexto = userData.cidade || '';
       if (userData.estado) cidadeTexto += (cidadeTexto ? ` - ${userData.estado}` : userData.estado);
       cidadeInput.value = cidadeTexto;
       sobreTextarea.value = userData.sobre || '';
 
-      // Avatar
       if (userData.foto_perfil && userData.foto_perfil.startsWith('data:image')) {
         avatarImg.src = userData.foto_perfil;
         avatarImg.style.display = 'block';
         avatarPlaceholder.style.display = 'none';
         currentAvatarBase64 = userData.foto_perfil;
+        currentUser.foto_perfil = userData.foto_perfil;
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        menuAvatarDiv.innerHTML = `<img src="${userData.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
       } else {
         avatarImg.style.display = 'none';
         avatarPlaceholder.style.display = 'flex';
         currentAvatarBase64 = null;
       }
 
-      if (user.tipo_usuario === 'prestador') {
+      if (currentUser.tipo_usuario === 'prestador') {
         servicosInput.value = userData.servicos || '';
         experienciaInput.value = userData.experiencia || '';
         maquinasTextarea.value = userData.maquinas || '';
         contatoTextarea.value = userData.whatsapp ? `WhatsApp: ${userData.whatsapp}` : '';
-      } else if (user.tipo_usuario === 'empresa') {
+      } else if (currentUser.tipo_usuario === 'empresa') {
+        empresaNomeDisplay.innerText = userData.nome || '';
         tipoEmpresaInput.value = userData.nicho || 'Agronegócio';
         cultivoInput.value = userData.cultivo || '';
         regiaoInput.value = userData.regiao || '';
-        // Carregar lista de serviços que contrata (se houver)
         if (userData.servicos_contrata) {
           try {
-            servicosList = JSON.parse(userData.servicos_contrata);
+            servicosEmpresaList = JSON.parse(userData.servicos_contrata);
           } catch(e) {
-            servicosList = userData.servicos_contrata.split(',').map(s => s.trim());
+            servicosEmpresaList = userData.servicos_contrata.split(',').map(s => s.trim());
           }
         } else {
-          servicosList = [];
+          servicosEmpresaList = [];
         }
-        renderServicosTags();
-      }
-
-      // Atualizar menu com foto
-      if (userData.foto_perfil && userData.foto_perfil.startsWith('data:image')) {
-        menuAvatar.innerHTML = `<img src="${userData.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+        renderServicosEmpresaTags();
       }
     } catch (err) {
       console.error(err);
@@ -673,30 +483,9 @@ body {
     }
   }
 
-  // Renderizar tags de serviços (empresa)
-  function renderServicosTags() {
-    servicosTagsContainer.innerHTML = '';
-    servicosList.forEach(serv => {
-      const tag = document.createElement('span');
-      tag.className = 'tag';
-      tag.innerText = serv;
-      servicosTagsContainer.appendChild(tag);
-    });
-  }
-
-  // Adicionar serviço (empresa)
-  document.getElementById('add-servico-btn')?.addEventListener('click', () => {
-    const novoServico = prompt('Digite o serviço que contrata (ex: Colheita, Pulverização):');
-    if (novoServico && novoServico.trim()) {
-      servicosList.push(novoServico.trim());
-      renderServicosTags();
-    }
-  });
-
-  // Salvar perfil
   async function salvarPerfil() {
     const nome = nomeInput.value.trim();
-    const sobrenome = user.sobrenome || '';
+    const sobrenome = currentUser.sobrenome || '';
     const endereco = '';
     let cidade = '';
     let estado = '';
@@ -710,25 +499,27 @@ body {
       estado = '';
     }
     const sobre = sobreTextarea.value.trim();
+    const especialidade = especialidadeInput.value.trim();
 
     const payload = {
-      nome, sobrenome, endereco, cidade, estado, sobre,
+      nome, sobrenome, endereco, cidade, estado, sobre, especialidade,
       foto_perfil: currentAvatarBase64 || null
     };
 
-    if (user.tipo_usuario === 'prestador') {
+    if (currentUser.tipo_usuario === 'prestador') {
       payload.servicos = servicosInput.value.trim();
       payload.experiencia = experienciaInput.value.trim();
       const whatsapp = contatoTextarea.value.trim().replace(/^WhatsApp: /i, '');
       payload.whatsapp = whatsapp;
-      // Campos não backend (maquinas) – armazenar em localStorage ou ignorar
-      localStorage.setItem('maquinas_temp', maquinasTextarea.value);
-    } else if (user.tipo_usuario === 'empresa') {
+      payload.maquinas = maquinasTextarea.value.trim();
+    } else if (currentUser.tipo_usuario === 'empresa') {
       payload.nicho = tipoEmpresaInput.value.trim();
       payload.cultivo = cultivoInput.value.trim();
       payload.regiao = regiaoInput.value.trim();
-      payload.servicos_contrata = JSON.stringify(servicosList);
+      payload.servicos_contrata = JSON.stringify(servicosEmpresaList);
     }
+
+    console.log('Enviando payload:', payload);
 
     try {
       const response = await fetch(`${API_BASE_URL}/profile`, {
@@ -744,17 +535,28 @@ body {
         throw new Error(err.error || 'Erro ao salvar');
       }
       alert('Perfil atualizado com sucesso!');
-      user.nome = nome;
-      localStorage.setItem('user', JSON.stringify(user));
+      currentUser.nome = nome;
+      currentUser.sobrenome = sobrenome;
+      if (currentAvatarBase64) currentUser.foto_perfil = currentAvatarBase64;
+      localStorage.setItem('user', JSON.stringify(currentUser));
       atualizarMenuBasico();
       await carregarPerfil();
-      carregarAvaliacaoMedia();
+      carregarAvaliacoes();
     } catch (err) {
+      console.error(err);
       alert(err.message);
     }
   }
 
-  // Upload de avatar
+  // Adicionar serviço (empresa)
+  document.getElementById('add-servico-btn')?.addEventListener('click', () => {
+    const novoServico = prompt('Digite o serviço que contrata (ex: Colheita, Pulverização):');
+    if (novoServico && novoServico.trim()) {
+      servicosEmpresaList.push(novoServico.trim());
+      renderServicosEmpresaTags();
+    }
+  });
+
   document.getElementById('avatar-input').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -768,14 +570,19 @@ body {
     reader.readAsDataURL(file);
   });
 
-  // Inicialização
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
+  }
+
+  // ========== INICIALIZAÇÃO ==========
   configurarCamposPorTipo();
   atualizarMenuBasico();
   carregarPerfil();
-  carregarAvaliacaoMedia();
+  carregarAvaliacoes();
   btnSalvar.addEventListener('click', salvarPerfil);
 
-  // Menu lateral e navegação (código resumido, mas funcional)
+  // ========== MENU LATERAL ==========
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -798,7 +605,7 @@ body {
         }
         closeMenu();
       } else if (nav === 'inicio') window.location.href = 'home.html';
-      else if (nav === 'empresas') window.location.href = (user.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      else if (nav === 'empresas') window.location.href = (currentUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
       else if (nav === 'agenda') window.location.href = 'agenda.html';
       else if (nav === 'perfil') closeMenu();
       else if (nav === 'configuracoes') alert('Configurações em breve');

@@ -16,6 +16,6 @@ const Service = sequelize.define('servicos', {
 });
 
 Service.belongsTo(User, { foreignKey: 'usuario_id', onDelete: 'CASCADE' });
-User.hasMany(Service, { foreignKey: 'usuario_id' });
+User.hasMany(Service, { foreignKey: 'usuario_id', as: 'servicos_prestador' });
 
 module.exports = Service;

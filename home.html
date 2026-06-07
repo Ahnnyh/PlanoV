@@ -138,7 +138,6 @@
         </div>
       </div>
       <div class="menu-nav">
-        <!-- mesmos itens do seu home original -->
         <div class="menu-item" data-nav="inicio"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="menu-text">Início</div></div>
         <div class="menu-item" data-nav="empresas"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="menu-text">Empresas</div></div>
         <div class="menu-item" data-nav="agenda"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div><div class="menu-text">Minha Agenda</div></div>
@@ -155,20 +154,27 @@
 </div>
 <script>
   const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const user = JSON.parse(localStorage.getItem('user') || '{}'); // única declaração
+
   if (!token || !user.id) {
     alert('Você precisa estar logado para acessar esta página.');
     window.location.href = 'login.html';
   }
-  // Atualizar saudação e menu
+
+  // Atualizar saudação
   document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
+
+  // Atualizar menu lateral (texto e foto)
   document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
   const tipo = user.tipo_usuario === 'prestador' ? 'Prestador' : (user.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
   document.getElementById('menuTipo').innerText = tipo;
-  // Foto no menu
-  const menuAvatarContainer = document.getElementById('menuAvatarContainer');
+
+  // Foto no menu (se existir)
+  const menuAvatarDiv = document.getElementById('menuAvatarContainer');
   if (user.foto_perfil && user.foto_perfil.startsWith('data:image')) {
-    menuAvatarContainer.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    menuAvatarDiv.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+  } else {
+    // Mantém o SVG padrão (já está lá)
   }
 
   // Adaptar card "Buscar"
@@ -189,7 +195,7 @@
   document.getElementById('link-agenda').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'agenda.html'; });
   document.getElementById('link-agendar').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'agendar_servico.html'; });
 
-  // Menu lateral
+  // Menu lateral (abrir/fechar e navegação)
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -198,7 +204,12 @@
   if (menuBtn) menuBtn.addEventListener('click', openMenu);
   if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
   if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
-  document.getElementById('backButton').addEventListener('click', () => { if (window.history.length > 1) window.history.back(); else alert('Não há página anterior.'); });
+
+  document.getElementById('backButton').addEventListener('click', () => {
+    if (window.history.length > 1) window.history.back();
+    else alert('Não há página anterior.');
+  });
+
   document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -210,13 +221,21 @@
           window.location.href = 'login.html';
         }
         closeMenu();
-      } else if (nav === 'inicio') closeMenu();
-      else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
-      else if (nav === 'empresas') window.location.href = user.tipo_usuario === 'prestador' ? 'buscar-empresas.html' : 'buscar-prestadores.html';
-      else if (nav === 'agenda') window.location.href = 'agenda.html';
-      else if (nav === 'configuracoes') alert('Tela de configurações em breve.');
-      else if (nav === 'ajuda') alert('Central de ajuda em desenvolvimento.');
-      else closeMenu();
+      } else if (nav === 'inicio') {
+        closeMenu();
+      } else if (nav === 'perfil') {
+        window.location.href = 'meu_perfil.html';
+      } else if (nav === 'empresas') {
+        window.location.href = user.tipo_usuario === 'prestador' ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      } else if (nav === 'agenda') {
+        window.location.href = 'agenda.html';
+      } else if (nav === 'configuracoes') {
+        alert('Tela de configurações em breve.');
+      } else if (nav === 'ajuda') {
+        alert('Central de ajuda em desenvolvimento.');
+      } else {
+        closeMenu();
+      }
     });
   });
 </script>

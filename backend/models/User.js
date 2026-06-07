@@ -21,6 +21,10 @@ const User = sequelize.define('usuarios', {
   cultivo: { type: DataTypes.STRING(100), allowNull: true },
   regiao: { type: DataTypes.STRING(100), allowNull: true },
   sobre: { type: DataTypes.TEXT, allowNull: true },
+  especialidade: { type: DataTypes.STRING(200), allowNull: true },
+  servicos_contrata: { type: DataTypes.TEXT, allowNull: true }, // para empresa
+  servicos: { type: DataTypes.TEXT, allowNull: true, field: 'servico' },
+  maquinas: { type: DataTypes.TEXT, allowNull: true }, // para prestador
 }, {
   tableName: 'usuarios',
   timestamps: true,

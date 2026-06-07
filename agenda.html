@@ -249,8 +249,9 @@ body {
   justify-content: center;
 }
 .menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
-.menu-user-info h4 { font-size: 18px; font-weight: 700; }
-.menu-user-info p { font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+.menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
 .menu-close {
   position: absolute;
   top: 16px;
@@ -357,7 +358,7 @@ body {
       </button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar">
+          <div class="menu-avatar" id="menuAvatarContainer">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
               <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
               <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
@@ -397,13 +398,17 @@ body {
     window.location.href = 'login.html';
   }
 
-  if (user.nome) {
-    document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
-    document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`;
-  }
+  // Atualizar saudação e menu (com foto)
+  document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
+  document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
   const menuTipoSpan = document.getElementById('menuTipo');
   if (menuTipoSpan && user.tipo_usuario) {
     menuTipoSpan.innerText = user.tipo_usuario === 'prestador' ? 'Prestador' : (user.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
+  }
+  // Foto no menu
+  const menuAvatarContainer = document.getElementById('menuAvatarContainer');
+  if (user.foto_perfil && user.foto_perfil.startsWith('data:image')) {
+    menuAvatarContainer.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
   }
 
   let currentYear = new Date().getFullYear();
@@ -444,7 +449,6 @@ body {
 
     grid.innerHTML = '';
 
-    // Dias anteriores
     for (let i = firstDay - 1; i >= 0; i--) {
       const d = document.createElement('div');
       d.className = 'day other';
@@ -452,7 +456,6 @@ body {
       grid.appendChild(d);
     }
 
-    // Dias atuais
     for (let day = 1; day <= daysInMonth; day++) {
       const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       const hasEvent = appointments.some(apt => {
@@ -470,7 +473,6 @@ body {
       grid.appendChild(d);
     }
 
-    // Dias seguintes
     const totalCells = firstDay + daysInMonth;
     const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
     for (let i = 1; i <= remaining; i++) {
@@ -527,7 +529,6 @@ body {
     evCard.style.display = 'none';
   });
 
-  // Popular anos
   const currentYearNum = new Date().getFullYear();
   for (let y = currentYearNum - 2; y <= currentYearNum + 2; y++) {
     const opt = document.createElement('option');
@@ -537,17 +538,14 @@ body {
     yearSelect.appendChild(opt);
   }
 
-  // Botão + para agendar serviço
   document.getElementById('btnAddAgendamento').addEventListener('click', () => {
     window.location.href = 'agendar_servico.html';
   });
 
-  // MENU
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
   const backButton = document.getElementById('backButton');
-
   function openMenu() { menuOverlay.classList.add('open'); }
   function closeMenu() { menuOverlay.classList.remove('open'); }
   menuBtn?.addEventListener('click', openMenu);
