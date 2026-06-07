@@ -9,20 +9,17 @@ const User = sequelize.define('usuarios', {
   sobrenome: { type: DataTypes.STRING(100), allowNull: false },
   email: { type: DataTypes.STRING(150), allowNull: false, unique: true },
   senha: { type: DataTypes.STRING(255), allowNull: false },
-  tipo_usuario: { type: DataTypes.STRING(20), allowNull: false }, // 'prestador', 'empresa'
+  tipo_usuario: { type: DataTypes.STRING(20), allowNull: false },
   endereco: { type: DataTypes.STRING(255), allowNull: true },
   cidade: { type: DataTypes.STRING(100), allowNull: true },
   estado: { type: DataTypes.STRING(2), allowNull: true },
-  foto_perfil: { type: DataTypes.STRING(255), allowNull: true },
-  // Campos específicos de prestador
+  foto_perfil: { type: DataTypes.TEXT('long'), allowNull: true }, // LONGTEXT
   experiencia: { type: DataTypes.TEXT, allowNull: true },
   disponibilidade: { type: DataTypes.BOOLEAN, defaultValue: true },
   whatsapp: { type: DataTypes.STRING(20), allowNull: true },
-  // Campos específicos de empresa
   nicho: { type: DataTypes.STRING(100), allowNull: true },
   cultivo: { type: DataTypes.STRING(100), allowNull: true },
   regiao: { type: DataTypes.STRING(100), allowNull: true },
-  // Sobre (geral)
   sobre: { type: DataTypes.TEXT, allowNull: true },
 }, {
   tableName: 'usuarios',

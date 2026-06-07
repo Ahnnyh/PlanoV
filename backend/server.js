@@ -11,17 +11,16 @@ const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // Aumente o limite para fotos grandes
 
-// Rotas
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/reviews', reviewRoutes);
 
-// Sincronizar modelos e iniciar servidor
-sequelize.sync({ alter: true }).then(() => {
+// Sincronizar sem alterar estrutura existente
+sequelize.sync({ alter: false }).then(() => {
   console.log('Banco de dados sincronizado');
   app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
