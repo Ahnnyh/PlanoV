@@ -176,24 +176,40 @@ body {
   <div class="bg-overlay"></div>
 
   <div class="content">
-    <!-- Logo no topo -->
     <div class="logo-area">
       <img src="img/logo.png" alt="PlanoV">
     </div>
 
-    <!-- Bloco centralizado verticalmente -->
     <div class="center-block">
       <div class="hero-text">
         <h1>Bem-vindo ao Plano V</h1>
         <p>Conectando serviços e oportunidades no campo.</p>
       </div>
       <div class="btn-group">
-        <button class="btn btn-criar" onclick="window.location.href='cadastro.html'">Criar Conta</button>
-        <button class="btn btn-login" onclick="window.location.href='login.html'">Fazer login</button>
+        <button class="btn btn-criar" id="btn-criar-conta">Criar Conta</button>
+        <button class="btn btn-login" id="btn-login">Fazer login</button>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  // Se o usuário já estiver logado, redireciona para a página inicial interna
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  if (token && user.id) {
+    // Redireciona para a página principal (home) após o cadastro/login
+    window.location.href = 'home.html';
+  }
+
+  document.getElementById('btn-criar-conta').addEventListener('click', () => {
+    window.location.href = 'cadastro.html';
+  });
+
+  document.getElementById('btn-login').addEventListener('click', () => {
+    window.location.href = 'login.html';
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>PlanoV - Perfil do Prestador</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* MANTER O CSS ORIGINAL DO ARQUIVO (idêntico ao que você tem) */
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  :root { --verde: #3a5f1e; --verde-btn: #2d5016; --verde-card: #4a7c28; --verde-light: #e8f0df; --laranja: #e07a1c; --laranja-range:#f0a050; --bg: #f7f4ee; --branco: #ffffff; --texto: #1a1a1a; --muted: #888; --borda: #e0ddd6; }
+  body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
+  .frame { width: 100%; max-width: 450px; background: var(--bg); border-radius: 44px; overflow: hidden; border: 1px solid #d4cfc2; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; position: relative; margin: 0 auto; }
+  .hero { position: relative; height: 210px; flex-shrink: 0; background-image: url('img/superior_perfil.png'); background-size: cover; background-position: left bottom; background-color: #b8d0a5; border-top-left-radius: 44px; border-top-right-radius: 44px; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
+  .hero-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 52px 20px 0; }
+  .btn-icon { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; border-radius: 50%; }
+  .btn-icon:active { background: rgba(0,0,0,0.05); }
+  .btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
+  .logo-wrap img { height: 40px; display: block; content: url('img/logo.png'); }
+  .avatar-hero { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); z-index: 20; width: 100px; height: 100px; border-radius: 50%; border: 4px solid #fff; background: linear-gradient(135deg, #8B6914, #c8a050); overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: flex; align-items: center; justify-content: center; }
+  .avatar-hero svg { width: 64px; height: 64px; }
+  .avatar-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .body { flex: 1; overflow-y: auto; scrollbar-width: none; background: var(--bg); padding: 0 16px 40px; }
+  .body::-webkit-scrollbar { display: none; }
+  .perfil-info { text-align: center; padding: 22px 10px 20px; }
+  .perfil-info h2 { font-size: 22px; font-weight: 700; color: var(--texto); }
+  .perfil-info .sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .perfil-info .loc { font-size: 13px; color: var(--muted); margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .perfil-info .loc svg { width: 14px; height: 14px; fill: var(--laranja); flex-shrink: 0; }
+  .divider { height: 1px; background: var(--borda); margin: 0 0 16px; }
+  .section-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; color: var(--texto); margin-bottom: 10px; }
+  .section-title svg { width: 18px; height: 18px; stroke: var(--texto); fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+  .sobre-text { font-size: 13px; color: var(--texto); line-height: 1.7; margin-bottom: 20px; }
+  .info-title { font-size: 17px; font-weight: 700; color: var(--verde-card); margin-bottom: 10px; }
+  .info-row { font-size: 13px; color: var(--texto); margin-bottom: 6px; line-height: 1.5; }
+  .info-row .lbl { font-weight: 700; }
+  .contato-card { background: var(--verde-light); border-radius: 16px; padding: 14px 16px 18px; margin: 18px 0 20px; text-align: center; }
+  .contato-card .ct-title { font-size: 14px; font-weight: 700; color: var(--verde-card); margin-bottom: 14px; }
+  .contato-btns { display: flex; justify-content: center; gap: 20px; }
+  .ct-btn { width: 52px; height: 52px; border-radius: 50%; background: var(--verde-btn); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, background 0.15s; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+  .ct-btn:active { transform: scale(0.96); }
+  .ct-btn svg { width: 24px; height: 24px; fill: #fff; }
+  .avaliacao-geral { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .avaliacao-geral .star { font-size: 20px; }
+  .avaliacao-geral span { font-size: 14px; font-weight: 500; color: var(--texto); }
+  .review-card { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 12px 14px; margin-bottom: 10px; }
+  .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: #ddd; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .review-avatar svg { width: 20px; height: 20px; fill: #aaa; }
+  .review-name { font-size: 13px; font-weight: 700; color: var(--texto); line-height: 1.3; }
+  .stars { display: flex; gap: 2px; margin-bottom: 6px; padding-left: 46px; }
+  .stars span { color: var(--laranja); font-size: 14px; }
+  .review-text { font-size: 12px; color: var(--texto); line-height: 1.6; padding-left: 46px; }
+  .nova-avaliacao-section { background: var(--branco); border-radius: 16px; border: 1px solid var(--borda); overflow: hidden; margin-top: 8px; }
+  .avaliacao-header-click { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; transition: background 0.2s; }
+  .avaliacao-header-click:hover { background: #f0ede7; }
+  .toggle-icon { width: 20px; height: 20px; stroke: var(--verde-card); transition: transform 0.3s; }
+  .avaliacao-content { padding: 0 16px 20px; display: none; border-top: 1px solid var(--borda); }
+  .avaliacao-content.open { display: block; }
+  .rating-input-wrap { text-align: center; margin-bottom: 16px; }
+  .stars-input { display: flex; justify-content: center; gap: 8px; margin-bottom: 8px; }
+  .star-input { width: 32px; height: 32px; fill: #ddd; stroke: none; cursor: pointer; transition: fill 0.2s; }
+  .star-input.active { fill: var(--laranja); }
+  .rating-feedback { font-size: 12px; color: var(--muted); }
+  .review-textarea { width: 100%; font-family: 'Poppins', sans-serif; font-size: 13px; padding: 12px; border: 1px solid var(--borda); border-radius: 12px; resize: vertical; margin-bottom: 16px; background: #fefefe; }
+  .btn-enviar-avaliacao { width: 100%; background: var(--verde-btn); color: white; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; border: none; border-radius: 12px; padding: 12px; cursor: pointer; transition: background 0.2s; }
+  .btn-enviar-avaliacao:active { transform: scale(0.98); }
+  /* MENU LATERAL (igual ao dos outros) */
+  .menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
+  .menu-drawer { position: absolute; top: 0; right: 0; width: min(280px, 85%); min-width: 260px; height: 100%; background: #ffffff; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); overflow-y: auto; border-radius: 20px 0 0 20px; }
+  .menu-overlay.open { opacity: 1; visibility: visible; }
+  .menu-overlay.open .menu-drawer { transform: translateX(0); }
+  .menu-header { padding: 28px 20px 20px; background: linear-gradient(135deg, #3a5f1e, #2d5016); color: white; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  .menu-user { display: flex; align-items: center; gap: 12px; }
+  .menu-avatar { width: 52px; height: 52px; background: linear-gradient(145deg, #d48f3b, #b56a1a); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
+  .menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+  .menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
+  .menu-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+  .menu-close svg { width: 20px; height: 20px; stroke: white; stroke-width: 2; }
+  .menu-nav { padding: 12px 0 20px; }
+  .menu-item { display: flex; align-items: center; gap: 14px; padding: 12px 20px; font-size: 15px; font-weight: 500; color: #1a1a1a; transition: background 0.2s; cursor: pointer; }
+  .menu-item:hover, .menu-item:active { background: #f0ede7; }
+  .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
+  .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .menu-item .menu-text { flex: 1; }
+  .divider { height: 1px; background: #e0ddd6; margin: 8px 16px; }
+  .section-title-menu { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
+  .footer-menu { border-top: 1px solid #e0ddd6; margin-top: 8px; padding: 8px 0; }
+  @media (max-width: 400px) { /* ... */ }
+  @media (max-width: 340px) { /* ... */ }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hero">
+    <div class="hero-nav">
+      <button class="btn-icon" id="backButton" aria-label="Voltar">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="logo-wrap"><img alt="PlanoV"></div>
+      <button class="btn-icon" id="menuButton" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="avatar-hero" id="avatar-hero">
+      <svg viewBox="0 0 60 60" fill="none">
+        <circle cx="30" cy="22" r="13" fill="#f5d59a"/>
+        <path d="M8 56c0-12 10-20 22-20s22 8 22 20" fill="#4a7c28"/>
+        <ellipse cx="30" cy="11" rx="15" ry="4.5" fill="#6B4510"/>
+        <rect x="15" y="7" width="30" height="7" rx="3.5" fill="#8B5E14"/>
+        <circle cx="23" cy="22" r="2.5" fill="#c8956a"/>
+        <circle cx="37" cy="22" r="2.5" fill="#c8956a"/>
+        <path d="M24 30 Q30 34 36 30" stroke="#c8956a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+  </div>
+  <div class="body">
+    <div class="perfil-info">
+      <h2 id="prestador-nome">Carregando...</h2>
+      <div class="sub" id="prestador-especialidade">-</div>
+      <div class="loc" id="prestador-localizacao">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span>-</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+      Sobre
+    </div>
+    <p class="sobre-text" id="prestador-sobre">-</p>
+    <div class="info-title">Informações Profissionais</div>
+    <div class="info-row"><span class="lbl">Serviços:</span> <span id="prestador-servicos">-</span></div>
+    <div class="info-row"><span class="lbl">Experiência:</span> <span id="prestador-experiencia">-</span></div>
+    <div id="contato-card-wrapper" style="display: none;"></div>
+    <div class="avaliacao-geral" id="avaliacao-geral">
+      <span class="star">⭐</span>
+      <span id="avaliacao-media">- avaliação média</span>
+    </div>
+    <div id="reviews-container"></div>
+    <div class="nova-avaliacao-section" id="avaliacaoAccordion" style="display: none;">
+      <div class="avaliacao-header-click" id="accordionHeader">
+        <div class="section-header">
+          <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="section-label" style="font-size: 14px;">Avaliar este prestador</span>
+        </div>
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="avaliacao-content" id="avaliacaoContent">
+        <div class="rating-input-wrap">
+          <div class="stars-input" id="starsInput">
+            <svg class="star-input" data-value="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="3" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="4" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star-input" data-value="5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <span class="rating-feedback" id="ratingFeedback">Clique nas estrelas para avaliar</span>
+        </div>
+        <textarea id="reviewComment" class="review-textarea" placeholder="Escreva seu comentário (opcional)..." rows="3"></textarea>
+        <button class="btn-enviar-avaliacao" id="btnEnviarAvaliacao">Enviar avaliação</button>
+      </div>
+    </div>
+  </div>
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-drawer">
+      <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg></div>
+          <div class="menu-user-info">
+            <h4 id="menuNome">Visitante</h4>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4"/><path d="M12 9c2 0 4 1.5 4 4"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3"/></svg><span id="menuTipo">Convidado</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="menu-nav">
+        <!-- (mesmos itens do menu) -->
+        <div class="menu-item" data-nav="inicio"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="menu-text">Início</div></div>
+        <div class="menu-item" data-nav="empresas"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="menu-text">Empresas</div></div>
+        <div class="menu-item" data-nav="agenda"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div><div class="menu-text">Minha Agenda</div></div>
+        <div class="divider"></div>
+        <div class="section-title-menu">CONTA</div>
+        <div class="menu-item" data-nav="login" id="menu-login"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text">Entrar / Cadastrar</div></div>
+        <div class="menu-item" data-nav="perfil" id="menu-perfil" style="display:none;"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text">Meu Perfil</div></div>
+        <div class="menu-item" data-nav="sair" id="menu-sair" style="display:none;"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><div class="menu-text">Sair</div></div>
+        <div class="divider"></div>
+        <div class="menu-item" data-nav="ajuda"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="menu-text">Ajuda</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const API_BASE_URL = 'http://localhost:3000/api';
+  let token = localStorage.getItem('token');
+  let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
+  const urlParams = new URLSearchParams(window.location.search);
+  const prestadorId = urlParams.get('id');
+  if (!prestadorId) { alert('Prestador não especificado.'); window.location.href = 'buscar-prestadores.html'; }
+
+  // Atualizar menu lateral com foto do usuário logado
+  const menuAvatarDiv = document.querySelector('.menu-avatar');
+  const menuNome = document.getElementById('menuNome');
+  const menuTipo = document.getElementById('menuTipo');
+  const menuLogin = document.getElementById('menu-login');
+  const menuPerfil = document.getElementById('menu-perfil');
+  const menuSair = document.getElementById('menu-sair');
+  if (token && loggedUser.id) {
+    menuNome.innerText = `${loggedUser.nome} ${loggedUser.sobrenome || ''}`.trim();
+    menuTipo.innerText = loggedUser.tipo_usuario === 'prestador' ? 'Prestador' : (loggedUser.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
+    menuLogin.style.display = 'none';
+    menuPerfil.style.display = 'flex';
+    menuSair.style.display = 'flex';
+    if (loggedUser.foto_perfil && loggedUser.foto_perfil.startsWith('data:image')) {
+      menuAvatarDiv.innerHTML = `<img src="${loggedUser.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    }
+  } else {
+    menuNome.innerText = 'Visitante';
+    menuTipo.innerText = 'Convidado';
+    menuLogin.style.display = 'flex';
+    menuPerfil.style.display = 'none';
+    menuSair.style.display = 'none';
+  }
+
+  let currentRating = 0;
+  async function carregarPerfil() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/profile/${prestadorId}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      });
+      if (!response.ok) throw new Error('Perfil não encontrado');
+      const data = await response.json();
+      const user = data.user;
+      document.getElementById('prestador-nome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
+      document.getElementById('prestador-especialidade').innerText = user.especialidade || user.sobre?.substring(0, 50) || 'Profissional do campo';
+      let cidadeEstado = user.cidade || '';
+      if (user.estado) cidadeEstado += (cidadeEstado ? ` - ${user.estado}` : user.estado);
+      document.querySelector('#prestador-localizacao span').innerText = cidadeEstado || 'Localização não informada';
+      document.getElementById('prestador-sobre').innerText = user.sobre || 'Sem descrição.';
+      document.getElementById('prestador-servicos').innerText = user.servicos || 'Não informado';
+      document.getElementById('prestador-experiencia').innerText = user.experiencia || 'Não informada';
+      // Avatar
+      const avatarDiv = document.getElementById('avatar-hero');
+      if (user.foto_perfil && user.foto_perfil.startsWith('data:image')) {
+        avatarDiv.innerHTML = `<img src="${user.foto_perfil}" alt="Avatar">`;
+      }
+      // Contato – apenas para empresas logadas
+      const contatoWrapper = document.getElementById('contato-card-wrapper');
+      if (token && loggedUser.tipo_usuario === 'empresa') {
+        const whatsapp = user.whatsapp || '';
+        const email = user.email || '';
+        contatoWrapper.innerHTML = `
+          <div class="contato-card">
+            <div class="ct-title">Entrar em Contato</div>
+            <div class="contato-btns">
+              ${whatsapp ? `<button class="ct-btn" id="btn-whatsapp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.845L.057 23.489a.5.5 0 00.61.61l5.677-1.475A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 01-5.044-1.394l-.36-.214-3.737.972.993-3.62-.235-.373A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg></button>` : ''}
+              ${email ? `<button class="ct-btn" id="btn-email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></button>` : ''}
+            </div>
+          </div>
+        `;
+        contatoWrapper.style.display = 'block';
+        if (whatsapp) document.getElementById('btn-whatsapp')?.addEventListener('click', () => window.open(`https://wa.me/${whatsapp.replace(/\D/g, '')}`, '_blank'));
+        if (email) document.getElementById('btn-email')?.addEventListener('click', () => window.open(`mailto:${email}`));
+      } else { contatoWrapper.style.display = 'none'; }
+    } catch (err) { console.error(err); alert('Erro ao carregar perfil.'); }
+  }
+
+  async function carregarAvaliacoes() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/reviews/${prestadorId}`);
+      if (!response.ok) throw new Error('Erro ao carregar avaliações');
+      const data = await response.json();
+      const media = data.media ? parseFloat(data.media) : 0;
+      const total = data.total || 0;
+      const mediaEl = document.getElementById('avaliacao-media');
+      if (media > 0) mediaEl.innerHTML = `${media.toFixed(1)} avaliação média (${total} avaliações)`;
+      else mediaEl.innerHTML = 'Ainda sem avaliações';
+      const container = document.getElementById('reviews-container');
+      container.innerHTML = '';
+      if (data.reviews && data.reviews.length) {
+        data.reviews.forEach(rev => {
+          const starsHtml = Array(5).fill(0).map((_, i) => i < rev.nota ? '★' : '☆').join('');
+          const card = document.createElement('div');
+          card.className = 'review-card';
+          card.innerHTML = `
+            <div class="review-header">
+              <div class="review-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+              <span class="review-name">${escapeHtml(rev.avaliador.nome)}</span>
+            </div>
+            <div class="stars"><span>${starsHtml}</span></div>
+            <p class="review-text">${escapeHtml(rev.comentario || '')}</p>
+          `;
+          container.appendChild(card);
+        });
+      } else { container.innerHTML = '<p style="text-align:center; color:#888;">Nenhuma avaliação ainda.</p>'; }
+    } catch (err) { console.error(err); }
+  }
+
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
+
+  // Accordion e envio de avaliação (igual ao original)
+  const avaliacaoAccordion = document.getElementById('avaliacaoAccordion');
+  const accordionHeader = document.getElementById('accordionHeader');
+  const avaliacaoContent = document.getElementById('avaliacaoContent');
+  const toggleIcon = document.querySelector('.toggle-icon');
+  const starsInputs = document.querySelectorAll('.star-input');
+  const ratingFeedback = document.getElementById('ratingFeedback');
+  const btnEnviar = document.getElementById('btnEnviarAvaliacao');
+  const reviewComment = document.getElementById('reviewComment');
+  function setStars(rating) { starsInputs.forEach((star, idx) => { if (idx < rating) star.classList.add('active'); else star.classList.remove('active'); }); }
+  starsInputs.forEach(star => {
+    star.addEventListener('click', () => { const value = parseInt(star.getAttribute('data-value')); currentRating = value; setStars(currentRating); ratingFeedback.textContent = `Você selecionou ${currentRating} estrela${currentRating > 1 ? 's' : ''}`; });
+    star.addEventListener('mouseenter', () => { const value = parseInt(star.getAttribute('data-value')); setStars(value); });
+    star.addEventListener('mouseleave', () => { setStars(currentRating); });
+  });
+  if (token && loggedUser.id && loggedUser.id != prestadorId) {
+    avaliacaoAccordion.style.display = 'block';
+    if (accordionHeader) accordionHeader.addEventListener('click', () => { const isOpen = avaliacaoContent.classList.contains('open'); if (isOpen) { avaliacaoContent.classList.remove('open'); toggleIcon.style.transform = 'rotate(0deg)'; } else { avaliacaoContent.classList.add('open'); toggleIcon.style.transform = 'rotate(180deg)'; } });
+    if (btnEnviar) btnEnviar.addEventListener('click', async () => {
+      if (currentRating === 0) { alert('Selecione uma classificação em estrelas.'); return; }
+      const comentario = reviewComment.value.trim();
+      try {
+        const response = await fetch(`${API_BASE_URL}/reviews`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ avaliado_id: parseInt(prestadorId), nota: currentRating, comentario: comentario })
+        });
+        if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao enviar avaliação'); }
+        alert('Avaliação enviada com sucesso!');
+        currentRating = 0; setStars(0); reviewComment.value = ''; ratingFeedback.textContent = 'Clique nas estrelas para avaliar';
+        avaliacaoContent.classList.remove('open'); toggleIcon.style.transform = 'rotate(0deg)';
+        carregarAvaliacoes();
+      } catch (err) { alert(err.message); }
+    });
+  } else { avaliacaoAccordion.style.display = 'none'; }
+
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const backButton = document.getElementById('backButton');
+  function openMenu() { menuOverlay.classList.add('open'); }
+  function closeMenu() { menuOverlay.classList.remove('open'); }
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+  if (backButton) backButton.addEventListener('click', () => window.history.back());
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') { localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'login.html'; }
+      else if (nav === 'inicio') window.location.href = 'home.html';
+      else if (nav === 'empresas') window.location.href = (loggedUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      else if (nav === 'agenda') window.location.href = 'agenda.html';
+      else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
+      else if (nav === 'login') window.location.href = 'login.html';
+      else if (nav === 'ajuda') alert('Central de ajuda em breve.');
+      else closeMenu();
+    });
+  });
+  carregarPerfil(); carregarAvaliacoes();
+</script>
+</body>
+</html>

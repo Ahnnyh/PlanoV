@@ -45,7 +45,7 @@ body {
   margin: 0 auto;
 }
 
-/* ── HEADER ── */
+/* HEADER */
 .header { position: relative; overflow: hidden; flex-shrink: 0; }
 .header-bg {
   position: absolute; inset: 0;
@@ -69,7 +69,7 @@ body {
 .btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
 .logo-wrap img { height: 40px; content: url('img/logo.png'); }
 
-/* ── FAIXA TÍTULO ── */
+/* FAIXA TÍTULO */
 .title-bar {
   background: var(--verde);
   padding: 14px 20px;
@@ -78,7 +78,7 @@ body {
 }
 .title-bar h1 { font-size: 18px; font-weight: 700; color: #fff; }
 
-/* ── PERFIL HERO ── */
+/* PERFIL HERO */
 .perfil-hero {
   position: relative;
   background-image: url('img/inferior.png');
@@ -96,7 +96,6 @@ body {
   position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
   background: linear-gradient(to bottom, transparent, var(--bg));
 }
-
 .avatar-wrap {
   position: relative; z-index: 1;
   width: 90px; height: 90px;
@@ -113,7 +112,6 @@ body {
   background: linear-gradient(135deg, #8B6914, #c8a050);
 }
 .avatar-placeholder svg { width: 54px; height: 54px; }
-
 .badge-prestador {
   position: relative; z-index: 1;
   margin-top: 8px;
@@ -125,7 +123,7 @@ body {
   letter-spacing: 0.3px;
 }
 
-/* ── BODY SCROLL ── */
+/* BODY SCROLL */
 .body {
   flex: 1;
   overflow-y: auto;
@@ -141,14 +139,27 @@ body {
   text-align: center;
   padding: 16px 0 4px;
 }
-.perfil-nome h2 {
-  font-size: 20px; font-weight: 700; color: var(--texto);
+.perfil-nome input.editable-input {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 1px dashed var(--borda);
 }
-.perfil-nome p {
-  font-size: 13px; color: var(--muted); margin-top: 2px;
+.perfil-nome .editable-input {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: var(--texto);
+  border: none;
+  border-bottom: 1px dashed var(--borda);
+  background: transparent;
+  outline: none;
+  padding: 2px 0;
+  margin-bottom: 4px;
+  text-align: center;
 }
+.perfil-nome .editable-input:focus { border-bottom-color: var(--verde); }
 
-/* ── CARDS ── */
+/* CARDS */
 .card {
   background: var(--branco);
   border-radius: 14px;
@@ -156,25 +167,27 @@ body {
   padding: 14px 16px;
   margin-bottom: 12px;
 }
-
 .card-title {
   font-size: 15px; font-weight: 700; color: var(--verde-card);
   margin-bottom: 10px;
 }
-
 .info-row {
   font-size: 13px; color: var(--texto);
   margin-bottom: 4px;
   line-height: 1.5;
 }
 .info-row .lbl { font-weight: 700; }
+.info-row .editable-input {
+  margin-left: 8px;
+  width: auto;
+  display: inline-block;
+}
 
-/* Grid 2 colunas */
+/* Grid 2 colunas (máquinas + contato) – útil para prestador */
 .card-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 10px; margin-bottom: 12px;
 }
-
 .card-mini {
   background: var(--branco);
   border-radius: 14px;
@@ -195,12 +208,6 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.card-mini p {
-  font-size: 12px; color: var(--texto);
-  line-height: 1.6;
-}
-
-/* Sobre - textarea editável */
 .sobre-textarea {
   width: 100%;
   font-family: 'Poppins', sans-serif;
@@ -212,8 +219,6 @@ body {
   padding: 0;
   min-height: 70px;
 }
-
-/* Avaliação - mantido o emoji da estrela */
 .avaliacao {
   background: var(--branco);
   border-radius: 14px;
@@ -224,24 +229,9 @@ body {
   margin-bottom: 12px;
 }
 .avaliacao .star { font-size: 20px; }
-.avaliacao span {
-  font-size: 14px; font-weight: 500; color: var(--texto);
-}
+.avaliacao span { font-size: 14px; font-weight: 500; color: var(--texto); }
 
-/* Campos editáveis */
-.editable-input {
-  width: 100%;
-  font-family: 'Poppins', sans-serif;
-  font-size: 13px; color: var(--texto);
-  border: none; border-bottom: 1px dashed var(--borda);
-  background: transparent; outline: none;
-  padding: 2px 0;
-  margin-bottom: 4px;
-  text-align: center;
-}
-.editable-input:focus { border-bottom-color: var(--verde); }
-
-/* ── BOTÃO FIXO ── */
+/* BOTÃO FIXO */
 .btn-footer {
   position: fixed;
   bottom: 0;
@@ -257,20 +247,17 @@ body {
   width: 100%;
   background: var(--verde-btn);
   color: #fff;
-  font-family: 'Poppins', sans-serif;
   font-size: 15px; font-weight: 700;
-  border: none; border-radius: 14px;
+  border: none;
+  border-radius: 14px;
   padding: 14px;
   cursor: pointer;
-  letter-spacing: 0.3px;
   transition: background 0.15s, transform 0.1s;
 }
 .btn-salvar:active { transform: scale(0.98); }
-
-/* Upload avatar */
 #avatar-input { display: none; }
 
-/* ========= MENU LATERAL (DRAWER) RESPONSIVO ========= */
+/* ========= MENU LATERAL (DRAWER) ========= */
 .menu-overlay {
   position: absolute;
   top: 0;
@@ -284,7 +271,6 @@ body {
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s;
 }
-
 .menu-drawer {
   position: absolute;
   top: 0;
@@ -293,249 +279,90 @@ body {
   min-width: 260px;
   height: 100%;
   background: var(--branco);
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  box-shadow: -8px 0 24px rgba(0,0,0,0.15);
   z-index: 101;
   transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  transition: transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1);
   overflow-y: auto;
   border-radius: 20px 0 0 20px;
 }
-
-.menu-overlay.open {
-  opacity: 1;
-  visibility: visible;
-}
-.menu-overlay.open .menu-drawer {
-  transform: translateX(0);
-}
-
+.menu-overlay.open { opacity:1; visibility:visible; }
+.menu-overlay.open .menu-drawer { transform: translateX(0); }
 .menu-header {
   padding: 28px 20px 20px;
   background: linear-gradient(135deg, #3a5f1e, #2d5016);
   color: white;
   border-bottom: 1px solid rgba(255,255,255,0.2);
 }
-.menu-user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.menu-user { display: flex; align-items: center; gap: 12px; }
 .menu-avatar {
-  width: 52px;
-  height: 52px;
+  width: 52px; height: 52px;
   background: linear-gradient(145deg, #d48f3b, #b56a1a);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-.menu-avatar svg {
-  width: 30px;
-  height: 30px;
-  stroke: white;
-  stroke-width: 1.8;
-  fill: none;
-}
-.menu-user-info h4 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.menu-user-info p {
-  font-size: 12px;
-  opacity: 0.85;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.menu-user-info p svg {
-  width: 14px;
-  height: 14px;
-  stroke: white;
-  stroke-width: 2;
-}
+.menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
+.menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+.menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
 .menu-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  position: absolute; top: 16px; right: 16px;
   background: rgba(255,255,255,0.2);
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none; width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
 }
-.menu-close svg {
-  width: 20px;
-  height: 20px;
-  stroke: white;
-  stroke-width: 2;
-}
-
-.menu-nav {
-  padding: 12px 0 20px;
-}
+.menu-close svg { width: 20px; height: 20px; stroke: white; stroke-width: 2; }
+.menu-nav { padding: 12px 0 20px; }
 .menu-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: flex; align-items: center; gap: 14px;
   padding: 12px 20px;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 15px; font-weight: 500;
   color: var(--texto);
   transition: background 0.2s;
   cursor: pointer;
 }
 .menu-item:hover, .menu-item:active { background: #f0ede7; }
-.menu-item .menu-icon {
-  width: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.menu-item .menu-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+.menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
+.menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .menu-item .menu-text { flex: 1; }
-.divider {
-  height: 1px;
-  background: var(--borda);
-  margin: 8px 16px;
-}
-.section-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-  padding: 12px 20px 4px;
-  text-transform: uppercase;
-}
-.machine-list {
-  padding-left: 38px;
-  margin: 4px 0 8px;
-}
-.machine-list li {
-  list-style: none;
-  font-size: 13px;
-  padding: 6px 0;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.machine-list li::before {
-  content: "•";
-  color: var(--laranja);
-  font-weight: bold;
-}
-.menu-sobre-text {
-  font-size: 12px;
-  color: #555;
-  padding: 6px 20px 12px 20px;
-  line-height: 1.5;
-  border-bottom: 1px solid var(--borda);
-  margin-bottom: 4px;
-}
-.footer-menu {
-  border-top: 1px solid var(--borda);
-  margin-top: 8px;
-  padding: 8px 0;
-}
+.divider { height: 1px; background: var(--borda); margin: 8px 16px; }
+.section-title { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
+.machine-list { padding-left: 38px; margin: 4px 0 8px; }
+.machine-list li { list-style: none; font-size: 13px; padding: 6px 0; color: #444; display: flex; align-items: center; gap: 8px; }
+.machine-list li::before { content: "•"; color: var(--laranja); font-weight: bold; }
+.menu-sobre-text { font-size: 12px; color: #555; padding: 6px 20px 12px; line-height: 1.5; border-bottom: 1px solid var(--borda); margin-bottom: 4px; }
+.footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
 
-/* ===== MEDIA QUERIES RESPONSIVAS ===== */
 @media (max-width: 400px) {
-  .header-content {
-    padding: 52px 16px 14px;
-  }
-  .btn-icon {
-    width: 40px;
-    height: 40px;
-  }
-  .btn-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-  .logo-wrap img {
-    height: 36px;
-  }
-  .title-bar {
-    padding: 12px 16px;
-  }
-  .title-bar h1 {
-    font-size: 16px;
-  }
-  .perfil-hero {
-    padding-top: 20px;
-    padding-bottom: 35px;
-  }
-  .avatar-wrap {
-    width: 80px;
-    height: 80px;
-  }
-  .badge-prestador {
-    font-size: 10px;
-    padding: 2px 12px;
-  }
-  .perfil-nome {
-    padding: 12px 0 2px;
-  }
-  .perfil-nome input.editable-input {
-    font-size: 18px;
-  }
-  .body {
-    padding: 0 12px 100px;
-  }
-  .card {
-    padding: 12px 14px;
-  }
-  .card-grid {
-    gap: 8px;
-  }
-  .card-mini {
-    padding: 10px 12px;
-  }
-  .btn-footer {
-    padding: 12px 20px 28px;
-  }
-  .btn-salvar {
-    font-size: 14px;
-    padding: 12px;
-  }
+  .header-content { padding: 52px 16px 14px; }
+  .btn-icon { width: 40px; height: 40px; }
+  .btn-icon svg { width: 22px; height: 22px; }
+  .logo-wrap img { height: 36px; }
+  .title-bar { padding: 12px 16px; }
+  .title-bar h1 { font-size: 16px; }
+  .perfil-hero { padding-top: 20px; padding-bottom: 35px; }
+  .avatar-wrap { width: 80px; height: 80px; }
+  .badge-prestador { font-size: 10px; padding: 2px 12px; }
+  .perfil-nome { padding: 12px 0 2px; }
+  .perfil-nome input.editable-input { font-size: 18px; }
+  .body { padding: 0 12px 100px; }
+  .card { padding: 12px 14px; }
+  .card-grid { gap: 8px; }
+  .card-mini { padding: 10px 12px; }
+  .btn-footer { padding: 12px 20px 28px; }
+  .btn-salvar { font-size: 14px; padding: 12px; }
 }
-
 @media (max-width: 340px) {
-  .perfil-nome input.editable-input {
-    font-size: 16px;
-  }
-  .card-title {
-    font-size: 14px;
-  }
-  .info-row {
-    font-size: 12px;
-  }
-  .card-mini-title {
-    font-size: 12px;
-  }
-  .sobre-textarea {
-    font-size: 12px;
-  }
-  .avaliacao span {
-    font-size: 13px;
-  }
-  .btn-salvar {
-    font-size: 13px;
-    padding: 10px;
-  }
+  .perfil-nome input.editable-input { font-size: 16px; }
+  .card-title { font-size: 14px; }
+  .info-row { font-size: 12px; }
+  .card-mini-title { font-size: 12px; }
+  .sobre-textarea { font-size: 12px; }
+  .avaliacao span { font-size: 13px; }
+  .btn-salvar { font-size: 13px; padding: 10px; }
 }
 </style>
 </head>
@@ -550,19 +377,15 @@ body {
       <button class="btn-icon" id="backButton" aria-label="Voltar">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="logo-wrap">
-        <img alt="PlanoV">
-      </div>
+      <div class="logo-wrap"><img alt="PlanoV"></div>
       <button class="btn-icon" id="menuButton" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- FAIXA TÍTULO -->
   <div class="title-bar"><h1>Meu Perfil</h1></div>
 
-  <!-- HERO com foto -->
   <div class="perfil-hero">
     <label for="avatar-input" style="cursor:pointer">
       <div class="avatar-wrap" id="avatar-wrap">
@@ -578,81 +401,78 @@ body {
       </div>
     </label>
     <input type="file" id="avatar-input" accept="image/*">
-    <div class="badge-prestador">Prestador</div>
+    <div class="badge-prestador" id="tipo-badge">Prestador</div>
   </div>
 
-  <!-- BODY -->
   <div class="body" id="mainBody">
-
-    <!-- Nome / localização editáveis -->
     <div class="perfil-nome">
-      <input class="editable-input" id="nome" value="João Silva"
-             style="font-size:20px;font-weight:700;text-align:center;border-bottom:1px dashed var(--borda);">
-      <input class="editable-input" id="especialidade" value="Especialista em colheita"
-             style="font-size:13px;color:#888;text-align:center;">
-      <input class="editable-input" id="cidade" value="Araras - SP"
-             style="font-size:13px;color:#888;text-align:center;">
+      <input class="editable-input" id="nome" placeholder="Nome">
+      <input class="editable-input" id="especialidade" placeholder="Especialidade">
+      <input class="editable-input" id="cidade" placeholder="Cidade - UF">
     </div>
 
-    <!-- Informações Profissionais -->
-    <div class="card">
-      <div class="card-title">Informações Profissionais</div>
-      <div class="info-row">
-        <span class="lbl">Serviços:</span>
-        <input class="editable-input" id="servicos" value="Colheita e Plantação" style="margin-left:8px;width:auto;display:inline-block;">
-      </div>
-      <div class="info-row">
-        <span class="lbl">Experiência:</span>
-        <input class="editable-input" id="experiencia" value="8 anos" style="margin-left:8px;width:auto;display:inline-block;">
-      </div>
-    </div>
-
-    <!-- Máquinas + Contato -->
-    <div class="card-grid">
-      <div class="card-mini">
-        <div class="card-mini-title">
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="11" width="18" height="8" rx="2"/>
-            <rect x="7" y="5" width="10" height="6" rx="1"/>
-            <circle cx="7" cy="17" r="2"/>
-            <circle cx="17" cy="17" r="2"/>
-            <line x1="5" y1="11" x2="5" y2="9"/>
-            <line x1="19" y1="11" x2="19" y2="9"/>
-          </svg>
-          <span>Máquinas</span>
+    <div id="campos-prestador" style="display: none;">
+      <div class="card">
+        <div class="card-title">Informações Profissionais</div>
+        <div class="info-row">
+          <span class="lbl">Serviços:</span>
+          <input class="editable-input" id="servicos">
         </div>
-        <textarea class="sobre-textarea" id="maquinas" rows="2">Trator John Deere
-Colheitadeira</textarea>
-      </div>
-      <div class="card-mini">
-        <div class="card-mini-title">
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-          <span>Contato</span>
+        <div class="info-row">
+          <span class="lbl">Experiência:</span>
+          <input class="editable-input" id="experiencia">
         </div>
-        <textarea class="sobre-textarea" id="contato" rows="2">(19) 9 9999-9999
-jsilva@email.com</textarea>
+      </div>
+      <div class="card-grid">
+        <div class="card-mini">
+          <div class="card-mini-title">
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="8" rx="2"/><rect x="7" y="5" width="10" height="6" rx="1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="5" y1="11" x2="5" y2="9"/><line x1="19" y1="11" x2="19" y2="9"/></svg>
+            <span>Máquinas</span>
+          </div>
+          <textarea class="sobre-textarea" id="maquinas" rows="2" placeholder="Liste suas máquinas..."></textarea>
+        </div>
+        <div class="card-mini">
+          <div class="card-mini-title">
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Contato</span>
+          </div>
+          <textarea class="sobre-textarea" id="contato" rows="2" placeholder="WhatsApp, email..."></textarea>
+        </div>
       </div>
     </div>
 
-    <!-- Sobre -->
+    <div id="campos-empresa" style="display: none;">
+      <div class="card">
+        <div class="card-title">Informações da Empresa</div>
+        <div class="info-row">
+          <span class="lbl">Nicho:</span>
+          <input class="editable-input" id="nicho" placeholder="Ex: Agricultura, Pecuária...">
+        </div>
+        <div class="info-row">
+          <span class="lbl">Cultivo Principal:</span>
+          <input class="editable-input" id="cultivo" placeholder="Ex: Soja, Milho...">
+        </div>
+        <div class="info-row">
+          <span class="lbl">Região de Atuação:</span>
+          <input class="editable-input" id="regiao" placeholder="Ex: Centro-Oeste...">
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-title" style="color: var(--laranja);">Sobre</div>
-      <textarea class="sobre-textarea" id="sobre" rows="3">Especialista em operação de tratores e preparo do solo. atuo com eficiencia em serviços agricolas</textarea>
+      <textarea class="sobre-textarea" id="sobre" rows="3" placeholder="Fale sobre você ou sua empresa..."></textarea>
     </div>
 
-    <!-- Avaliação - mantida a estrela emoji -->
+    <!-- Avaliação média (apenas visual, não editável) -->
     <div class="avaliacao">
       <span class="star">⭐</span>
       <span id="nota-texto">4,8 avaliação média</span>
     </div>
+  </div>
 
-  </div><!-- /body -->
-
-  <!-- BOTÃO FIXO -->
   <div class="btn-footer">
-    <button class="btn-salvar" onclick="salvar()">Salvar alterações</button>
+    <button class="btn-salvar" id="btnSalvar">Salvar alterações</button>
   </div>
 
   <!-- MENU DRAWER -->
@@ -663,7 +483,7 @@ jsilva@email.com</textarea>
       </button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar">
+          <div class="menu-avatar" id="menuAvatar">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
               <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
               <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
@@ -672,197 +492,279 @@ jsilva@email.com</textarea>
             </svg>
           </div>
           <div class="menu-user-info">
-            <h4 id="menuFazendaNome">Fazenda Luzia</h4>
-            <p>
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/>
-                <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/>
-                <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/>
-              </svg>
-              AgroConectada
-            </p>
+            <h4 id="menuNome">Carregando...</h4>
+            <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/><path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/></svg><span id="menuTipo">Usuário</span></p>
           </div>
         </div>
       </div>
       <div class="menu-nav">
-        <div class="menu-item" data-nav="inicio">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <div class="menu-text">Início</div>
-        </div>
-        <div class="menu-item" data-nav="empresas">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-          <div class="menu-text">Empresas</div>
-        </div>
-        <div class="menu-item" data-nav="agenda">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
-          <div class="menu-text">Minha Agenda</div>
-        </div>
+        <div class="menu-item" data-nav="inicio"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="menu-text">Início</div></div>
+        <div class="menu-item" data-nav="empresas"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="menu-text">Empresas</div></div>
+        <div class="menu-item" data-nav="agenda"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div><div class="menu-text">Minha Agenda</div></div>
         <div class="divider"></div>
-        <div class="section-title">INFORMAÇÃO</div>
-        <div class="menu-item" style="pointer-events: none;">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-          <div class="menu-text"><strong>Serviços:</strong> <span id="menuServicosValor">Colheita e Plantação</span></div>
-        </div>
-        <div class="menu-item" style="pointer-events: none;">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="menu-text"><strong>Experiência:</strong> <span id="menuExperienciaValor">8 anos</span></div>
-        </div>
+        <div class="section-title">CONFIGURAÇÕES</div>
+        <div class="menu-item" data-nav="perfil"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text">Meu Perfil</div></div>
+        <div class="menu-item" data-nav="configuracoes"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="menu-text">Configurações</div></div>
+        <div class="menu-item" data-nav="ajuda"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="menu-text">Ajuda</div></div>
         <div class="divider"></div>
-        <div class="section-title">MÁQUINAS</div>
-        <div class="menu-item" style="pointer-events: none;">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="8" rx="2"/><rect x="7" y="5" width="10" height="6" rx="1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="5" y1="11" x2="5" y2="9"/><line x1="19" y1="11" x2="19" y2="9"/></svg></div>
-          <div class="menu-text"><strong>Meu equipamento</strong></div>
-        </div>
-        <ul class="machine-list" id="menuMachineList">
-          <li>Trator John Deere</li>
-          <li>Colheitadeira</li>
-        </ul>
-        <div class="section-title">SOBRE</div>
-        <div class="menu-sobre-text" id="menuSobreTexto">
-          Especialista em operação de tratores e preparo do solo. atuo com eficiencia em serviços agricolas
-        </div>
-        <div class="divider"></div>
-        <div class="menu-item" data-nav="configuracoes">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-          <div class="menu-text">Configurações</div>
-        </div>
-        <div class="menu-item" data-nav="ajuda">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="menu-text">Ajuda</div>
-        </div>
-        <div class="divider"></div>
-        <div class="footer-menu">
-          <div class="menu-item" data-nav="perfil">
-            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div class="menu-text">Perfil</div>
-          </div>
-          <div class="menu-item" data-nav="sair">
-            <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
-            <div class="menu-text">Sair</div>
-          </div>
-        </div>
+        <div class="footer-menu"><div class="menu-item" data-nav="sair"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><div class="menu-text">Sair</div></div></div>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
-// ----- elementos do DOM -----
-const menuOverlay = document.getElementById('menuOverlay');
-const menuBtn = document.getElementById('menuButton');
-const closeMenuBtn = document.getElementById('closeMenuBtn');
-const backButton = document.getElementById('backButton');
+  const API_BASE_URL = 'http://localhost:3000/api';
+  let token = localStorage.getItem('token');
+  let user = JSON.parse(localStorage.getItem('user') || '{}');
 
-// ---- Função para atualizar o menu com dados atuais do perfil ----
-function updateMenuFromProfile() {
-  const servicos = document.getElementById('servicos').value.trim() || "Não informado";
-  const experiencia = document.getElementById('experiencia').value.trim() || "Não informado";
-  const maquinasRaw = document.getElementById('maquinas').value;
-  const sobreTexto = document.getElementById('sobre').value.trim() || "Sem descrição";
-  
-  const menuServicosSpan = document.getElementById('menuServicosValor');
-  const menuExpSpan = document.getElementById('menuExperienciaValor');
-  const menuSobreDiv = document.getElementById('menuSobreTexto');
-  if (menuServicosSpan) menuServicosSpan.innerText = servicos;
-  if (menuExpSpan) menuExpSpan.innerText = experiencia;
-  if (menuSobreDiv) menuSobreDiv.innerText = sobreTexto;
-  
-  const lines = maquinasRaw.split(/\r?\n/).filter(l => l.trim().length > 0);
-  const machineListUl = document.getElementById('menuMachineList');
-  if (machineListUl) {
-    machineListUl.innerHTML = '';
-    if (lines.length === 0) {
-      const li = document.createElement('li');
-      li.textContent = 'Nenhuma máquina cadastrada';
-      machineListUl.appendChild(li);
+  if (!token || !user.id) {
+    alert('Você precisa estar logado para acessar esta página.');
+    window.location.href = 'login.html';
+  }
+
+  // Elementos gerais
+  const nomeInput = document.getElementById('nome');
+  const especialidadeInput = document.getElementById('especialidade');
+  const cidadeInput = document.getElementById('cidade');
+  const sobreTextarea = document.getElementById('sobre');
+  const tipoBadge = document.getElementById('tipo-badge');
+  const btnSalvar = document.getElementById('btnSalvar');
+  const avatarImg = document.getElementById('avatar-img');
+  const avatarPlaceholder = document.querySelector('.avatar-placeholder');
+  let currentAvatarBase64 = null;
+
+  // Elementos específicos de prestador
+  const camposPrestadorDiv = document.getElementById('campos-prestador');
+  const servicosInput = document.getElementById('servicos');
+  const experienciaInput = document.getElementById('experiencia');
+  const maquinasTextarea = document.getElementById('maquinas');
+  const contatoTextarea = document.getElementById('contato');
+
+  // Elementos específicos de empresa
+  const camposEmpresaDiv = document.getElementById('campos-empresa');
+  const nichoInput = document.getElementById('nicho');
+  const cultivoInput = document.getElementById('cultivo');
+  const regiaoInput = document.getElementById('regiao');
+
+  // Menu lateral
+  const menuNome = document.getElementById('menuNome');
+  const menuTipo = document.getElementById('menuTipo');
+  const menuAvatar = document.getElementById('menuAvatar');
+
+  // Atualizar menu com dados básicos do usuário
+  function atualizarMenuBasico() {
+    menuNome.innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
+    if (user.tipo_usuario === 'prestador') menuTipo.innerText = 'Prestador';
+    else if (user.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
+    else menuTipo.innerText = 'Usuário';
+  }
+
+  // Mostrar/esconder campos conforme tipo
+  function configurarCamposPorTipo() {
+    if (user.tipo_usuario === 'prestador') {
+      tipoBadge.innerText = 'Prestador';
+      camposPrestadorDiv.style.display = 'block';
+      camposEmpresaDiv.style.display = 'none';
+    } else if (user.tipo_usuario === 'empresa') {
+      tipoBadge.innerText = 'Empresa';
+      camposPrestadorDiv.style.display = 'none';
+      camposEmpresaDiv.style.display = 'block';
     } else {
-      lines.forEach(line => {
-        const li = document.createElement('li');
-        li.textContent = line.trim();
-        machineListUl.appendChild(li);
+      tipoBadge.innerText = 'Produtor Rural';
+      camposPrestadorDiv.style.display = 'none';
+      camposEmpresaDiv.style.display = 'none';
+    }
+  }
+
+  // Carregar perfil completo da API
+  async function carregarPerfil() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/profile/${user.id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
-    }
-  }
-}
+      if (!response.ok) throw new Error('Erro ao carregar perfil');
+      const data = await response.json();
+      const userData = data.user;
 
-function openMenu() {
-  updateMenuFromProfile();
-  menuOverlay.classList.add('open');
-}
+      // Preencher campos comuns
+      nomeInput.value = userData.nome || '';
+      especialidadeInput.value = userData.especialidade || userData.sobre?.substring(0, 50) || '';
+      let cidadeTexto = userData.cidade || '';
+      if (userData.estado) cidadeTexto += (cidadeTexto ? ` - ${userData.estado}` : userData.estado);
+      cidadeInput.value = cidadeTexto;
+      sobreTextarea.value = userData.sobre || '';
 
-function closeMenu() {
-  menuOverlay.classList.remove('open');
-}
-
-if (menuBtn) menuBtn.addEventListener('click', openMenu);
-if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
-if (menuOverlay) menuOverlay.addEventListener('click', (e) => {
-  if (e.target === menuOverlay) closeMenu();
-});
-
-document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
-  item.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const nav = item.getAttribute('data-nav');
-    if (nav === 'sair') {
-      if (confirm('Deseja realmente sair da sua conta?')) {
-        alert('Você saiu do sistema. (Função de logout simulada)');
+      // Avatar
+      if (userData.foto_perfil && userData.foto_perfil.startsWith('data:image')) {
+        avatarImg.src = userData.foto_perfil;
+        avatarImg.style.display = 'block';
+        avatarPlaceholder.style.display = 'none';
+        currentAvatarBase64 = userData.foto_perfil;
+      } else {
+        avatarImg.style.display = 'none';
+        avatarPlaceholder.style.display = 'flex';
+        currentAvatarBase64 = null;
       }
-      closeMenu();
-    } 
-    else if (nav === 'perfil') {
-      closeMenu();
+
+      if (user.tipo_usuario === 'prestador') {
+        servicosInput.value = userData.servicos || '';
+        experienciaInput.value = userData.experiencia || '';
+        // Máquinas e contato podem ser guardados localmente, mas o backend não tem campos específicos? Vamos armazenar em "maquinas" e "contato" (não persistem no backend por enquanto)
+        maquinasTextarea.value = userData.maquinas || '';
+        contatoTextarea.value = userData.whatsapp ? `WhatsApp: ${userData.whatsapp}` : '';
+      } else if (user.tipo_usuario === 'empresa') {
+        nichoInput.value = userData.nicho || '';
+        cultivoInput.value = userData.cultivo || '';
+        regiaoInput.value = userData.regiao || '';
+      }
+
+      // Atualizar menu lateral com foto
+      if (userData.foto_perfil && userData.foto_perfil.startsWith('data:image')) {
+        menuAvatar.innerHTML = `<img src="${userData.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+      } else {
+        menuAvatar.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+          <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+          <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+          <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+          <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+        </svg>`;
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Erro ao carregar perfil.');
     }
-    else {
-      let msg = '';
-      if (nav === 'inicio') msg = 'Navegar para Início';
-      else if (nav === 'empresas') msg = 'Navegar para Empresas';
-      else if (nav === 'agenda') msg = 'Navegar para Minha Agenda';
-      else if (nav === 'configuracoes') msg = 'Abrir Configurações';
-      else if (nav === 'ajuda') msg = 'Central de Ajuda';
-      alert(`🔜 ${msg} (simulação)`);
-      closeMenu();
-    }
-  });
-});
-
-if (backButton) {
-  backButton.addEventListener('click', () => {
-    alert('Voltar para tela anterior (simulação)');
-  });
-}
-
-function salvar() {
-  const nome = document.getElementById('nome').value.trim();
-  if (!nome) { alert('Informe seu nome.'); return; }
-  updateMenuFromProfile();
-  alert('Perfil salvo com sucesso!\n\n' + nome);
-}
-
-document.getElementById('avatar-input').addEventListener('change', function() {
-  const file = this.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = document.getElementById('avatar-img');
-    img.src = e.target.result;
-    img.style.display = 'block';
-    document.querySelector('.avatar-placeholder').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-});
-
-const camposDinamicos = ['servicos', 'experiencia', 'maquinas', 'sobre'];
-camposDinamicos.forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    el.addEventListener('change', updateMenuFromProfile);
-    el.addEventListener('blur', updateMenuFromProfile);
   }
-});
 
-updateMenuFromProfile();
+  // Salvar alterações
+  async function salvarPerfil() {
+    const nome = nomeInput.value.trim();
+    const sobrenome = user.sobrenome || '';
+    const endereco = ''; // Não temos campo
+    let cidade = '';
+    let estado = '';
+    const cidadeRaw = cidadeInput.value.trim();
+    if (cidadeRaw.includes('-')) {
+      const parts = cidadeRaw.split('-');
+      cidade = parts[0].trim();
+      estado = parts[1].trim();
+    } else {
+      cidade = cidadeRaw;
+      estado = '';
+    }
+    const sobre = sobreTextarea.value.trim();
+
+    // Construir payload base
+    const payload = {
+      nome, sobrenome, endereco, cidade, estado, sobre,
+      foto_perfil: currentAvatarBase64 || null
+    };
+
+    if (user.tipo_usuario === 'prestador') {
+      const servicos = servicosInput.value.trim();
+      const experiencia = experienciaInput.value.trim();
+      const whatsapp = contatoTextarea.value.trim().replace(/^WhatsApp: /i, '');
+      // Campos adicionais (maquinas, etc) não são salvos no backend atual, mas podemos guardar localmente via localStorage se quiser
+      payload.servicos = servicos;
+      payload.experiencia = experiencia;
+      payload.whatsapp = whatsapp;
+    } else if (user.tipo_usuario === 'empresa') {
+      payload.nicho = nichoInput.value.trim();
+      payload.cultivo = cultivoInput.value.trim();
+      payload.regiao = regiaoInput.value.trim();
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Erro ao salvar');
+      }
+      alert('Perfil atualizado com sucesso!');
+      // Atualizar localStorage com nome alterado
+      user.nome = nome;
+      user.sobrenome = sobrenome;
+      localStorage.setItem('user', JSON.stringify(user));
+      atualizarMenuBasico();
+      // Recarregar o perfil para garantir consistência
+      await carregarPerfil();
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
+  // Upload de avatar
+  document.getElementById('avatar-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      currentAvatarBase64 = ev.target.result;
+      avatarImg.src = currentAvatarBase64;
+      avatarImg.style.display = 'block';
+      avatarPlaceholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Inicialização
+  configurarCamposPorTipo();
+  atualizarMenuBasico();
+  carregarPerfil();
+
+  // Evento do botão salvar
+  btnSalvar.addEventListener('click', salvarPerfil);
+
+  // ========== MENU LATERAL ==========
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const backButton = document.getElementById('backButton');
+
+  function openMenu() { menuOverlay.classList.add('open'); }
+  function closeMenu() { menuOverlay.classList.remove('open'); }
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+  if (backButton) backButton.addEventListener('click', () => window.history.back());
+
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') {
+        if (confirm('Deseja realmente sair da sua conta?')) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        }
+        closeMenu();
+      } else if (nav === 'inicio') {
+        window.location.href = 'home.html';
+      } else if (nav === 'empresas') {
+        window.location.href = (user.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      } else if (nav === 'agenda') {
+        window.location.href = 'agenda.html';
+      } else if (nav === 'perfil') {
+        closeMenu();
+      } else if (nav === 'configuracoes') {
+        alert('Configurações em breve');
+        closeMenu();
+      } else if (nav === 'ajuda') {
+        alert('Central de ajuda em breve');
+        closeMenu();
+      } else {
+        closeMenu();
+      }
+    });
+  });
 </script>
 </body>
 </html>

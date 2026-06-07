@@ -3,243 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>PlanoV – Empresas</title>
+  <title>PlanoV – Prestadores</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* ==== Mesmo CSS já existente – mantido original ==== */
+    /* Mesmo CSS do buscar-empresas, mas adaptado para prestadores – exatamente igual ao original */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    :root {
-      --verde: #3a5f1e;
-      --verde-btn: #2d5016;
-      --laranja: #e07a1c;
-      --bg: #f7f4ee;
-      --branco: #ffffff;
-      --texto: #1a1a1a;
-      --muted: #777;
-      --borda: #e0ddd6;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #cdc8bc;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .frame {
-      width: 100%;
-      max-width: 450px;
-      background: var(--bg);
-      border-radius: 44px;
-      overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-    .header {
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      height: 178px;
-    }
-    .header-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 150%;
-      object-fit: cover;
-      display: block;
-    }
-    .header-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 52px 20px 18px;
-    }
-    .btn-icon {
-      background: none;
-      border: none;
-      cursor: pointer;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background 0.2s;
-    }
+    :root { --verde: #3a5f1e; --verde-btn: #2d5016; --laranja: #e07a1c; --bg: #f7f4ee; --branco: #ffffff; --texto: #1a1a1a; --muted: #777; --borda: #e0ddd6; }
+    body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
+    .frame { width: 100%; max-width: 450px; background: var(--bg); border-radius: 44px; overflow: hidden; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4); position: relative; display: flex; flex-direction: column; }
+    .header { position: relative; overflow: hidden; flex-shrink: 0; height: 178px; }
+    .header-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 52px 20px 18px; }
+    .btn-icon { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
     .btn-icon:active { background: rgba(0, 0, 0, 0.05); }
-    .btn-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: #2d4f14;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      fill: none;
-      stroke-linejoin: round;
-    }
-    .logo-wrap img {
-      height: 40px;
-      display: block;
-    }
-    .search-wrap {
-      position: relative;
-      z-index: 1;
-      padding: 0 20px 20px;
-    }
-    .search-bar {
-      background: var(--branco);
-      border-radius: 40px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--borda);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
-    .search-icon {
-      width: 20px;
-      height: 20px;
-      stroke: var(--muted);
-      stroke-width: 2.5;
-      flex-shrink: 0;
-    }
-    .search-bar input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      padding: 8px 0;
-    }
+    .btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
+    .logo-wrap img { height: 40px; display: block; }
+    .search-wrap { position: relative; z-index: 1; padding: 0 20px 20px; }
+    .search-bar { background: var(--branco); border-radius: 40px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--borda); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
+    .search-icon { width: 20px; height: 20px; stroke: var(--muted); stroke-width: 2.5; flex-shrink: 0; }
+    .search-bar input { flex: 1; border: none; outline: none; background: transparent; font-family: 'Poppins', sans-serif; font-size: 14px; padding: 8px 0; }
     .search-bar input::placeholder { color: var(--muted); }
-    .title-bar {
-      background: var(--verde);
-      padding: 14px 20px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .title-bar h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.2px;
-    }
-    .body {
-      flex: 1;
-      background: var(--bg);
-      padding: 20px 16px 30px;
-      overflow-y: auto;
-    }
-    .cards-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card {
-      background: var(--branco);
-      border-radius: 18px;
-      border: 1px solid var(--borda);
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      transition: transform 0.1s, box-shadow 0.1s;
-    }
+    .title-bar { background: var(--verde); padding: 14px 20px; text-align: center; flex-shrink: 0; }
+    .title-bar h2 { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 0.2px; }
+    .body { flex: 1; background: var(--bg); padding: 20px 16px 30px; overflow-y: auto; }
+    .cards-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .card-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .card { background: var(--branco); border-radius: 18px; border: 1px solid var(--borda); padding: 14px; display: flex; gap: 12px; transition: transform 0.1s, box-shadow 0.1s; }
     .card:active { transform: scale(0.99); }
-    .card-foto-wrap {
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #c8a96e, #b58d4a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .avatar-inicial {
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-      text-transform: uppercase;
-    }
-    .card-foto-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .card-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .card-nome {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--texto);
-    }
-    .card-prod {
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .card-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 6px;
-    }
-    .card-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .star {
-      width: 16px;
-      height: 16px;
-      fill: var(--laranja);
-      stroke: none;
-    }
-    .card-nota {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--texto);
-    }
-    .btn-visualizar {
-      background: var(--verde-btn);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 6px 18px;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-    }
-    .btn-visualizar:active {
-      transform: scale(0.96);
-      background: #3a6620;
-    }
-    .empty-msg {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 14px;
-      display: none;
-    }
-    /* MENU LATERAL – mesmo estilo (mantido) */
+    .card-foto-wrap { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #c8a96e, #b58d4a); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .avatar-inicial { font-size: 28px; font-weight: 700; color: white; text-transform: uppercase; }
+    .card-foto-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .card-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .card-nome { font-size: 16px; font-weight: 700; color: var(--texto); }
+    .card-prod { font-size: 13px; color: var(--muted); }
+    .card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+    .card-rating { display: flex; align-items: center; gap: 4px; }
+    .star { width: 16px; height: 16px; fill: var(--laranja); stroke: none; }
+    .card-nota { font-size: 13px; font-weight: 600; color: var(--texto); }
+    .btn-visualizar { background: var(--verde-btn); color: white; border: none; border-radius: 30px; padding: 6px 18px; font-size: 12px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+    .btn-visualizar:active { transform: scale(0.96); background: #3a6620; }
+    .empty-msg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; display: none; }
+    /* Menu lateral igual ao buscar-empresas, manter */
     .menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
     .menu-drawer { position: absolute; top: 0; right: 0; width: min(280px, 85%); min-width: 260px; height: 100%; background: #ffffff; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); overflow-y: auto; border-radius: 20px 0 0 20px; }
     .menu-overlay.open { opacity: 1; visibility: visible; }
@@ -286,16 +90,13 @@
 <body>
 
 <div class="frame">
-
   <div class="header">
     <img src="IMG/superior.png" alt="" class="header-bg" />
     <div class="header-content">
       <button class="btn-icon" onclick="history.back()" aria-label="Voltar">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="logo-wrap">
-        <img src="IMG/logo.png" alt="PlanoV Logo" />
-      </div>
+      <div class="logo-wrap"><img src="IMG/logo.png" alt="PlanoV Logo" /></div>
       <button class="btn-icon" id="menuButton" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -306,36 +107,23 @@
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
-        <input type="text" id="search-input" placeholder="Buscar empresa..." autocomplete="off" />
+        <input type="text" id="search-input" placeholder="Buscar prestador..." autocomplete="off" />
       </div>
     </div>
   </div>
-
-  <div class="title-bar">
-    <h2>Empresas</h2>
-  </div>
-
+  <div class="title-bar"><h2>Prestadores</h2></div>
   <div class="body">
     <div class="cards-wrap">
       <ul class="card-list" id="card-list"></ul>
-      <div class="empty-msg" id="empty-msg">Nenhuma empresa encontrada.</div>
+      <div class="empty-msg" id="empty-msg">Nenhum prestador encontrado.</div>
     </div>
   </div>
-
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
       <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar">
-            <!-- Ícone de planta padrão será substituído por foto se existir no JS -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
-              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
-              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
-              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
-              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
+          <div class="menu-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/><path d="M12 10v10M8 20h8" stroke-linecap="round"/><path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/><path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/></svg></div>
           <div class="menu-user-info">
             <h4 id="menuNome">Carregando...</h4>
             <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/><path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/></svg><span id="menuTipo">Usuário</span></p>
@@ -361,88 +149,82 @@
 <script>
   const API_BASE_URL = 'http://localhost:3000/api';
   let token = localStorage.getItem('token');
-  let user = JSON.parse(localStorage.getItem('user') || '{}');
+  let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-  if (!token || !user.id) {
+  if (!token || !loggedUser.id) {
     alert('Você precisa estar logado para acessar esta página.');
     window.location.href = 'login.html';
   }
 
-  // Atualizar menu com dados do usuário (incluindo foto)
+  // Atualizar menu com foto do usuário logado
+  const menuAvatarDiv = document.querySelector('.menu-avatar');
   const menuNome = document.getElementById('menuNome');
   const menuTipo = document.getElementById('menuTipo');
-  const menuAvatarDiv = document.querySelector('.menu-avatar');
-  if (menuNome) menuNome.innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
+  if (menuNome) menuNome.innerText = `${loggedUser.nome} ${loggedUser.sobrenome || ''}`.trim();
   if (menuTipo) {
-    if (user.tipo_usuario === 'prestador') menuTipo.innerText = 'Prestador';
-    else if (user.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
+    if (loggedUser.tipo_usuario === 'prestador') menuTipo.innerText = 'Prestador';
+    else if (loggedUser.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
     else menuTipo.innerText = 'Usuário';
   }
-  // Se houver foto do usuário logado, substituir no menu
-  if (user.foto_perfil && user.foto_perfil.startsWith('data:image')) {
-    menuAvatarDiv.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+  if (loggedUser.foto_perfil && loggedUser.foto_perfil.startsWith('data:image')) {
+    menuAvatarDiv.innerHTML = `<img src="${loggedUser.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
   }
 
-  const cardList = document.getElementById('card-list');
   const searchInput = document.getElementById('search-input');
+  const cardList = document.getElementById('card-list');
   const emptyMsg = document.getElementById('empty-msg');
 
-  async function carregarEmpresas(searchTerm = '') {
+  async function carregarPrestadores(searchTerm = '') {
     try {
-      let url = `${API_BASE_URL}/companies`;
+      let url = `${API_BASE_URL}/companies/providers`;
       if (searchTerm) url += `?search=${encodeURIComponent(searchTerm)}`;
       const response = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
-      if (!response.ok) throw new Error('Erro ao carregar empresas');
-      const empresas = await response.json();
-      renderCards(empresas);
+      if (!response.ok) throw new Error('Erro ao carregar prestadores');
+      const prestadores = await response.json();
+      if (prestadores.length === 0) {
+        cardList.innerHTML = '';
+        emptyMsg.style.display = 'block';
+        return;
+      }
+      emptyMsg.style.display = 'none';
+      cardList.innerHTML = '';
+      prestadores.forEach(prov => {
+        const nomeCompleto = `${prov.nome} ${prov.sobrenome || ''}`.trim();
+        const inicial = prov.nome ? prov.nome.charAt(0).toUpperCase() : 'P';
+        const descricao = prov.experiencia ? `Experiência: ${prov.experiencia}` : 'Profissional do agro';
+        const nota = 'N/A';
+        const foto = prov.foto_perfil && prov.foto_perfil.startsWith('data:image') ? prov.foto_perfil : null;
+        const card = document.createElement('li');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-foto-wrap">
+            ${foto ? `<img src="${foto}" alt="Avatar">` : `<span class="avatar-inicial">${inicial}</span>`}
+          </div>
+          <div class="card-info">
+            <span class="card-nome">${nomeCompleto}</span>
+            <span class="card-prod">${descricao}</span>
+            <div class="card-bottom">
+              <div class="card-rating">
+                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="card-nota">${nota}</span>
+              </div>
+              <button class="btn-visualizar" data-id="${prov.id}">Visualizar</button>
+            </div>
+          </div>
+        `;
+        const btn = card.querySelector('.btn-visualizar');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          window.location.href = `perfil-prestador.html?id=${prov.id}`;
+        });
+        cardList.appendChild(card);
+      });
     } catch (err) {
       console.error(err);
       cardList.innerHTML = '';
       emptyMsg.style.display = 'block';
-      emptyMsg.innerText = 'Erro ao carregar empresas. Tente novamente.';
+      emptyMsg.innerText = 'Erro ao carregar prestadores. Tente novamente.';
     }
-  }
-
-  function renderCards(empresasArray) {
-    if (!empresasArray.length) {
-      cardList.innerHTML = '';
-      emptyMsg.style.display = 'block';
-      emptyMsg.innerText = 'Nenhuma empresa encontrada.';
-      return;
-    }
-    emptyMsg.style.display = 'none';
-    cardList.innerHTML = '';
-    empresasArray.forEach(emp => {
-      const nomeCompleto = `${emp.nome} ${emp.sobrenome || ''}`.trim();
-      const inicial = emp.nome ? emp.nome.charAt(0).toUpperCase() : 'E';
-      const descricao = emp.nicho || emp.cultivo || 'Empresa do agronegócio';
-      const nota = 'N/A';
-      const foto = emp.foto_perfil && emp.foto_perfil.startsWith('data:image') ? emp.foto_perfil : null;
-      const card = document.createElement('li');
-      card.className = 'card';
-      card.innerHTML = `
-        <div class="card-foto-wrap">
-          ${foto ? `<img src="${foto}" alt="Avatar">` : `<span class="avatar-inicial">${inicial}</span>`}
-        </div>
-        <div class="card-info">
-          <span class="card-nome">${nomeCompleto}</span>
-          <span class="card-prod">${descricao}</span>
-          <div class="card-bottom">
-            <div class="card-rating">
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <span class="card-nota">${nota}</span>
-            </div>
-            <button class="btn-visualizar" data-id="${emp.id}">Visualizar</button>
-          </div>
-        </div>
-      `;
-      const btn = card.querySelector('.btn-visualizar');
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.location.href = `perfil-empresa.html?id=${emp.id}`;
-      });
-      cardList.appendChild(card);
-    });
   }
 
   let debounceTimeout;
@@ -450,7 +232,7 @@
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
       const term = searchInput.value.trim();
-      carregarEmpresas(term);
+      carregarPrestadores(term);
     }, 500);
   });
 
@@ -474,7 +256,7 @@
       } else if (nav === 'inicio') {
         window.location.href = 'home.html';
       } else if (nav === 'empresas') {
-        closeMenu();
+        window.location.href = (loggedUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
       } else if (nav === 'agenda') {
         window.location.href = 'agenda.html';
       } else if (nav === 'perfil') {
@@ -485,7 +267,7 @@
     });
   });
 
-  carregarEmpresas();
+  carregarPrestadores();
 </script>
 </body>
 </html>

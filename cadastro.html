@@ -221,54 +221,22 @@ select.input-field {
 
 /* ===== MEDIA QUERIES RESPONSIVAS ===== */
 @media (max-width: 400px) {
-  .header {
-    padding: 52px 16px 14px;
-  }
-  .btn-icon {
-    width: 40px;
-    height: 40px;
-  }
-  .btn-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-  .logo-wrap img {
-    height: 38px;
-  }
-  .body {
-    padding: 16px 16px 25px;
-  }
-  .form-card {
-    padding: 16px 14px;
-  }
-  .card-title {
-    font-size: 17px;
-  }
-  .field-label {
-    font-size: 12px;
-  }
-  .input-field {
-    font-size: 13px;
-    padding: 10px 12px;
-  }
-  .check-label {
-    font-size: 11.5px;
-  }
-  .btn-cadastrar {
-    font-size: 15px;
-    padding: 12px;
-  }
+  .header { padding: 52px 16px 14px; }
+  .btn-icon { width: 40px; height: 40px; }
+  .btn-icon svg { width: 22px; height: 22px; }
+  .logo-wrap img { height: 38px; }
+  .body { padding: 16px 16px 25px; }
+  .form-card { padding: 16px 14px; }
+  .card-title { font-size: 17px; }
+  .field-label { font-size: 12px; }
+  .input-field { font-size: 13px; padding: 10px 12px; }
+  .check-label { font-size: 11.5px; }
+  .btn-cadastrar { font-size: 15px; padding: 12px; }
 }
 @media (max-width: 340px) {
-  .form-card {
-    padding: 14px 12px;
-  }
-  .check-row {
-    padding: 10px 12px;
-  }
-  .check-label {
-    font-size: 11px;
-  }
+  .form-card { padding: 14px 12px; }
+  .check-row { padding: 10px 12px; }
+  .check-label { font-size: 11px; }
 }
 </style>
 </head>
@@ -288,51 +256,58 @@ select.input-field {
     <div class="logo-wrap">
       <img src="img/logo.png" alt="PlanoV">
     </div>
-    <!-- Espaço vazio para manter alinhamento centralizado da logo -->
     <div style="width:44px"></div>
   </div>
 
   <!-- BODY -->
   <div class="body">
 
-    <!-- CARD ARREDONDADO COM TÍTULO DENTRO -->
     <div class="form-card">
-
       <div class="card-title">Cadastro</div>
 
       <div class="field-group">
-        <label class="field-label">Nome</label>
+        <label class="field-label">Nome *</label>
         <input type="text" class="input-field" id="nome" placeholder="Insira o primeiro nome">
       </div>
 
       <div class="field-group">
-        <label class="field-label">Sobrenome</label>
+        <label class="field-label">Sobrenome *</label>
         <input type="text" class="input-field" id="sobrenome" placeholder="Insira o último nome">
       </div>
 
       <div class="field-group">
-        <label class="field-label">Email</label>
+        <label class="field-label">Email *</label>
         <input type="email" class="input-field" id="email" placeholder="exemplo@gmail.com">
       </div>
 
       <div class="field-group">
         <label class="field-label">Endereço</label>
-        <input type="text" class="input-field" id="endereco" placeholder="Casa 5 rua ...">
+        <input type="text" class="input-field" id="endereco" placeholder="Rua, número, bairro...">
       </div>
 
       <div class="field-group">
-        <label class="field-label">Qual o tipo de usuário?</label>
+        <label class="field-label">Cidade</label>
+        <input type="text" class="input-field" id="cidade" placeholder="Sua cidade">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Estado (UF)</label>
+        <input type="text" class="input-field" id="estado" placeholder="Ex: SP" maxlength="2">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Qual o tipo de usuário? *</label>
         <select class="input-field" id="tipo">
           <option value="">Selecione...</option>
-          <option value="empresa" selected>Empresa</option>
+          <option value="empresa">Empresa</option>
           <option value="prestador">Prestador de Serviço</option>
           <option value="produtor">Produtor Rural</option>
         </select>
       </div>
 
       <div class="field-group">
-        <label class="field-label">Senha</label>
-        <input type="password" class="input-field" id="senha" placeholder="......">
+        <label class="field-label">Senha *</label>
+        <input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres">
       </div>
 
       <!-- Concordo -->
@@ -347,38 +322,90 @@ select.input-field {
       <div class="btn-wrap">
         <button class="btn-cadastrar" id="btnCadastrar">Cadastre-se</button>
       </div>
-
     </div>
 
   </div>
 </div>
 
 <script>
-  // ========= CADASTRO =========
-  function cadastrar() {
+  // ========== CONEXÃO COM BACKEND ==========
+  const API_BASE_URL = 'http://localhost:3000/api';
+
+  async function cadastrar() {
+    // Obter valores
     const nome = document.getElementById('nome').value.trim();
+    const sobrenome = document.getElementById('sobrenome').value.trim();
     const email = document.getElementById('email').value.trim();
+    const endereco = document.getElementById('endereco').value.trim();
+    const cidade = document.getElementById('cidade').value.trim();
+    const estado = document.getElementById('estado').value.trim();
+    const tipo = document.getElementById('tipo').value;
     const senha = document.getElementById('senha').value.trim();
     const concordo = document.getElementById('concordo').checked;
 
-    if (!nome || !email || !senha) {
-      alert('Preencha todos os campos obrigatórios.');
+    // Validações
+    if (!nome || !sobrenome || !email || !senha || !tipo) {
+      alert('Preencha todos os campos obrigatórios (*).');
+      return;
+    }
+    if (senha.length < 6) {
+      alert('A senha deve ter no mínimo 6 caracteres.');
       return;
     }
     if (!concordo) {
       alert('Você precisa concordar com os termos de uso.');
       return;
     }
-    window.location.href = 'home.html';
+
+    // Desabilitar botão e mostrar loading (opcional)
+    const btn = document.getElementById('btnCadastrar');
+    const originalText = btn.innerText;
+    btn.innerText = 'Cadastrando...';
+    btn.disabled = true;
+
+    try {
+      const payload = {
+        nome, sobrenome, email, senha, tipo_usuario: tipo,
+        endereco: endereco || null,
+        cidade: cidade || null,
+        estado: estado || null
+      };
+
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro no cadastro');
+      }
+
+      // Salvar token e dados do usuário
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      alert('Cadastro realizado com sucesso!');
+
+      // Redirecionar para página inicial (home logada)
+      window.location.href = 'home.html';
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      btn.innerText = originalText;
+      btn.disabled = false;
+    }
   }
 
   document.getElementById('btnCadastrar').addEventListener('click', cadastrar);
 
-  // Botão voltar
+  // Botão voltar (funcional)
   const backButton = document.getElementById('backButton');
   if (backButton) {
     backButton.addEventListener('click', () => {
-      alert('Voltar para tela anterior (simulação)');
+      window.history.back();
     });
   }
 </script>

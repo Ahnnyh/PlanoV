@@ -1,59 +1,76 @@
-// ===== RECUPERAR SENHA – SCRIPT PRINCIPAL =====
+// ===== RECUPERAR SENHA – INTEGRAÇÃO COM BACKEND =====
+const API_BASE_URL = 'http://localhost:3000/api';
 
-// ===== ELEMENTOS DO DOM =====
 const emailInput     = document.getElementById('email');
 const btnSend        = document.getElementById('btn-send');
 const modalOverlay   = document.getElementById('modal-overlay');
 const modalBtnFechar = document.getElementById('modal-btn-fechar');
 
-// ===== VALIDAÇÃO DE EMAIL =====
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
-// ===== CONTROLE DO MODAL =====
 function abrirModal() {
   modalOverlay.classList.add('show');
 }
 
 function fecharModal() {
   modalOverlay.classList.remove('show');
+  // Opcional: limpar email e redirecionar para login
+  window.location.href = 'login.html';
 }
 
-// ===== MARCADOR DE ERRO =====
-function markError(input) {
+function markError(input, message) {
   input.classList.add('error');
+  alert(message);  // ou exibir mensagem inline, mas para simplicidade mantemos alert
   input.focus();
   input.addEventListener('input', () => input.classList.remove('error'), { once: true });
 }
 
-// ===== ENVIO DO FORMULÁRIO =====
-function handleSend() {
-  const value = emailInput.value.trim();
+async function handleSend() {
+  const email = emailInput.value.trim();
 
-  if (!isValidEmail(value)) {
-    markError(emailInput);
+  if (!isValidEmail(email)) {
+    markError(emailInput, 'Digite um email válido.');
     return;
   }
 
-  // Simula o envio para o backend (substitua por fetch real)
-  console.log('[PlanoV] Recuperação solicitada para:', value);
-  emailInput.value = '';
+  // Desabilitar botão durante o envio
+  const originalText = btnSend.innerText;
+  btnSend.innerText = 'Enviando...';
+  btnSend.disabled = true;
 
-  // Exibe o modal de confirmação
-  abrirModal();
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Erro ao solicitar recuperação.');
+    }
+
+    // Limpa campo e exibe modal
+    emailInput.value = '';
+    abrirModal();
+  } catch (err) {
+    alert(err.message);
+    emailInput.classList.add('error');
+  } finally {
+    btnSend.innerText = originalText;
+    btnSend.disabled = false;
+  }
 }
 
-// ===== EVENTOS =====
+// Eventos
 btnSend.addEventListener('click', handleSend);
 modalBtnFechar.addEventListener('click', fecharModal);
-
-// Fecha modal ao clicar fora (no overlay)
 modalOverlay.addEventListener('click', (e) => {
   if (e.target === modalOverlay) fecharModal();
 });
-
-// Tecla Enter no campo de email
 emailInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') handleSend();
 });
