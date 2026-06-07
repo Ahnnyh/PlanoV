@@ -56,8 +56,9 @@ cd planov
 2. Backend
 bash
 cd backend
+npm install dotenv
 npm install
-Crie um arquivo .env na pasta backend com o seguinte conteúdo:
+Atualize o arquivo .env na pasta backend com o seguinte conteúdo:
 
 env
 PORT=3000
