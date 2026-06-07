@@ -97,3 +97,8 @@ CREATE INDEX idx_servicos_usuario ON servicos(usuario_id);
 CREATE INDEX idx_agenda_prestador ON agenda(prestador_id);
 CREATE INDEX idx_agenda_empresa ON agenda(empresa_id);
 CREATE INDEX idx_avaliacoes_avaliado ON avaliacoes(avaliado_id);
+
+ALTER TABLE usuarios ADD COLUMN especialidade VARCHAR(200);
+ALTER TABLE usuarios ADD COLUMN servicos_contrata TEXT;
+ALTER TABLE usuarios ADD COLUMN servico TEXT;
+ALTER TABLE usuarios ADD COLUMN maquinas TEXT;
