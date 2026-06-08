@@ -341,12 +341,15 @@ body {
       <div class="week-days"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
       <div class="days-grid" id="grid"></div>
     </div>
-    <div class="event-card" id="ev-card" style="display:none">
-      <div class="event-name" id="ev-name">-</div>
-      <div class="event-row"><span class="label">Serviço:</span> <span id="ev-service">-</span></div>
-      <div class="event-row"><span class="label">Parceiro:</span> <span id="ev-parceiro">-</span></div>
-      <div class="event-row"><span class="label">Status:</span> <span id="ev-status">-</span></div>
-    </div>
+<div class="event-card" id="ev-card" style="display:none">
+  <div class="event-name" id="ev-name">-</div>
+  <div class="event-row"><span class="label">Descrição:</span> <span id="ev-descricao">-</span></div>
+  <div class="event-row"><span class="label">Período:</span> <span id="ev-periodo">-</span></div>
+  <div class="event-row"><span class="label">Horário:</span> <span id="ev-horario">-</span></div>
+  <div class="event-row"><span class="label">Duração:</span> <span id="ev-duracao">-</span></div>
+  <div class="event-row"><span class="label">Parceiro:</span> <span id="ev-parceiro">-</span></div>
+  <div class="event-row"><span class="label">Status:</span> <span id="ev-status">-</span></div>
+</div>
   </div>
   <div class="bottom-img"></div>
 
@@ -398,6 +401,7 @@ body {
     window.location.href = 'login.html';
   }
 
+  // Saudação e menu
   // Atualizar saudação e menu (com foto)
   document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
   document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
@@ -411,6 +415,7 @@ body {
     menuAvatarContainer.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
   }
 
+// ========== VARIÁVEIS GLOBAIS ==========
   let currentYear = new Date().getFullYear();
   let currentMonth = new Date().getMonth();
   let appointments = [];
@@ -421,6 +426,42 @@ body {
   const yearSelect = document.getElementById('year-sel');
   const evCard = document.getElementById('ev-card');
 
+// ========== FUNÇÕES AUXILIARES (adicione aqui) ==========
+function isDateInRange(dateStr, startISO, endISO) {
+  const check = new Date(dateStr);
+  const start = new Date(startISO);
+  const end = new Date(endISO);
+  check.setHours(0,0,0,0);
+  start.setHours(0,0,0,0);
+  end.setHours(0,0,0,0);
+  return check >= start && check <= end;
+}
+
+function formatDateToDDMMYYYY(dateISO) {
+  const d = new Date(dateISO);
+  const day = d.getDate().toString().padStart(2,'0');
+  const month = (d.getMonth()+1).toString().padStart(2,'0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+function formatTimeFromISO(dateISO) {
+  const d = new Date(dateISO);
+  const hours = d.getHours().toString().padStart(2,'0');
+  const minutes = d.getMinutes().toString().padStart(2,'0');
+  return `${hours}:${minutes}`;
+}
+
+function getDurationInDays(startISO, endISO) {
+  const start = new Date(startISO);
+  const end = new Date(endISO);
+  start.setHours(0,0,0,0);
+  end.setHours(0,0,0,0);
+  const diffTime = Math.abs(end - start);
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+}
+
+  // ========== BUSCAR AGENDAMENTOS ==========
   async function fetchAppointments() {
     try {
       const response = await fetch(`${API_BASE_URL}/schedule`, {
@@ -459,10 +500,9 @@ body {
     for (let day = 1; day <= daysInMonth; day++) {
       const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       const hasEvent = appointments.some(apt => {
-        if (!apt.inicio) return false;
-        const aptDate = new Date(apt.inicio).toISOString().split('T')[0];
-        return aptDate === dateStr;
-      });
+  if (!apt.inicio || !apt.fim) return false;
+  return isDateInRange(dateStr, apt.inicio, apt.fim);
+});
       const d = document.createElement('div');
       d.className = 'day';
       if (hasEvent) d.classList.add('has-event');
@@ -484,26 +524,49 @@ body {
   }
 
   function selectDay(day) {
-    selectedDay = day;
-    renderCalendar();
-    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    const eventsOnDay = appointments.filter(apt => {
-      if (!apt.inicio) return false;
-      const aptDate = new Date(apt.inicio).toISOString().split('T')[0];
-      return aptDate === dateStr;
-    });
-    if (eventsOnDay.length === 0) {
-      evCard.style.display = 'none';
-    } else {
-      const ev = eventsOnDay[0];
-      document.getElementById('ev-name').innerText = ev.tipo_servico;
-      document.getElementById('ev-service').innerText = ev.descricao || 'Sem descrição';
-      const parceiro = ev.prestador ? `${ev.prestador.nome} ${ev.prestador.sobrenome || ''}` : (ev.empresa ? `${ev.empresa.nome} ${ev.empresa.sobrenome || ''}` : 'Parceiro');
-      document.getElementById('ev-parceiro').innerText = parceiro;
-      document.getElementById('ev-status').innerText = ev.status;
-      evCard.style.display = 'block';
-    }
+  selectedDay = day;
+  renderCalendar();
+  const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+  const eventOnDay = appointments.find(apt => {
+    if (!apt.inicio || !apt.fim) return false;
+    return isDateInRange(dateStr, apt.inicio, apt.fim);
+  });
+
+  if (!eventOnDay) {
+    evCard.style.display = 'none';
+    return;
   }
+
+  const ev = eventOnDay;
+  document.getElementById('ev-name').innerText = ev.tipo_servico;
+
+    // DESCRIÇÃO 
+  document.getElementById('ev-descricao').innerText = ev.descricao || 'Sem descrição'; 
+
+
+  // PERÍODO
+  const dataInicio = formatDateToDDMMYYYY(ev.inicio);
+  const dataFim = formatDateToDDMMYYYY(ev.fim);
+  document.getElementById('ev-periodo').innerText = `${dataInicio} → ${dataFim}`;
+
+  // HORÁRIO 
+  const horaInicio = formatTimeFromISO(ev.inicio);
+  const horaFim = formatTimeFromISO(ev.fim);
+  document.getElementById('ev-horario').innerText = `${horaInicio} às ${horaFim}`;
+
+  // DURAÇÃO 
+  const dias = getDurationInDays(ev.inicio, ev.fim);
+  document.getElementById('ev-duracao').innerText = `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
+
+  // PARCEIRO 
+  const parceiro = ev.prestador ? `${ev.prestador.nome} ${ev.prestador.sobrenome || ''}` : (ev.empresa ? `${ev.empresa.nome} ${ev.empresa.sobrenome || ''}` : 'Parceiro');
+  document.getElementById('ev-parceiro').innerText = parceiro;
+
+  // STATUS
+  document.getElementById('ev-status').innerText = ev.status;
+
+  evCard.style.display = 'block';
+}
 
   function changeMonth(delta) {
     currentMonth += delta;
@@ -514,6 +577,7 @@ body {
     evCard.style.display = 'none';
   }
 
+    // ========== EVENT LISTENERS ==========
   document.getElementById('prev').addEventListener('click', () => changeMonth(-1));
   document.getElementById('next').addEventListener('click', () => changeMonth(1));
   monthSelect.addEventListener('change', (e) => {
