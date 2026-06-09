@@ -6,7 +6,7 @@
   <title>PlanoV – Prestadores</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* Mesmo CSS do buscar-empresas, mas adaptado para prestadores – exatamente igual ao original */
+    /* ========== CSS COMPLETO (mesmo do original, com adições para toast e modal) ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     :root { --verde: #3a5f1e; --verde-btn: #2d5016; --laranja: #e07a1c; --bg: #f7f4ee; --branco: #ffffff; --texto: #1a1a1a; --muted: #777; --borda: #e0ddd6; }
     body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
@@ -17,7 +17,7 @@
     .btn-icon { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
     .btn-icon:active { background: rgba(0, 0, 0, 0.05); }
     .btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
-    .logo-wrap img { height: 40px; display: block; }
+    .logo-wrap img { height: 40px; display: block; content: url('IMG/logo.png'); }
     .search-wrap { position: relative; z-index: 1; padding: 0 20px 20px; }
     .search-bar { background: var(--branco); border-radius: 40px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--borda); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
     .search-icon { width: 20px; height: 20px; stroke: var(--muted); stroke-width: 2.5; flex-shrink: 0; }
@@ -43,29 +43,233 @@
     .btn-visualizar { background: var(--verde-btn); color: white; border: none; border-radius: 30px; padding: 6px 18px; font-size: 12px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: background 0.15s, transform 0.1s; }
     .btn-visualizar:active { transform: scale(0.96); background: #3a6620; }
     .empty-msg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; display: none; }
-    /* Menu lateral igual ao buscar-empresas, manter */
-    .menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
-    .menu-drawer { position: absolute; top: 0; right: 0; width: min(280px, 85%); min-width: 260px; height: 100%; background: #ffffff; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); overflow-y: auto; border-radius: 20px 0 0 20px; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 1100;
+      white-space: nowrap;
+      max-width: 90%;
+      white-space: normal;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+    .toast.success { background: var(--verde); }
+    .toast.error { background: #c0392b; }
+    .toast.info { background: var(--laranja); }
+
+    /* Modal de confirmação */
+    .modal-overlay-confirm {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-container {
+      background: white;
+      width: 85%;
+      max-width: 320px;
+      border-radius: 28px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .modal-container h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--texto);
+      margin-bottom: 16px;
+    }
+    .modal-container p {
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+    .modal-btn.cancel {
+      background: #e0ddd6;
+      color: #333;
+    }
+    .modal-btn.save {
+      background: var(--verde);
+      color: white;
+    }
+
+    /* MENU LATERAL (mesmo do buscar-empresas) */
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+    .menu-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(280px, 85%);
+      min-width: 260px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      overflow-y: auto;
+      border-radius: 20px 0 0 20px;
+    }
     .menu-overlay.open { opacity: 1; visibility: visible; }
     .menu-overlay.open .menu-drawer { transform: translateX(0); }
-    .menu-header { padding: 28px 20px 20px; background: linear-gradient(135deg, #3a5f1e, #2d5016); color: white; border-bottom: 1px solid rgba(255,255,255,0.2); }
-    .menu-user { display: flex; align-items: center; gap: 12px; }
-    .menu-avatar { width: 52px; height: 52px; background: linear-gradient(145deg, #d48f3b, #b56a1a); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-    .menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
-    .menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-    .menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
-    .menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
-    .menu-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
-    .menu-close svg { width: 20px; height: 20px; stroke: white; stroke-width: 2; }
-    .menu-nav { padding: 12px 0 20px; }
-    .menu-item { display: flex; align-items: center; gap: 14px; padding: 12px 20px; font-size: 15px; font-weight: 500; color: #1a1a1a; transition: background 0.2s; cursor: pointer; }
-    .menu-item:hover, .menu-item:active { background: #f0ede7; }
-    .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
-    .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-    .menu-item .menu-text { flex: 1; }
-    .divider { height: 1px; background: #e0ddd6; margin: 8px 16px; }
-    .section-title { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
-    .footer-menu { border-top: 1px solid #e0ddd6; margin-top: 8px; padding: 8px 0; }
+    .menu-header {
+      padding: 28px 20px 20px;
+      background: linear-gradient(135deg, #3a5f1e, #2d5016);
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .menu-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-avatar {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #d48f3b, #b56a1a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-avatar svg {
+      width: 30px;
+      height: 30px;
+      stroke: white;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .menu-user-info h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .menu-user-info p {
+      font-size: 12px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .menu-user-info p svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .menu-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .menu-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .menu-nav {
+      padding: 12px 0 20px;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .menu-item:hover, .menu-item:active {
+      background: #f0ede7;
+    }
+    .menu-item .menu-icon {
+      width: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-item .menu-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .menu-item .menu-text {
+      flex: 1;
+    }
+    .divider {
+      height: 1px;
+      background: #e0ddd6;
+      margin: 8px 16px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      letter-spacing: 0.5px;
+      padding: 12px 20px 4px;
+      text-transform: uppercase;
+    }
+    .footer-menu {
+      border-top: 1px solid #e0ddd6;
+      margin-top: 8px;
+      padding: 8px 0;
+    }
     @media (max-width: 400px) {
       .header-content { padding: 52px 16px 18px; }
       .search-wrap { padding: 0 16px 16px; }
@@ -88,25 +292,17 @@
   </style>
 </head>
 <body>
-
 <div class="frame">
   <div class="header">
     <img src="IMG/superior.png" alt="" class="header-bg" />
     <div class="header-content">
-      <button class="btn-icon" onclick="history.back()" aria-label="Voltar">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
+      <button class="btn-icon" onclick="history.back()" aria-label="Voltar"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
       <div class="logo-wrap"><img src="IMG/logo.png" alt="PlanoV Logo" /></div>
-      <button class="btn-icon" id="menuButton" aria-label="Menu">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
+      <button class="btn-icon" id="menuButton" aria-label="Menu"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     </div>
     <div class="search-wrap">
       <div class="search-bar">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="search-input" placeholder="Buscar prestador..." autocomplete="off" />
       </div>
     </div>
@@ -118,16 +314,32 @@
       <div class="empty-msg" id="empty-msg">Nenhum prestador encontrado.</div>
     </div>
   </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" style="display: none;">
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
+    <div class="modal-container">
+      <h3 id="confirmTitle">Confirmar</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-buttons">
+        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU LATERAL COMPLETO -->
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
       <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/><path d="M12 10v10M8 20h8" stroke-linecap="round"/><path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/><path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/></svg></div>
-          <div class="menu-user-info">
-            <h4 id="menuNome">Carregando...</h4>
-            <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/><path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/></svg><span id="menuTipo">Usuário</span></p>
-          </div>
+          <div class="menu-avatar" id="menuAvatar"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg></div>
+          <div class="menu-user-info"><h4 id="menuNome">Carregando...</h4><p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4"/><path d="M12 9c2 0 4 1.5 4 4"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3"/></svg><span id="menuTipo">Usuário</span></p></div>
         </div>
       </div>
       <div class="menu-nav">
@@ -151,13 +363,64 @@
   let token = localStorage.getItem('token');
   let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-  if (!token || !loggedUser.id) {
-    alert('Você precisa estar logado para acessar esta página.');
-    window.location.href = 'login.html';
+  // ========== FUNÇÕES DE NOTIFICAÇÃO ==========
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
   }
 
-  // Atualizar menu com foto do usuário logado
-  const menuAvatarDiv = document.querySelector('.menu-avatar');
+  function confirmAction(title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').innerText = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    modal.style.display = 'flex';
+    const confirmBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      onConfirm();
+    };
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  }
+
+  if (!token || !loggedUser.id) {
+    showMessage('Você precisa estar logado para acessar esta página.', 'error');
+    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+  }
+
+  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
+  function atualizarFotoMenu() {
+    const menuAvatarDiv = document.getElementById('menuAvatar');
+    if (!menuAvatarDiv) return;
+    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    const foto = usuario.foto_perfil;
+    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+      menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    } else {
+      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+      </svg>`;
+    }
+  }
+
+  // ========== ATUALIZAR MENU LATERAL ==========
   const menuNome = document.getElementById('menuNome');
   const menuTipo = document.getElementById('menuTipo');
   if (menuNome) menuNome.innerText = `${loggedUser.nome} ${loggedUser.sobrenome || ''}`.trim();
@@ -166,13 +429,28 @@
     else if (loggedUser.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
     else menuTipo.innerText = 'Usuário';
   }
-  if (loggedUser.foto_perfil && loggedUser.foto_perfil.startsWith('data:image')) {
-    menuAvatarDiv.innerHTML = `<img src="${loggedUser.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+  // Ajustar texto do menu "Empresas" para "Prestadores" se o usuário for empresa
+  const menuEmpresasText = document.querySelector('.menu-item[data-nav="empresas"] .menu-text');
+  if (menuEmpresasText && loggedUser.tipo_usuario === 'empresa') {
+    menuEmpresasText.innerText = 'Prestadores';
   }
+  atualizarFotoMenu();
 
   const searchInput = document.getElementById('search-input');
   const cardList = document.getElementById('card-list');
   const emptyMsg = document.getElementById('empty-msg');
+
+  async function fetchMediaAvaliacoes(usuarioId) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/reviews/${usuarioId}`);
+      if (!response.ok) return null;
+      const data = await response.json();
+      return data.media ? data.media.toFixed(1) : null;
+    } catch (err) {
+      console.error(`Erro ao buscar média para ${usuarioId}`, err);
+      return null;
+    }
+  }
 
   async function carregarPrestadores(searchTerm = '') {
     try {
@@ -181,19 +459,46 @@
       const response = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
       if (!response.ok) throw new Error('Erro ao carregar prestadores');
       const prestadores = await response.json();
-      if (prestadores.length === 0) {
+      console.log('Prestadores retornados da API:', prestadores);
+
+      if (!prestadores.length) {
         cardList.innerHTML = '';
         emptyMsg.style.display = 'block';
+        emptyMsg.innerText = 'Nenhum prestador encontrado.';
         return;
       }
       emptyMsg.style.display = 'none';
       cardList.innerHTML = '';
-      prestadores.forEach(prov => {
+
+      const cardsData = await Promise.all(prestadores.map(async (prov) => {
+        const media = await fetchMediaAvaliacoes(prov.id);
+        return { prov, media };
+      }));
+
+      cardsData.forEach(({ prov, media }) => {
         const nomeCompleto = `${prov.nome} ${prov.sobrenome || ''}`.trim();
         const inicial = prov.nome ? prov.nome.charAt(0).toUpperCase() : 'P';
-        const descricao = prov.experiencia ? `Experiência: ${prov.experiencia}` : 'Profissional do agro';
-        const nota = 'N/A';
-        const foto = prov.foto_perfil && prov.foto_perfil.startsWith('data:image') ? prov.foto_perfil : null;
+        
+      let areaAtuacao = 'Profissional do agro';
+      if (prov.especialidade && prov.especialidade.trim() !== '') {
+        areaAtuacao = prov.especialidade;
+      } else if (prov.servicos) {
+        let servicosRaw = prov.servicos;
+        if (typeof servicosRaw === 'string') {
+          if (servicosRaw.includes(',')) {
+            areaAtuacao = servicosRaw.split(',')[0].trim();
+          } else {
+            areaAtuacao = servicosRaw.trim();
+          }
+        } else if (Array.isArray(servicosRaw) && servicosRaw.length) {
+          areaAtuacao = servicosRaw[0];
+        }
+        } else {
+          areaAtuacao = 'Profissional do agro';
+        }
+        
+        const nota = media ? `${media}` : '—';
+        const foto = prov.foto_perfil && (prov.foto_perfil.startsWith('data:image') || prov.foto_perfil.startsWith('http')) ? prov.foto_perfil : null;
         const card = document.createElement('li');
         card.className = 'card';
         card.innerHTML = `
@@ -202,7 +507,7 @@
           </div>
           <div class="card-info">
             <span class="card-nome">${nomeCompleto}</span>
-            <span class="card-prod">${descricao}</span>
+            <span class="card-prod">${areaAtuacao}</span>
             <div class="card-bottom">
               <div class="card-rating">
                 <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -213,8 +518,7 @@
           </div>
         `;
         const btn = card.querySelector('.btn-visualizar');
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
+        btn.addEventListener('click', () => {
           window.location.href = `perfil-prestador.html?id=${prov.id}`;
         });
         cardList.appendChild(card);
@@ -224,6 +528,7 @@
       cardList.innerHTML = '';
       emptyMsg.style.display = 'block';
       emptyMsg.innerText = 'Erro ao carregar prestadores. Tente novamente.';
+      showMessage('Erro ao carregar prestadores.', 'error');
     }
   }
 
@@ -231,11 +536,11 @@
   searchInput.addEventListener('input', () => {
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
-      const term = searchInput.value.trim();
-      carregarPrestadores(term);
+      carregarPrestadores(searchInput.value.trim());
     }, 500);
   });
 
+  // ========== MENU LATERAL EVENTOS ==========
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -250,20 +555,18 @@
       e.stopPropagation();
       const nav = item.getAttribute('data-nav');
       if (nav === 'sair') {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        window.location.href = 'login.html';
-      } else if (nav === 'inicio') {
-        window.location.href = 'home.html';
-      } else if (nav === 'empresas') {
-        window.location.href = (loggedUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
-      } else if (nav === 'agenda') {
-        window.location.href = 'agenda.html';
-      } else if (nav === 'perfil') {
-        window.location.href = 'meu_perfil.html';
-      } else {
-        closeMenu();
-      }
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        });
+      } else if (nav === 'inicio') window.location.href = 'home.html';
+      else if (nav === 'empresas') window.location.href = (loggedUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      else if (nav === 'agenda') window.location.href = 'agenda.html';
+      else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
+      else if (nav === 'configuracoes') showMessage('Configurações em breve', 'info');
+      else if (nav === 'ajuda') showMessage('Central de ajuda em breve', 'info');
+      else closeMenu();
     });
   });
 

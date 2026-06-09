@@ -193,6 +193,31 @@ body {
 }
 .footer-text a:hover { text-decoration: underline; }
 
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1100;
+  white-space: nowrap;
+  max-width: 90%;
+  white-space: normal;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+.toast.success { background: var(--verde-btn); }
+.toast.error { background: #c0392b; }
+.toast.info { background: var(--laranja); }
+
 /* ===== MEDIA QUERIES RESPONSIVAS ===== */
 @media (max-width: 400px) {
   .header {
@@ -269,16 +294,33 @@ body {
 
 </div>
 
+<!-- TOAST -->
+<div id="toast" class="toast" style="display: none;">
+  <span id="toastMessage"></span>
+</div>
+
 <script>
   // ========== CONFIGURAÇÃO DA API ==========
   const API_BASE_URL = 'http://localhost:3000/api';
+
+  // ========== FUNÇÃO DE NOTIFICAÇÃO ==========
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
 
   // ========== VERIFICAR SE JÁ ESTÁ LOGADO ==========
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   if (token && user.id) {
     // Redireciona para a home se já estiver logado
-    window.location.href = 'index.html';
+    window.location.href = 'home.html';
   }
 
   // ========== ELEMENTOS DO DOM ==========
@@ -292,7 +334,7 @@ body {
     const senha = senhaInput.value.trim();
 
     if (!email || !senha) {
-      alert('Preencha o email e a senha.');
+      showMessage('Preencha o email e a senha.', 'error');
       return;
     }
 
@@ -316,12 +358,17 @@ body {
 
       // Sucesso: salvar token e dados do usuário
       localStorage.setItem('token', data.token);
+      // Salva o objeto user completo (incluindo foto_perfil, se existir)
       localStorage.setItem('user', JSON.stringify(data.user));
 
+      showMessage('Login realizado com sucesso!', 'success');
+      
       // Redirecionar para a página inicial (home)
-      window.location.href = 'index.html';
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 1000);
     } catch (err) {
-      alert(err.message);
+      showMessage(err.message, 'error');
       // Reabilitar botão
       btnEntrar.innerText = textoOriginal;
       btnEntrar.disabled = false;

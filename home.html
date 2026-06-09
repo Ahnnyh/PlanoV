@@ -32,6 +32,89 @@
   .card-sub { font-size: 12px; color: var(--muted); }
   .card-arrow { font-size: 28px; color: var(--verde-btn); font-weight: 700; flex-shrink: 0; line-height: 1; }
   .bottom-img { height: 140px; background-image: url('img/inferior.png'); background-size: cover; background-position: center -110px; margin-top: -35px; position: relative; z-index: 1; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1100;
+    white-space: nowrap;
+    max-width: 90%;
+    white-space: normal;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    pointer-events: none;
+  }
+  .toast.success { background: var(--verde); }
+  .toast.error { background: #c0392b; }
+  .toast.info { background: var(--laranja); }
+
+  /* Modal de confirmação */
+  .modal-overlay-confirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-container {
+    background: white;
+    width: 85%;
+    max-width: 320px;
+    border-radius: 28px;
+    padding: 24px 20px;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  .modal-container h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 16px;
+  }
+  .modal-container p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .modal-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+  }
+  .modal-btn.cancel {
+    background: #e0ddd6;
+    color: #333;
+  }
+  .modal-btn.save {
+    background: var(--verde);
+    color: white;
+  }
+
   /* Menu lateral igual aos outros */
   .menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
   .menu-drawer { position: absolute; top: 0; right: 0; width: min(280px, 85%); min-width: 260px; height: 100%; background: var(--branco); box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); overflow-y: auto; border-radius: 20px 0 0 20px; }
@@ -55,8 +138,8 @@
   .divider { height: 1px; background: var(--borda); margin: 8px 16px; }
   .section-title { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
   .footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
-  @media (max-width: 400px) { /* ... */ }
-  @media (max-width: 340px) { /* ... */ }
+  @media (max-width: 400px) { /* mantido */ }
+  @media (max-width: 340px) { /* mantido */ }
 </style>
 </head>
 <body>
@@ -118,6 +201,24 @@
     </div>
   </div>
   <div class="bottom-img"></div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" style="display: none;">
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
+    <div class="modal-container">
+      <h3 id="confirmTitle">Confirmar</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-buttons">
+        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
       <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -154,30 +255,85 @@
 </div>
 <script>
   const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || '{}'); // única declaração
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  if (!token || !user.id) {
-    alert('Você precisa estar logado para acessar esta página.');
-    window.location.href = 'login.html';
+  // ========== FUNÇÕES DE NOTIFICAÇÃO ==========
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
   }
 
-  // Atualizar saudação
+  function confirmAction(title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').innerText = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    modal.style.display = 'flex';
+    const confirmBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      onConfirm();
+    };
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  }
+
+  if (!token || !user.id) {
+    showMessage('Você precisa estar logado para acessar esta página.', 'error');
+    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+  }
+
+  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
+  function atualizarFotoMenu() {
+    const menuAvatarDiv = document.getElementById('menuAvatarContainer');
+    if (!menuAvatarDiv) return;
+    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    const foto = usuario.foto_perfil;
+    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+      menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    } else {
+      // Ícone SVG padrão (planta)
+      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+      </svg>`;
+    }
+  }
+
+  // ========== ATUALIZAR INFORMAÇÕES DO MENU ==========
+  // Saudação
   document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
 
-  // Atualizar menu lateral (texto e foto)
+  // Nome e tipo no menu lateral
   document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
   const tipo = user.tipo_usuario === 'prestador' ? 'Prestador' : (user.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
   document.getElementById('menuTipo').innerText = tipo;
 
-  // Foto no menu (se existir)
-  const menuAvatarDiv = document.getElementById('menuAvatarContainer');
-  if (user.foto_perfil && user.foto_perfil.startsWith('data:image')) {
-    menuAvatarDiv.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
-  } else {
-    // Mantém o SVG padrão (já está lá)
+  // Ajustar texto do menu "Empresas" para "Prestadores" se o usuário for empresa
+  const menuEmpresasText = document.querySelector('.menu-item[data-nav="empresas"] .menu-text');
+  if (menuEmpresasText && user.tipo_usuario === 'empresa') {
+    menuEmpresasText.innerText = 'Prestadores';
   }
 
-  // Adaptar card "Buscar"
+  // Atualizar foto do menu
+  atualizarFotoMenu();
+
+  // ========== ADAPTAR CARD "BUSCAR" CONFORME TIPO DE USUÁRIO ==========
   if (user.tipo_usuario === 'prestador') {
     document.getElementById('busca-titulo').innerText = 'Buscar Empresa';
     document.getElementById('busca-sub').innerText = 'Encontre empresas que contratam';
@@ -186,7 +342,7 @@
     document.getElementById('busca-sub').innerText = 'Encontre profissionais para contratar';
   }
 
-  // Redirecionamentos
+  // ========== REDIRECIONAMENTOS DOS BOTÕES ==========
   document.getElementById('link-busca').addEventListener('click', (e) => {
     e.preventDefault();
     window.location.href = user.tipo_usuario === 'prestador' ? 'buscar-empresas.html' : 'buscar-prestadores.html';
@@ -195,7 +351,7 @@
   document.getElementById('link-agenda').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'agenda.html'; });
   document.getElementById('link-agendar').addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'agendar_servico.html'; });
 
-  // Menu lateral (abrir/fechar e navegação)
+  // ========== MENU LATERAL (ABRIR/FECHAR E NAVEGAÇÃO) ==========
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -207,7 +363,7 @@
 
   document.getElementById('backButton').addEventListener('click', () => {
     if (window.history.length > 1) window.history.back();
-    else alert('Não há página anterior.');
+    else showMessage('Não há página anterior.', 'info');
   });
 
   document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
@@ -215,14 +371,14 @@
       e.stopPropagation();
       const nav = item.getAttribute('data-nav');
       if (nav === 'sair') {
-        if (confirm('Deseja realmente sair da sua conta?')) {
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           window.location.href = 'login.html';
-        }
+        });
         closeMenu();
       } else if (nav === 'inicio') {
-        closeMenu();
+        closeMenu(); // já está na home, apenas fecha
       } else if (nav === 'perfil') {
         window.location.href = 'meu_perfil.html';
       } else if (nav === 'empresas') {
@@ -230,9 +386,11 @@
       } else if (nav === 'agenda') {
         window.location.href = 'agenda.html';
       } else if (nav === 'configuracoes') {
-        alert('Tela de configurações em breve.');
+        showMessage('Tela de configurações em breve.', 'info');
+        closeMenu();
       } else if (nav === 'ajuda') {
-        alert('Central de ajuda em desenvolvimento.');
+        showMessage('Central de ajuda em desenvolvimento.', 'info');
+        closeMenu();
       } else {
         closeMenu();
       }

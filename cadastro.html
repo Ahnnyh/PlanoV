@@ -10,12 +10,14 @@
 
 :root {
   --verde: #3a5f1e;
+  --verde-claro: #5a8530;
   --verde-btn: #2d5016;
   --bg: #f7f4ee;
   --branco: #ffffff;
   --texto: #1a1a1a;
   --muted: #888;
   --borda: #dedad2;
+  --laranja: #e07a1c;
 }
 
 body {
@@ -42,7 +44,6 @@ body {
   margin: 0 auto;
 }
 
-/* IMAGEM DE FUNDO COBRINDO TELA TODA */
 .bg-full {
   position: absolute;
   inset: 0;
@@ -65,7 +66,6 @@ body {
   z-index: 1;
 }
 
-/* HEADER */
 .header {
   position: relative;
   z-index: 2;
@@ -105,7 +105,6 @@ body {
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
 }
 
-/* BODY SCROLL */
 .body {
   flex: 1;
   overflow-y: auto;
@@ -116,26 +115,110 @@ body {
 }
 .body::-webkit-scrollbar { display: none; }
 
-/* CARD ARREDONDADO */
+/* CARD DE ESCOLHA */
+.tipo-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 20px;
+  padding: 28px 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  backdrop-filter: blur(2px);
+  text-align: center;
+}
+
+.tipo-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.tipo-title svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--verde);
+  stroke-width: 2;
+  fill: none;
+}
+
+.tipo-opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tipo-opcao {
+  background: #eef4e4;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tipo-opcao:hover {
+  background: #e2ecd4;
+  transform: scale(0.98);
+}
+.tipo-opcao.selecionado {
+  border-color: var(--verde);
+  background: #fff8e8;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.tipo-opcao svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--verde);
+  stroke-width: 1.5;
+  fill: none;
+  flex-shrink: 0;
+}
+.tipo-opcao .texto {
+  text-align: left;
+}
+.tipo-opcao h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 6px;
+}
+.tipo-opcao p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* FORMULÁRIO */
 .form-card {
   background: rgba(255, 255, 255, 0.96);
   border-radius: 20px;
-  padding: 20px 16px;
+  padding: 20px 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   backdrop-filter: blur(2px);
 }
 
-/* TÍTULO DENTRO DO CARD */
 .card-title {
   font-size: 18px;
   font-weight: 700;
   color: var(--verde);
   text-align: center;
-  margin-bottom: 18px;
-  letter-spacing: 0.3px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.card-title svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--verde);
+  stroke-width: 2;
+  fill: none;
 }
 
-/* CAMPOS */
 .field-group {
   margin-bottom: 14px;
 }
@@ -153,7 +236,7 @@ body {
   color: var(--texto);
   background: var(--bg);
   border: 1px solid var(--borda);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px 14px;
   outline: none;
   transition: border 0.15s, box-shadow 0.15s;
@@ -170,38 +253,12 @@ select.input-field {
   background-position: right 14px center;
   cursor: pointer;
 }
-/* CHECKBOX */
-.check-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: 4px;
-  padding: 12px 14px;
-  background: rgba(58,95,30,0.07);
-  border: 1.5px dashed rgba(58,95,30,0.35);
-  border-radius: 10px;
-}
-.check-row input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  margin-top: 1px;
-  accent-color: var(--verde);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.check-label {
-  font-size: 12.5px;
-  color: var(--texto);
-  line-height: 1.4;
-}
-.check-label a {
-  color: var(--verde);
-  font-weight: 600;
-  text-decoration: underline;
-}
-/* BOTÃO */
+
 .btn-wrap {
   padding: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .btn-cadastrar {
   width: 100%;
@@ -214,163 +271,305 @@ select.input-field {
   border-radius: 14px;
   padding: 14px;
   cursor: pointer;
-  letter-spacing: 0.3px;
   transition: background 0.15s, transform 0.1s;
 }
 .btn-cadastrar:active { transform: scale(0.98); }
+.btn-cadastrar:disabled {
+  background: #6b8a4a;
+  cursor: not-allowed;
+}
+.btn-voltar {
+  background: #e0ddd6;
+  color: #333;
+}
+.btn-voltar:active { transform: scale(0.98); }
 
-/* ===== MEDIA QUERIES RESPONSIVAS ===== */
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1100;
+  white-space: nowrap;
+  max-width: 90%;
+  white-space: normal;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+.toast.success { background: var(--verde-btn); }
+.toast.error { background: #c0392b; }
+.toast.info { background: var(--laranja); }
+
 @media (max-width: 400px) {
   .header { padding: 52px 16px 14px; }
   .btn-icon { width: 40px; height: 40px; }
   .btn-icon svg { width: 22px; height: 22px; }
   .logo-wrap img { height: 38px; }
   .body { padding: 16px 16px 25px; }
+  .tipo-card { padding: 20px 16px; }
+  .tipo-title { font-size: 18px; margin-bottom: 20px; }
+  .tipo-opcao { padding: 14px; gap: 12px; }
+  .tipo-opcao svg { width: 40px; height: 40px; }
+  .tipo-opcao h3 { font-size: 16px; }
   .form-card { padding: 16px 14px; }
   .card-title { font-size: 17px; }
   .field-label { font-size: 12px; }
   .input-field { font-size: 13px; padding: 10px 12px; }
-  .check-label { font-size: 11.5px; }
   .btn-cadastrar { font-size: 15px; padding: 12px; }
 }
 @media (max-width: 340px) {
-  .form-card { padding: 14px 12px; }
-  .check-row { padding: 10px 12px; }
-  .check-label { font-size: 11px; }
+  .tipo-opcao { flex-direction: column; text-align: center; }
+  .tipo-opcao .texto { text-align: center; }
 }
 </style>
 </head>
 <body>
 
 <div class="frame">
-
-  <!-- FUNDO COBRINDO TELA TODA -->
   <div class="bg-full"></div>
   <div class="bg-overlay"></div>
 
-  <!-- HEADER -->
   <div class="header">
     <button class="btn-icon" id="backButton" aria-label="Voltar">
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <div class="logo-wrap">
-      <img src="img/logo.png" alt="PlanoV">
-    </div>
+    <div class="logo-wrap"><img src="img/logo.png" alt="PlanoV"></div>
     <div style="width:44px"></div>
   </div>
 
-  <!-- BODY -->
-  <div class="body">
+  <div class="body" id="bodyContent"></div>
+</div>
 
-    <div class="form-card">
-      <div class="card-title">Cadastro</div>
-
-      <div class="field-group">
-        <label class="field-label">Nome *</label>
-        <input type="text" class="input-field" id="nome" placeholder="Insira o primeiro nome">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Sobrenome *</label>
-        <input type="text" class="input-field" id="sobrenome" placeholder="Insira o último nome">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Email *</label>
-        <input type="email" class="input-field" id="email" placeholder="exemplo@gmail.com">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Endereço</label>
-        <input type="text" class="input-field" id="endereco" placeholder="Rua, número, bairro...">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Cidade</label>
-        <input type="text" class="input-field" id="cidade" placeholder="Sua cidade">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Estado (UF)</label>
-        <input type="text" class="input-field" id="estado" placeholder="Ex: SP" maxlength="2">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Qual o tipo de usuário? *</label>
-        <select class="input-field" id="tipo">
-          <option value="">Selecione...</option>
-          <option value="empresa">Empresa</option>
-          <option value="prestador">Prestador de Serviço</option>
-          <option value="produtor">Produtor Rural</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Senha *</label>
-        <input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres">
-      </div>
-
-      <!-- Concordo -->
-      <div class="check-row">
-        <input type="checkbox" id="concordo">
-        <label class="check-label" for="concordo">
-          Concordo — <a href="#">Você concorda com os nossos termos de uso?</a>
-        </label>
-      </div>
-
-      <!-- Botão -->
-      <div class="btn-wrap">
-        <button class="btn-cadastrar" id="btnCadastrar">Cadastre-se</button>
-      </div>
-    </div>
-
-  </div>
+<div id="toast" class="toast" style="display: none;">
+  <span id="toastMessage"></span>
 </div>
 
 <script>
-  // ========== CONEXÃO COM BACKEND ==========
   const API_BASE_URL = 'http://localhost:3000/api';
+  const bodyDiv = document.getElementById('bodyContent');
+  let tipoSelecionado = null;
 
-  async function cadastrar() {
-    // Obter valores
-    const nome = document.getElementById('nome').value.trim();
-    const sobrenome = document.getElementById('sobrenome').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const endereco = document.getElementById('endereco').value.trim();
-    const cidade = document.getElementById('cidade').value.trim();
-    const estado = document.getElementById('estado').value.trim();
-    const tipo = document.getElementById('tipo').value;
-    const senha = document.getElementById('senha').value.trim();
-    const concordo = document.getElementById('concordo').checked;
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
 
-    // Validações
-    if (!nome || !sobrenome || !email || !senha || !tipo) {
-      alert('Preencha todos os campos obrigatórios (*).');
-      return;
-    }
-    if (senha.length < 6) {
-      alert('A senha deve ter no mínimo 6 caracteres.');
-      return;
-    }
-    if (!concordo) {
-      alert('Você precisa concordar com os termos de uso.');
-      return;
+  function renderEscolhaTipo() {
+    bodyDiv.innerHTML = `
+      <div class="tipo-card">
+        <div class="tipo-title">
+          <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Tipo de conta
+        </div>
+        <div class="tipo-opcoes">
+          <div class="tipo-opcao" data-tipo="empresa">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <div class="texto">
+              <h3>Empresa</h3>
+              <p>Contrate prestadores de serviço</p>
+            </div>
+          </div>
+          <div class="tipo-opcao" data-tipo="prestador">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <div class="texto">
+              <h3>Prestador</h3>
+              <p>Ofereça seus serviços no campo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.querySelectorAll('.tipo-opcao').forEach(el => {
+      el.addEventListener('click', () => {
+        const tipo = el.getAttribute('data-tipo');
+        tipoSelecionado = tipo;
+        renderFormulario(tipo);
+      });
+    });
+  }
+
+  function renderFormulario(tipo) {
+    if (tipo === 'empresa') {
+      bodyDiv.innerHTML = `
+        <div class="form-card">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Cadastro de Empresa
+          </div>
+          <div class="field-group">
+            <label class="field-label">Nome da empresa *</label>
+            <input type="text" class="input-field" id="nome" placeholder="Ex: Fazenda Modelo Ltda">
+          </div>
+          <div class="field-group">
+            <label class="field-label">E-mail *</label>
+            <input type="email" class="input-field" id="email" placeholder="contato@empresa.com">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Senha *</label>
+            <input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Telefone / WhatsApp *</label>
+            <input type="tel" class="input-field" id="whatsapp" placeholder="(00) 00000-0000">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Cidade</label>
+            <input type="text" class="input-field" id="cidade" placeholder="Sua cidade">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Estado (UF)</label>
+            <input type="text" class="input-field" id="estado" placeholder="Ex: SP" maxlength="2">
+          </div>
+          <div class="btn-wrap">
+            <button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button>
+            <button class="btn-cadastrar btn-voltar" id="btnVoltarTipo">Voltar e escolher tipo</button>
+          </div>
+        </div>
+      `;
+    } else {
+      bodyDiv.innerHTML = `
+        <div class="form-card">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Cadastro de Prestador
+          </div>
+          <div class="field-group">
+            <label class="field-label">Nome completo *</label>
+            <input type="text" class="input-field" id="nome" placeholder="Seu nome">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Sobrenome</label>
+            <input type="text" class="input-field" id="sobrenome" placeholder="Seu sobrenome">
+          </div>
+          <div class="field-group">
+            <label class="field-label">E-mail *</label>
+            <input type="email" class="input-field" id="email" placeholder="exemplo@email.com">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Senha *</label>
+            <input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Telefone / WhatsApp *</label>
+            <input type="tel" class="input-field" id="whatsapp" placeholder="(00) 00000-0000">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Cidade</label>
+            <input type="text" class="input-field" id="cidade" placeholder="Sua cidade">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Estado (UF)</label>
+            <input type="text" class="input-field" id="estado" placeholder="Ex: SP" maxlength="2">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Tipo de serviço principal *</label>
+            <select class="input-field" id="servicos">
+              <option value="">Selecione...</option>
+              <option value="Colheita">Colheita</option>
+              <option value="Pulverização">Pulverização</option>
+              <option value="Plantio">Plantio</option>
+              <option value="Irrigação">Irrigação</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Anos de experiência</label>
+            <input type="text" class="input-field" id="experiencia" placeholder="Ex: 5 anos">
+          </div>
+          <div class="btn-wrap">
+            <button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button>
+            <button class="btn-cadastrar btn-voltar" id="btnVoltarTipo">Voltar e escolher tipo</button>
+          </div>
+        </div>
+      `;
     }
 
-    // Desabilitar botão e mostrar loading (opcional)
+    document.getElementById('btnCadastrar')?.addEventListener('click', () => realizarCadastro(tipo));
+    document.getElementById('btnVoltarTipo')?.addEventListener('click', renderEscolhaTipo);
+  }
+
+  async function realizarCadastro(tipo) {
+    let payload = { tipo_usuario: tipo };
+
+    if (tipo === 'empresa') {
+      const nome = document.getElementById('nome')?.value.trim();
+      const email = document.getElementById('email')?.value.trim();
+      const senha = document.getElementById('senha')?.value.trim();
+      const whatsapp = document.getElementById('whatsapp')?.value.trim();
+      const cidade = document.getElementById('cidade')?.value.trim();
+      const estado = document.getElementById('estado')?.value.trim();
+
+      if (!nome || !email || !senha || !whatsapp) {
+        showMessage('Preencha todos os campos obrigatórios (*).', 'error');
+        return;
+      }
+      if (senha.length < 6) {
+        showMessage('A senha deve ter no mínimo 6 caracteres.', 'error');
+        return;
+      }
+
+      payload.nome = nome;
+      payload.sobrenome = '';
+      payload.email = email;
+      payload.senha = senha;
+      payload.whatsapp = whatsapp;
+      payload.cidade = cidade || null;
+      payload.estado = estado || null;
+      payload.nicho = '';
+      payload.cultivo = '';
+      payload.regiao = '';
+    } else {
+      const nome = document.getElementById('nome')?.value.trim();
+      const sobrenome = document.getElementById('sobrenome')?.value.trim();
+      const email = document.getElementById('email')?.value.trim();
+      const senha = document.getElementById('senha')?.value.trim();
+      const whatsapp = document.getElementById('whatsapp')?.value.trim();
+      const cidade = document.getElementById('cidade')?.value.trim();
+      const estado = document.getElementById('estado')?.value.trim();
+      const servicos = document.getElementById('servicos')?.value;
+      const experiencia = document.getElementById('experiencia')?.value.trim();
+
+      if (!nome || !email || !senha || !whatsapp || !servicos) {
+        showMessage('Preencha todos os campos obrigatórios (*).', 'error');
+        return;
+      }
+      if (senha.length < 6) {
+        showMessage('A senha deve ter no mínimo 6 caracteres.', 'error');
+        return;
+      }
+
+      payload.nome = nome;
+      payload.sobrenome = sobrenome || '';
+      payload.email = email;
+      payload.senha = senha;
+      payload.whatsapp = whatsapp;
+      payload.cidade = cidade || null;
+      payload.estado = estado || null;
+      payload.servicos = servicos;
+      payload.experiencia = experiencia || '';
+    }
+
     const btn = document.getElementById('btnCadastrar');
     const originalText = btn.innerText;
     btn.innerText = 'Cadastrando...';
     btn.disabled = true;
 
     try {
-      const payload = {
-        nome, sobrenome, email, senha, tipo_usuario: tipo,
-        endereco: endereco || null,
-        cidade: cidade || null,
-        estado: estado || null
-      };
-
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -379,35 +578,34 @@ select.input-field {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Erro no cadastro');
-      }
+      if (!response.ok) throw new Error(data.error || 'Erro no cadastro');
 
-      // Salvar token e dados do usuário
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      alert('Cadastro realizado com sucesso!');
-
-      // Redirecionar para página inicial (home logada)
-      window.location.href = 'home.html';
+      showMessage('Cadastro realizado com sucesso!', 'success');
+      setTimeout(() => {
+        window.location.href = 'meu_perfil.html';
+      }, 1500);
     } catch (err) {
-      alert(err.message);
-    } finally {
+      showMessage(err.message, 'error');
       btn.innerText = originalText;
       btn.disabled = false;
     }
   }
 
-  document.getElementById('btnCadastrar').addEventListener('click', cadastrar);
-
-  // Botão voltar (funcional)
-  const backButton = document.getElementById('backButton');
-  if (backButton) {
-    backButton.addEventListener('click', () => {
+  // Controle do botão voltar do header
+  function voltarPagina() {
+    if (window.history.length > 1) {
       window.history.back();
-    });
+    } else {
+      // Se não houver histórico, volta para a tela de escolha
+      renderEscolhaTipo();
+    }
   }
+
+  document.getElementById('backButton')?.addEventListener('click', voltarPagina);
+  renderEscolhaTipo();
 </script>
 </body>
 </html>

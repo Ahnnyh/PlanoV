@@ -203,6 +203,88 @@ body {
   border-radius: 0 0 44px 44px;
 }
 
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1100;
+  white-space: nowrap;
+  max-width: 90%;
+  white-space: normal;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+.toast.success { background: var(--verde); }
+.toast.error { background: #c0392b; }
+.toast.info { background: var(--laranja); }
+
+/* Modal de confirmação */
+.modal-overlay-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-container {
+  background: white;
+  width: 85%;
+  max-width: 320px;
+  border-radius: 28px;
+  padding: 24px 20px;
+  box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.modal-container h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 16px;
+}
+.modal-container p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #555;
+}
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.modal-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+.modal-btn.cancel {
+  background: #e0ddd6;
+  color: #333;
+}
+.modal-btn.save {
+  background: var(--verde);
+  color: white;
+}
+
 /* MENU LATERAL */
 .menu-overlay {
   position: absolute;
@@ -353,6 +435,23 @@ body {
   </div>
   <div class="bottom-img"></div>
 
+  <!-- TOAST -->
+  <div id="toast" class="toast" style="display: none;">
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
+    <div class="modal-container">
+      <h3 id="confirmTitle">Confirmar</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-buttons">
+        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MENU LATERAL -->
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
@@ -396,26 +495,79 @@ body {
   let token = localStorage.getItem('token');
   let user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  if (!token || !user.id) {
-    alert('Você precisa estar logado para acessar a agenda.');
-    window.location.href = 'login.html';
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
   }
 
-  // Saudação e menu
-  // Atualizar saudação e menu (com foto)
+  function confirmAction(title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').innerText = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    modal.style.display = 'flex';
+    const confirmBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      onConfirm();
+    };
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  }
+
+  if (!token || !user.id) {
+    showMessage('Você precisa estar logado para acessar a agenda.', 'error');
+    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+  }
+
+  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
+  function atualizarFotoMenu() {
+    const menuAvatarContainer = document.getElementById('menuAvatarContainer');
+    if (!menuAvatarContainer) return;
+    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    const foto = usuario.foto_perfil;
+    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+      menuAvatarContainer.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    } else {
+      // Ícone SVG padrão (planta)
+      menuAvatarContainer.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+      </svg>`;
+    }
+  }
+
+  // ========== SAUDAÇÃO E INFORMAÇÕES DO MENU ==========
   document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
   document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
   const menuTipoSpan = document.getElementById('menuTipo');
   if (menuTipoSpan && user.tipo_usuario) {
     menuTipoSpan.innerText = user.tipo_usuario === 'prestador' ? 'Prestador' : (user.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
   }
-  // Foto no menu
-  const menuAvatarContainer = document.getElementById('menuAvatarContainer');
-  if (user.foto_perfil && user.foto_perfil.startsWith('data:image')) {
-    menuAvatarContainer.innerHTML = `<img src="${user.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+  // Ajustar texto do menu "Empresas" para "Prestadores" se for empresa
+  const menuEmpresasText = document.querySelector('.menu-item[data-nav="empresas"] .menu-text');
+  if (menuEmpresasText && user.tipo_usuario === 'empresa') {
+    menuEmpresasText.innerText = 'Prestadores';
   }
+  // Atualizar foto do menu
+  atualizarFotoMenu();
 
-// ========== VARIÁVEIS GLOBAIS ==========
+  // ========== VARIÁVEIS GLOBAIS ==========
   let currentYear = new Date().getFullYear();
   let currentMonth = new Date().getMonth();
   let appointments = [];
@@ -426,40 +578,40 @@ body {
   const yearSelect = document.getElementById('year-sel');
   const evCard = document.getElementById('ev-card');
 
-// ========== FUNÇÕES AUXILIARES (adicione aqui) ==========
-function isDateInRange(dateStr, startISO, endISO) {
-  const check = new Date(dateStr);
-  const start = new Date(startISO);
-  const end = new Date(endISO);
-  check.setHours(0,0,0,0);
-  start.setHours(0,0,0,0);
-  end.setHours(0,0,0,0);
-  return check >= start && check <= end;
-}
+  // ========== FUNÇÕES AUXILIARES ==========
+  function isDateInRange(dateStr, startISO, endISO) {
+    const check = new Date(dateStr);
+    const start = new Date(startISO);
+    const end = new Date(endISO);
+    check.setHours(0,0,0,0);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+    return check >= start && check <= end;
+  }
 
-function formatDateToDDMMYYYY(dateISO) {
-  const d = new Date(dateISO);
-  const day = d.getDate().toString().padStart(2,'0');
-  const month = (d.getMonth()+1).toString().padStart(2,'0');
-  const year = d.getFullYear();
-  return `${day}/${month}/${year}`;
-}
+  function formatDateToDDMMYYYY(dateISO) {
+    const d = new Date(dateISO);
+    const day = d.getDate().toString().padStart(2,'0');
+    const month = (d.getMonth()+1).toString().padStart(2,'0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
 
-function formatTimeFromISO(dateISO) {
-  const d = new Date(dateISO);
-  const hours = d.getHours().toString().padStart(2,'0');
-  const minutes = d.getMinutes().toString().padStart(2,'0');
-  return `${hours}:${minutes}`;
-}
+  function formatTimeFromISO(dateISO) {
+    const d = new Date(dateISO);
+    const hours = d.getHours().toString().padStart(2,'0');
+    const minutes = d.getMinutes().toString().padStart(2,'0');
+    return `${hours}:${minutes}`;
+  }
 
-function getDurationInDays(startISO, endISO) {
-  const start = new Date(startISO);
-  const end = new Date(endISO);
-  start.setHours(0,0,0,0);
-  end.setHours(0,0,0,0);
-  const diffTime = Math.abs(end - start);
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-}
+  function getDurationInDays(startISO, endISO) {
+    const start = new Date(startISO);
+    const end = new Date(endISO);
+    start.setHours(0,0,0,0);
+    end.setHours(0,0,0,0);
+    const diffTime = Math.abs(end - start);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+  }
 
   // ========== BUSCAR AGENDAMENTOS ==========
   async function fetchAppointments() {
@@ -500,9 +652,9 @@ function getDurationInDays(startISO, endISO) {
     for (let day = 1; day <= daysInMonth; day++) {
       const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       const hasEvent = appointments.some(apt => {
-  if (!apt.inicio || !apt.fim) return false;
-  return isDateInRange(dateStr, apt.inicio, apt.fim);
-});
+        if (!apt.inicio || !apt.fim) return false;
+        return isDateInRange(dateStr, apt.inicio, apt.fim);
+      });
       const d = document.createElement('div');
       d.className = 'day';
       if (hasEvent) d.classList.add('has-event');
@@ -524,49 +676,35 @@ function getDurationInDays(startISO, endISO) {
   }
 
   function selectDay(day) {
-  selectedDay = day;
-  renderCalendar();
-  const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-  const eventOnDay = appointments.find(apt => {
-    if (!apt.inicio || !apt.fim) return false;
-    return isDateInRange(dateStr, apt.inicio, apt.fim);
-  });
+    selectedDay = day;
+    renderCalendar();
+    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const eventOnDay = appointments.find(apt => {
+      if (!apt.inicio || !apt.fim) return false;
+      return isDateInRange(dateStr, apt.inicio, apt.fim);
+    });
 
-  if (!eventOnDay) {
-    evCard.style.display = 'none';
-    return;
+    if (!eventOnDay) {
+      evCard.style.display = 'none';
+      return;
+    }
+
+    const ev = eventOnDay;
+    document.getElementById('ev-name').innerText = ev.tipo_servico;
+    document.getElementById('ev-descricao').innerText = ev.descricao || 'Sem descrição';
+    const dataInicio = formatDateToDDMMYYYY(ev.inicio);
+    const dataFim = formatDateToDDMMYYYY(ev.fim);
+    document.getElementById('ev-periodo').innerText = `${dataInicio} → ${dataFim}`;
+    const horaInicio = formatTimeFromISO(ev.inicio);
+    const horaFim = formatTimeFromISO(ev.fim);
+    document.getElementById('ev-horario').innerText = `${horaInicio} às ${horaFim}`;
+    const dias = getDurationInDays(ev.inicio, ev.fim);
+    document.getElementById('ev-duracao').innerText = `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
+    const parceiro = ev.prestador ? `${ev.prestador.nome} ${ev.prestador.sobrenome || ''}` : (ev.empresa ? `${ev.empresa.nome} ${ev.empresa.sobrenome || ''}` : 'Parceiro');
+    document.getElementById('ev-parceiro').innerText = parceiro;
+    document.getElementById('ev-status').innerText = ev.status;
+    evCard.style.display = 'block';
   }
-
-  const ev = eventOnDay;
-  document.getElementById('ev-name').innerText = ev.tipo_servico;
-
-    // DESCRIÇÃO 
-  document.getElementById('ev-descricao').innerText = ev.descricao || 'Sem descrição'; 
-
-
-  // PERÍODO
-  const dataInicio = formatDateToDDMMYYYY(ev.inicio);
-  const dataFim = formatDateToDDMMYYYY(ev.fim);
-  document.getElementById('ev-periodo').innerText = `${dataInicio} → ${dataFim}`;
-
-  // HORÁRIO 
-  const horaInicio = formatTimeFromISO(ev.inicio);
-  const horaFim = formatTimeFromISO(ev.fim);
-  document.getElementById('ev-horario').innerText = `${horaInicio} às ${horaFim}`;
-
-  // DURAÇÃO 
-  const dias = getDurationInDays(ev.inicio, ev.fim);
-  document.getElementById('ev-duracao').innerText = `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
-
-  // PARCEIRO 
-  const parceiro = ev.prestador ? `${ev.prestador.nome} ${ev.prestador.sobrenome || ''}` : (ev.empresa ? `${ev.empresa.nome} ${ev.empresa.sobrenome || ''}` : 'Parceiro');
-  document.getElementById('ev-parceiro').innerText = parceiro;
-
-  // STATUS
-  document.getElementById('ev-status').innerText = ev.status;
-
-  evCard.style.display = 'block';
-}
 
   function changeMonth(delta) {
     currentMonth += delta;
@@ -577,7 +715,7 @@ function getDurationInDays(startISO, endISO) {
     evCard.style.display = 'none';
   }
 
-    // ========== EVENT LISTENERS ==========
+  // ========== EVENT LISTENERS ==========
   document.getElementById('prev').addEventListener('click', () => changeMonth(-1));
   document.getElementById('next').addEventListener('click', () => changeMonth(1));
   monthSelect.addEventListener('change', (e) => {
@@ -606,6 +744,7 @@ function getDurationInDays(startISO, endISO) {
     window.location.href = 'agendar_servico.html';
   });
 
+  // ========== MENU LATERAL ==========
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -622,9 +761,11 @@ function getDurationInDays(startISO, endISO) {
       e.stopPropagation();
       const nav = item.getAttribute('data-nav');
       if (nav === 'sair') {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        window.location.href = 'login.html';
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        });
       } else if (nav === 'inicio') {
         window.location.href = 'home.html';
       } else if (nav === 'empresas') {

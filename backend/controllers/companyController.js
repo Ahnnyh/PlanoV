@@ -37,7 +37,7 @@ exports.searchProviders = async (req, res) => {
 
     const providers = await User.findAll({
       where,
-      attributes: ['id', 'nome', 'sobrenome', 'cidade', 'estado', 'foto_perfil', 'experiencia', 'whatsapp']
+      attributes: ['id', 'nome', 'sobrenome', 'cidade', 'estado', 'foto_perfil', 'whatsapp', 'experiencia', 'especialidade', 'servicos']
     });
     res.json(providers);
   } catch (err) {

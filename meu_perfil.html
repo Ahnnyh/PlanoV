@@ -91,12 +91,14 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
 .info-row { font-size: 13px; color: var(--texto); margin-bottom: 4px; line-height: 1.5; }
 .info-row .lbl { font-weight: 700; margin-right: 4px; }
 .card { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 14px 16px; margin-bottom: 12px; }
-.card-title { font-size: 15px; font-weight: 700; color: var(--verde-card); margin-bottom: 10px; }
+.card-title { font-size: 15px; font-weight: 700; color: var(--verde-card); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.card-title svg { width: 18px; height: 18px; stroke: var(--verde-card); stroke-width: 2; fill: none; }
 .tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.tag { background: #e8f0df; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--verde-card); }
+.tag { background: #e8f0df; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--verde-card); display: inline-flex; align-items: center; gap: 4px; }
+.tag .remove-tag { cursor: pointer; font-weight: bold; margin-left: 4px; color: #a00; }
 .sobre-textarea { width: 100%; font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--texto); line-height: 1.6; border: none; outline: none; resize: none; background: transparent; padding: 0; min-height: 70px; }
 .avaliacao { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 12px 16px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; }
-.avaliacao .star { font-size: 20px; }
+.star-big { width: 24px; height: 24px; fill: var(--laranja); stroke: none; }
 .avaliacao span { font-size: 14px; font-weight: 500; color: var(--texto); }
 .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 .card-mini { background: var(--branco); border-radius: 14px; border: 1px solid var(--borda); padding: 12px 14px; }
@@ -106,6 +108,89 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
 .btn-salvar { width: 100%; background: var(--verde-btn); color: #fff; font-size: 15px; font-weight: 700; border: none; border-radius: 14px; padding: 14px; cursor: pointer; }
 .btn-salvar:active { transform: scale(0.98); }
 #avatar-input { display: none; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1100;
+  white-space: nowrap;
+  max-width: 90%;
+  white-space: normal;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+.toast.success { background: var(--verde-btn); }
+.toast.error { background: #c0392b; }
+.toast.info { background: var(--laranja); }
+
+/* Modal de confirmação genérico */
+.modal-overlay-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-container {
+  background: white;
+  width: 85%;
+  max-width: 320px;
+  border-radius: 28px;
+  padding: 24px 20px;
+  box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.modal-container h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 16px;
+}
+.modal-container p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #555;
+}
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.modal-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+.modal-btn.cancel {
+  background: #e0ddd6;
+  color: #333;
+}
+.modal-btn.save {
+  background: var(--verde);
+  color: white;
+}
+
 /* Menu lateral */
 .menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
 .menu-drawer { position: absolute; top: 0; right: 0; width: min(280px,85%); min-width:260px; height:100%; background: var(--branco); box-shadow: -8px 0 24px rgba(0,0,0,0.15); z-index:101; transform:translateX(100%); transition:transform 0.3s; overflow-y:auto; border-radius:20px 0 0 20px; }
@@ -130,6 +215,7 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
 .divider { height:1px; background:var(--borda); margin:8px 16px; }
 .section-title { font-size:13px; font-weight:600; color:#888; letter-spacing:0.5px; padding:12px 20px 4px; text-transform:uppercase; }
 .footer-menu { border-top:1px solid var(--borda); margin-top:8px; padding:8px 0; }
+
 @media (max-width: 400px) { 
   .header-content { padding: 52px 16px 14px; } 
   .btn-icon { width: 40px; height: 40px; } 
@@ -257,9 +343,9 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
       <div style="text-align:right; margin-top:4px;"><svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
     </div>
 
-    <!-- AVALIAÇÃO MÉDIA E LISTA DE AVALIAÇÕES -->
+    <!-- AVALIAÇÃO MÉDIA (com ícone SVG em vez de emoji) -->
     <div class="avaliacao" id="avaliacao-container">
-      <span class="star">⭐</span>
+      <svg class="star-big" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       <span id="nota-texto">Carregando...</span>
     </div>
     <div id="minhas-avaliacoes-container" style="margin-top: 12px;"></div>
@@ -267,6 +353,23 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
 
   <div class="btn-footer">
     <button class="btn-salvar" id="btnSalvar">Salvar alterações</button>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" style="display: none;">
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
+    <div class="modal-container">
+      <h3 id="confirmTitle">Confirmar</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-buttons">
+        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      </div>
+    </div>
   </div>
 
   <!-- MENU DRAWER -->
@@ -300,9 +403,62 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
   let token = localStorage.getItem('token');
   let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 
+  // ========== FUNÇÕES DE NOTIFICAÇÃO ==========
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
+
+  function confirmAction(title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').innerText = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    modal.style.display = 'flex';
+    const confirmBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      onConfirm();
+    };
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  }
+
   if (!token || !currentUser.id) {
-    alert('Você precisa estar logado para acessar esta página.');
-    window.location.href = 'login.html';
+    showMessage('Você precisa estar logado para acessar esta página.', 'error');
+    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+  }
+
+  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
+  function atualizarFotoMenu() {
+    const menuAvatarDiv = document.getElementById('menuAvatar');
+    if (!menuAvatarDiv) return;
+    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    const foto = usuario.foto_perfil;
+    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+      menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    } else {
+      // Ícone SVG padrão (planta)
+      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+      </svg>`;
+    }
   }
 
   // ========== ELEMENTOS ==========
@@ -317,7 +473,7 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
   let currentAvatarBase64 = null;
 
   // Prestador
-  const servicosInput = document.getElementById('servicos');  // input simples
+  const servicosInput = document.getElementById('servicos');
   const experienciaInput = document.getElementById('experiencia');
   const maquinasTextarea = document.getElementById('maquinas');
   const contatoTextarea = document.getElementById('contato');
@@ -398,13 +554,17 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
         if (data.reviews && data.reviews.length > 0) {
           data.reviews.forEach(rev => {
             const starsHtml = Array(5).fill(0).map((_, i) => i < rev.nota ? '★' : '☆').join('');
+            const foto = rev.avaliador.foto_perfil;
+            const avatarHtml = foto && foto.startsWith('data:image')
+              ? `<img src="${foto}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`
+              : `<svg viewBox="0 0 24 24" width="20" height="20" fill="#aaa"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;
             const card = document.createElement('div');
             card.className = 'review-card';
             card.style.cssText = 'background:white; border-radius:14px; border:1px solid #e0ddd6; padding:12px; margin-bottom:10px;';
             card.innerHTML = `
               <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-                <div style="width:36px;height:36px;background:#ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#aaa"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;background:#ddd;display:flex;align-items:center;justify-content:center;">
+                  ${avatarHtml}
                 </div>
                 <div><strong>${escapeHtml(rev.avaliador.nome)}</strong></div>
               </div>
@@ -442,14 +602,15 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
       cidadeInput.value = cidadeTexto;
       sobreTextarea.value = userData.sobre || '';
 
-      if (userData.foto_perfil && userData.foto_perfil.startsWith('data:image')) {
+      // Avatar e foto do menu
+      if (userData.foto_perfil && (userData.foto_perfil.startsWith('data:image') || userData.foto_perfil.startsWith('http'))) {
         avatarImg.src = userData.foto_perfil;
         avatarImg.style.display = 'block';
         avatarPlaceholder.style.display = 'none';
         currentAvatarBase64 = userData.foto_perfil;
         currentUser.foto_perfil = userData.foto_perfil;
         localStorage.setItem('user', JSON.stringify(currentUser));
-        menuAvatarDiv.innerHTML = `<img src="${userData.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+        atualizarFotoMenu();
       } else {
         avatarImg.style.display = 'none';
         avatarPlaceholder.style.display = 'flex';
@@ -479,7 +640,7 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
       }
     } catch (err) {
       console.error(err);
-      alert('Erro ao carregar perfil.');
+      showMessage('Erro ao carregar perfil.', 'error');
     }
   }
 
@@ -534,17 +695,18 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
         const err = await response.json();
         throw new Error(err.error || 'Erro ao salvar');
       }
-      alert('Perfil atualizado com sucesso!');
+      showMessage('Perfil atualizado com sucesso!', 'success');
       currentUser.nome = nome;
       currentUser.sobrenome = sobrenome;
       if (currentAvatarBase64) currentUser.foto_perfil = currentAvatarBase64;
       localStorage.setItem('user', JSON.stringify(currentUser));
+      atualizarFotoMenu();
       atualizarMenuBasico();
       await carregarPerfil();
       carregarAvaliacoes();
     } catch (err) {
       console.error(err);
-      alert(err.message);
+      showMessage(err.message, 'error');
     }
   }
 
@@ -593,23 +755,30 @@ body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; j
   if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
   if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
   if (backButton) backButton.addEventListener('click', () => window.history.back());
+
+  // Ajustar texto do menu "Empresas" para "Prestadores" se for empresa
+  const menuEmpresasText = document.querySelector('.menu-item[data-nav="empresas"] .menu-text');
+  if (menuEmpresasText && currentUser.tipo_usuario === 'empresa') {
+    menuEmpresasText.innerText = 'Prestadores';
+  }
+
   document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();
       const nav = item.getAttribute('data-nav');
       if (nav === 'sair') {
-        if (confirm('Deseja realmente sair da sua conta?')) {
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           window.location.href = 'login.html';
-        }
+        });
         closeMenu();
       } else if (nav === 'inicio') window.location.href = 'home.html';
       else if (nav === 'empresas') window.location.href = (currentUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
       else if (nav === 'agenda') window.location.href = 'agenda.html';
       else if (nav === 'perfil') closeMenu();
-      else if (nav === 'configuracoes') alert('Configurações em breve');
-      else if (nav === 'ajuda') alert('Central de ajuda em breve');
+      else if (nav === 'configuracoes') showMessage('Configurações em breve', 'info');
+      else if (nav === 'ajuda') showMessage('Central de ajuda em breve', 'info');
       else closeMenu();
     });
   });

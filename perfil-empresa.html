@@ -6,6 +6,7 @@
   <title>PlanoV - Perfil da Empresa</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ===== (estilos mantidos, apenas adicionadas classes para as estrelas SVG) ===== */
     * {
       margin: 0;
       padding: 0;
@@ -50,7 +51,7 @@
       margin: 0 auto;
     }
 
-    /* HEADER (igual ao meu_perfil.html) */
+    /* HEADER */
     .header {
       position: relative;
       overflow: hidden;
@@ -170,7 +171,6 @@
       border-radius: 20px;
     }
 
-    /* Conteúdo principal */
     .body {
       flex: 1;
       overflow-y: auto;
@@ -182,7 +182,6 @@
       display: none;
     }
 
-    /* Cards e seções */
     .card {
       background: var(--branco);
       border-radius: 14px;
@@ -206,6 +205,16 @@
       stroke-width: 2;
       fill: none;
     }
+    .info-row {
+      font-size: 13px;
+      color: var(--texto);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .info-row .lbl {
+      font-weight: 700;
+      margin-right: 8px;
+    }
     .sobre-texto {
       font-size: 13px;
       color: var(--texto);
@@ -226,7 +235,6 @@
       color: var(--verde-card);
     }
 
-    /* Bloco de avaliação média */
     .avaliacao-media {
       background: var(--branco);
       border-radius: 14px;
@@ -242,6 +250,7 @@
       width: 24px;
       height: 24px;
       fill: var(--laranja);
+      stroke: none;
     }
     .media-valor {
       font-size: 18px;
@@ -253,7 +262,6 @@
       color: var(--muted);
     }
 
-    /* Lista de avaliações */
     .reviews-list {
       list-style: none;
       margin-top: 6px;
@@ -277,9 +285,17 @@
       color: var(--texto);
     }
     .stars {
-      color: var(--laranja);
-      letter-spacing: 2px;
-      font-size: 13px;
+      display: flex;
+      gap: 2px;
+    }
+    .stars svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--laranja);
+      stroke: none;
+    }
+    .stars svg.empty {
+      fill: #e0ddd6;
     }
     .review-text {
       font-size: 12px;
@@ -287,7 +303,6 @@
       line-height: 1.4;
     }
 
-    /* Formulário de avaliação */
     .avaliar-area {
       margin-top: 12px;
     }
@@ -319,13 +334,15 @@
       justify-content: center;
     }
     .star-select {
-      font-size: 28px;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
-      color: #ddd;
-      transition: 0.1s;
+      fill: #ddd;
+      stroke: none;
+      transition: fill 0.1s;
     }
     .star-select.selected {
-      color: var(--laranja);
+      fill: var(--laranja);
     }
     textarea {
       width: 100%;
@@ -348,7 +365,115 @@
       cursor: pointer;
     }
 
-    /* MENU LATERAL (idêntico ao meu_perfil.html) */
+    /* Modais */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-container {
+      background: white;
+      width: 85%;
+      max-width: 320px;
+      border-radius: 28px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .modal-container h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--texto);
+      margin-bottom: 16px;
+    }
+    .modal-stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .modal-star {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      fill: #ddd;
+      stroke: none;
+      transition: fill 0.1s;
+    }
+    .modal-star.selected {
+      fill: var(--laranja);
+    }
+    .modal-container textarea {
+      width: 100%;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      resize: vertical;
+      margin: 8px 0 16px;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .modal-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+    .modal-btn.cancel {
+      background: #e0ddd6;
+      color: #333;
+    }
+    .modal-btn.save {
+      background: var(--verde-btn);
+      color: white;
+    }
+    .modal-btn.delete {
+      background: #c0392b;
+      color: white;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 1100;
+      white-space: nowrap;
+      max-width: 90%;
+      white-space: normal;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+    .toast.success { background: var(--verde-btn); }
+    .toast.error { background: #c0392b; }
+    .toast.info { background: var(--laranja); }
+
+    /* MENU LATERAL */
     .menu-overlay {
       position: absolute;
       top: 0;
@@ -538,12 +663,24 @@
       .card {
         padding: 12px 14px;
       }
+      .stars svg {
+        width: 12px;
+        height: 12px;
+      }
+      .star-select {
+        width: 24px;
+        height: 24px;
+      }
+      .modal-star {
+        width: 28px;
+        height: 28px;
+      }
     }
   </style>
 </head>
 <body>
 <div class="frame">
-  <!-- HEADER COM SUPERIOR.PNG -->
+  <!-- HEADER -->
   <div class="header">
     <div class="header-bg"></div>
     <div class="header-content">
@@ -560,7 +697,7 @@
     <h1>Perfil da Empresa</h1>
   </div>
 
-  <!-- HERO COM AVATAR E BADGE -->
+  <!-- HERO COM AVATAR -->
   <div class="perfil-hero">
     <div class="avatar-wrap" id="avatarWrap">
       <div class="avatar-placeholder" id="avatarPlaceholder">
@@ -571,14 +708,22 @@
     <div class="badge-empresa" id="badgeEmpresa">Empresa</div>
   </div>
 
-  <!-- CORPO PRINCIPAL -->
   <div class="body">
-    <!-- NOME DA EMPRESA (centralizado) -->
     <div style="text-align: center; margin: 8px 0 16px;">
       <h2 id="empresaNome" style="font-size: 22px; font-weight: 700; color: var(--texto);">Carregando...</h2>
     </div>
 
-    <!-- SOBRE -->
+    <!-- INFORMAÇÕES DA EMPRESA (NICHO, CULTIVO, REGIÃO) -->
+    <div class="card" id="infoEmpresaCard" style="display: none;">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Informações da Empresa
+      </div>
+      <div class="info-row" id="rowTipo"><span class="lbl">Tipo:</span> <span id="empresaTipo">-</span></div>
+      <div class="info-row" id="rowCultivo"><span class="lbl">Cultivo principal:</span> <span id="empresaCultivo">-</span></div>
+      <div class="info-row" id="rowRegiao"><span class="lbl">Região de atuação:</span> <span id="empresaRegiao">-</span></div>
+    </div>
+
     <div class="card">
       <div class="card-title">
         <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -587,7 +732,6 @@
       <div class="sobre-texto" id="sobreTexto">-</div>
     </div>
 
-    <!-- SERVIÇOS QUE CONTRATA -->
     <div class="card">
       <div class="card-title">
         <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -596,37 +740,58 @@
       <div class="tags-wrap" id="servicosTags"></div>
     </div>
 
-    <!-- AVALIAÇÃO MÉDIA -->
     <div class="avaliacao-media">
       <svg class="star-big" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       <span class="media-valor" id="mediaNota">-</span>
       <span class="media-label" id="mediaLabel">avaliação média</span>
     </div>
 
-    <!-- LISTA DE AVALIAÇÕES -->
     <div>
       <div class="card-title" style="margin-bottom: 8px;">Avaliações</div>
       <ul class="reviews-list" id="reviewsList"></ul>
     </div>
 
-    <!-- ÁREA PARA AVALIAR (só para usuários logados não-donos) -->
     <div id="avaliarArea" class="avaliar-area" style="display: none;">
       <button class="avaliar-btn" id="toggleFormBtn">Avaliar esta empresa</button>
       <div id="avaliarForm" class="avaliar-form">
-        <div class="stars-select" id="starsSelect">
-          <span data-value="1" class="star-select">☆</span>
-          <span data-value="2" class="star-select">☆</span>
-          <span data-value="3" class="star-select">☆</span>
-          <span data-value="4" class="star-select">☆</span>
-          <span data-value="5" class="star-select">☆</span>
-        </div>
+        <div class="stars-select" id="starsSelect"></div>
         <textarea id="comentarioInput" rows="2" placeholder="Deixe seu comentário (opcional)"></textarea>
         <button class="btn-enviar" id="enviarAvaliacaoBtn">Enviar avaliação</button>
       </div>
     </div>
   </div>
 
-  <!-- MENU LATERAL (DRAWER) -->
+  <!-- TOAST -->
+  <div id="toast" class="toast" style="display: none;">
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="confirmModal" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+      <h3 id="confirmTitle">Confirmar</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-buttons">
+        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE EDIÇÃO -->
+  <div id="editModal" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+      <h3>Editar Avaliação</h3>
+      <div class="modal-stars" id="editStars"></div>
+      <textarea id="editComentario" rows="3" placeholder="Seu comentário..."></textarea>
+      <div class="modal-buttons">
+        <button id="cancelEditBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="saveEditBtn" class="modal-btn save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU LATERAL -->
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
       <button class="menu-close" id="closeMenuBtn">
@@ -660,19 +825,35 @@
 </div>
 
 <script>
-  // ================= CONFIGURAÇÕES =================
   const API_BASE_URL = 'http://localhost:3000/api';
   let token = localStorage.getItem('token');
   let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
-
   const urlParams = new URLSearchParams(window.location.search);
   const empresaId = urlParams.get('id');
   if (!empresaId) {
-    alert('Empresa não especificada.');
-    window.location.href = 'buscar-empresas.html';
+    showMessage('Empresa não especificada.', 'error');
+    setTimeout(() => { window.location.href = 'buscar-empresas.html'; }, 1500);
   }
 
-  // ========== ELEMENTOS DO DOM ==========
+  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
+  function atualizarFotoMenu() {
+    const menuAvatarDiv = document.getElementById('menuAvatar');
+    if (!menuAvatarDiv) return;
+    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    const foto = usuario.foto_perfil;
+    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+      menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    } else {
+      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
+        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
+        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
+        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
+      </svg>`;
+    }
+  }
+
+  // DOM elements
   const empresaNomeEl = document.getElementById('empresaNome');
   const sobreTextoEl = document.getElementById('sobreTexto');
   const servicosTagsEl = document.getElementById('servicosTags');
@@ -681,12 +862,64 @@
   const reviewsListEl = document.getElementById('reviewsList');
   const avatarImg = document.getElementById('avatarImg');
   const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+  const infoEmpresaCard = document.getElementById('infoEmpresaCard');
+  const empresaTipoSpan = document.getElementById('empresaTipo');
+  const empresaCultivoSpan = document.getElementById('empresaCultivo');
+  const empresaRegiaoSpan = document.getElementById('empresaRegiao');
 
-  let currentRating = 0;
+  let currentReviewId = null;
+  let selectedEditRating = 0;
+
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
+
+  function confirmAction(title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').innerText = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    modal.style.display = 'flex';
+    const confirmBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      onConfirm();
+    };
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  }
 
   function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
+  }
+
+  // Gerar SVG de estrela
+  function starSvg(filled = true, size = 14) {
+    const fillColor = filled ? 'var(--laranja)' : '#e0ddd6';
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${fillColor}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+  }
+
+  function generateStars(nota, size = 14) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      html += starSvg(i <= nota, size);
+    }
+    return html;
   }
 
   async function carregarEmpresa() {
@@ -701,7 +934,31 @@
       empresaNomeEl.innerText = user.nome || 'Empresa';
       sobreTextoEl.innerText = user.sobre || 'Sem descrição.';
 
-      // Foto de perfil
+      // Preencher informações da empresa
+      let hasInfo = false;
+      if (user.nicho && user.nicho.trim() !== '') {
+        empresaTipoSpan.innerText = user.nicho;
+        hasInfo = true;
+      } else {
+        empresaTipoSpan.innerText = 'Não informado';
+      }
+      if (user.cultivo && user.cultivo.trim() !== '') {
+        empresaCultivoSpan.innerText = user.cultivo;
+        hasInfo = true;
+      } else {
+        empresaCultivoSpan.innerText = 'Não informado';
+      }
+      if (user.regiao && user.regiao.trim() !== '') {
+        empresaRegiaoSpan.innerText = user.regiao;
+        hasInfo = true;
+      } else {
+        empresaRegiaoSpan.innerText = 'Não informado';
+      }
+      if (hasInfo || (user.nicho || user.cultivo || user.regiao)) {
+        infoEmpresaCard.style.display = 'block';
+      }
+
+      // Avatar
       if (user.foto_perfil && (user.foto_perfil.startsWith('http') || user.foto_perfil.startsWith('data:image'))) {
         avatarImg.src = user.foto_perfil;
         avatarImg.style.display = 'block';
@@ -735,48 +992,194 @@
       console.error(err);
       empresaNomeEl.innerText = 'Erro';
       sobreTextoEl.innerText = 'Não foi possível carregar os dados.';
+      showMessage('Erro ao carregar perfil da empresa.', 'error');
     }
   }
 
   async function carregarAvaliacoes() {
     try {
-      const res = await fetch(`${API_BASE_URL}/reviews/${empresaId}`);
-      if (!res.ok) throw new Error();
-      const data = await res.json();
+      const response = await fetch(`${API_BASE_URL}/reviews/${empresaId}`);
+      if (!response.ok) throw new Error('Erro ao carregar avaliações');
+      const data = await response.json();
+
       const media = data.media ? parseFloat(data.media) : 0;
       const total = data.total || 0;
       mediaNotaEl.innerText = media > 0 ? media.toFixed(1) : '—';
       mediaLabelEl.innerText = media > 0 ? `avaliação média (${total} avaliações)` : 'sem avaliações';
 
-      reviewsListEl.innerHTML = '';
+      const container = reviewsListEl;
+      container.innerHTML = '';
+
       if (data.reviews && data.reviews.length) {
         data.reviews.forEach(rev => {
-          const estrelas = '★'.repeat(rev.nota) + '☆'.repeat(5 - rev.nota);
-          const li = document.createElement('li');
-          li.className = 'review-item';
-          li.innerHTML = `
-            <div class="review-header">
-              <span class="review-author">${escapeHtml(rev.avaliador.nome)}</span>
-              <span class="stars">${estrelas}</span>
+          const estrelasHtml = generateStars(rev.nota);
+          const isAuthor = (token && loggedUser.id && rev.avaliador && rev.avaliador.id === loggedUser.id);
+          
+          const foto = rev.avaliador.foto_perfil;
+          const avatarHtml = foto && (foto.startsWith('data:image') || foto.startsWith('http'))
+            ? `<img src="${foto}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`
+            : `<svg viewBox="0 0 24 24" width="20" height="20" fill="#aaa"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;
+
+          const reviewDiv = document.createElement('li');
+          reviewDiv.className = 'review-item';
+          reviewDiv.innerHTML = `
+            <div class="review-header" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;background:#ddd;display:flex;align-items:center;justify-content:center;">
+                  ${avatarHtml}
+                </div>
+                <div class="review-author" style="font-weight:600;">${escapeHtml(rev.avaliador.nome)}</div>
+                <div class="stars">${estrelasHtml}</div>
+              </div>
+              ${isAuthor ? `
+                <div style="display:flex; gap:6px;">
+                  <button class="edit-review" data-id="${rev.id}" data-nota="${rev.nota}" data-comentario="${escapeHtml(rev.comentario || '')}" style="background:none; border:none; cursor:pointer; padding:4px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 3l4 4-7 7H10v-4l7-7z"/>
+                      <path d="M4 20h16"/>
+                    </svg>
+                  </button>
+                  <button class="delete-review" data-id="${rev.id}" style="background:none; border:none; cursor:pointer; padding:4px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"/>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      <line x1="10" y1="11" x2="10" y2="17"/>
+                      <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
+                  </button>
+                </div>
+              ` : ''}
             </div>
-            <div class="review-text">${escapeHtml(rev.comentario || '')}</div>
+            <div class="review-text" style="margin-top:6px; padding-left:46px;">${escapeHtml(rev.comentario || '')}</div>
           `;
-          reviewsListEl.appendChild(li);
+          container.appendChild(reviewDiv);
+        });
+
+        // Botões editar
+        document.querySelectorAll('.edit-review').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const nota = parseInt(btn.getAttribute('data-nota'));
+            const comentario = btn.getAttribute('data-comentario');
+            currentReviewId = id;
+            selectedEditRating = nota;
+            
+            const starsContainer = document.getElementById('editStars');
+            starsContainer.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+              const starDiv = document.createElement('div');
+              starDiv.className = 'modal-star' + (i <= nota ? ' selected' : '');
+              starDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+              starDiv.addEventListener('click', () => {
+                selectedEditRating = i;
+                document.querySelectorAll('#editStars .modal-star').forEach((s, idx) => {
+                  if (idx < selectedEditRating) s.classList.add('selected');
+                  else s.classList.remove('selected');
+                });
+              });
+              starsContainer.appendChild(starDiv);
+            }
+            document.getElementById('editComentario').value = comentario;
+            document.getElementById('editModal').style.display = 'flex';
+          });
+        });
+
+        // Botões excluir
+        document.querySelectorAll('.delete-review').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            confirmAction('Excluir Avaliação', 'Tem certeza que deseja excluir esta avaliação? Esta ação não pode ser desfeita.', async () => {
+              try {
+                const res = await fetch(`${API_BASE_URL}/reviews/${id}`, {
+                  method: 'DELETE',
+                  headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error(await res.text());
+                showMessage('Avaliação removida!', 'success');
+                carregarAvaliacoes();
+              } catch (err) {
+                showMessage('Erro ao excluir: ' + err.message, 'error');
+              }
+            });
+          });
         });
       } else {
-        reviewsListEl.innerHTML = '<div style="text-align:center;color:#888;">Nenhuma avaliação ainda.</div>';
+        container.innerHTML = '<div style="text-align:center; color:#888;">Nenhuma avaliação ainda.</div>';
       }
     } catch (err) {
       console.error(err);
-      reviewsListEl.innerHTML = '<div style="text-align:center;color:#888;">Erro ao carregar avaliações.</div>';
+      reviewsListEl.innerHTML = '<div style="text-align:center; color:#888;">Erro ao carregar avaliações.</div>';
+      showMessage('Erro ao carregar avaliações.', 'error');
     }
   }
 
-  // ========== LÓGICA DE AVALIAÇÃO (usuário logado e não dono) ==========
+  // Modal de edição
+  document.getElementById('saveEditBtn')?.addEventListener('click', async () => {
+    if (selectedEditRating === 0) {
+      showMessage('Selecione uma nota!', 'error');
+      return;
+    }
+    const novoComentario = document.getElementById('editComentario').value.trim();
+    try {
+      const res = await fetch(`${API_BASE_URL}/reviews/${currentReviewId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ nota: selectedEditRating, comentario: novoComentario })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      showMessage('Avaliação atualizada!', 'success');
+      document.getElementById('editModal').style.display = 'none';
+      carregarAvaliacoes();
+    } catch (err) {
+      showMessage('Erro: ' + err.message, 'error');
+    }
+  });
+
+  document.getElementById('cancelEditBtn')?.addEventListener('click', () => {
+    document.getElementById('editModal').style.display = 'none';
+  });
+
+  // Nova avaliação - gerar estrelas SVG
+  const starsSelectDiv = document.getElementById('starsSelect');
+  const starsSelectArray = [];
+  for (let i = 1; i <= 5; i++) {
+    const starSvgElem = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    starSvgElem.setAttribute('viewBox', '0 0 24 24');
+    starSvgElem.setAttribute('width', '28');
+    starSvgElem.setAttribute('height', '28');
+    starSvgElem.classList.add('star-select');
+    starSvgElem.setAttribute('data-value', i);
+    starSvgElem.innerHTML = '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
+    starSvgElem.style.fill = '#ddd';
+    starsSelectDiv.appendChild(starSvgElem);
+    starsSelectArray.push(starSvgElem);
+  }
+
+  let currentRating = 0;
+
+  function setSelectStars(rating) {
+    starsSelectArray.forEach((star, idx) => {
+      if (idx < rating) {
+        star.style.fill = 'var(--laranja)';
+        star.classList.add('selected');
+      } else {
+        star.style.fill = '#ddd';
+        star.classList.remove('selected');
+      }
+    });
+  }
+
+  starsSelectArray.forEach(star => {
+    star.addEventListener('click', () => {
+      currentRating = parseInt(star.getAttribute('data-value'));
+      setSelectStars(currentRating);
+      document.getElementById('ratingFeedback')?.remove(); // não tem feedback
+    });
+  });
+
   const avaliarArea = document.getElementById('avaliarArea');
   const toggleFormBtn = document.getElementById('toggleFormBtn');
   const avaliarForm = document.getElementById('avaliarForm');
-  const starsSelectSpan = document.querySelectorAll('.star-select');
   const enviarBtn = document.getElementById('enviarAvaliacaoBtn');
   const comentarioInput = document.getElementById('comentarioInput');
 
@@ -785,19 +1188,9 @@
     toggleFormBtn.addEventListener('click', () => {
       avaliarForm.classList.toggle('open');
     });
-    starsSelectSpan.forEach(star => {
-      star.addEventListener('click', () => {
-        currentRating = parseInt(star.getAttribute('data-value'));
-        starsSelectSpan.forEach(s => {
-          const val = parseInt(s.getAttribute('data-value'));
-          s.innerText = val <= currentRating ? '★' : '☆';
-          s.classList.toggle('selected', val <= currentRating);
-        });
-      });
-    });
     enviarBtn.addEventListener('click', async () => {
       if (currentRating === 0) {
-        alert('Selecione uma classificação em estrelas.');
+        showMessage('Selecione uma classificação em estrelas.', 'error');
         return;
       }
       const comentario = comentarioInput.value.trim();
@@ -818,79 +1211,68 @@
           const err = await res.json();
           throw new Error(err.error || 'Erro ao enviar avaliação');
         }
-        alert('Avaliação enviada com sucesso!');
-        window.location.reload();
+        showMessage('Avaliação enviada com sucesso!', 'success');
+        setTimeout(() => window.location.reload(), 1500);
       } catch (err) {
-        alert(err.message);
+        showMessage(err.message, 'error');
       }
     });
   } else {
     avaliarArea.style.display = 'none';
   }
 
-  // ========== MENU LATERAL (idêntico ao meu_perfil.html) ==========
+  // ========== MENU LATERAL ==========
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
   const backButton = document.getElementById('backButton');
-
   function openMenu() { menuOverlay.classList.add('open'); }
   function closeMenu() { menuOverlay.classList.remove('open'); }
-  menuBtn.addEventListener('click', openMenu);
-  closeMenuBtn.addEventListener('click', closeMenu);
-  menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
-  backButton.addEventListener('click', () => window.history.back());
+  if (menuBtn) menuBtn.addEventListener('click', openMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+  if (backButton) backButton.addEventListener('click', () => window.history.back());
 
-  // Atualizar menu com dados do usuário logado
   const menuNome = document.getElementById('menuNome');
   const menuTipo = document.getElementById('menuTipo');
-  const menuAvatarDiv = document.getElementById('menuAvatar');
-
   if (token && loggedUser.id) {
     menuNome.innerText = `${loggedUser.nome || ''} ${loggedUser.sobrenome || ''}`.trim() || 'Usuário';
     menuTipo.innerText = loggedUser.tipo_usuario === 'prestador' ? 'Prestador' : (loggedUser.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
-    if (loggedUser.foto_perfil && (loggedUser.foto_perfil.startsWith('http') || loggedUser.foto_perfil.startsWith('data:image'))) {
-      menuAvatarDiv.innerHTML = `<img src="${loggedUser.foto_perfil}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
-    }
   } else {
     menuNome.innerText = 'Visitante';
     menuTipo.innerText = 'Convidado';
   }
+  atualizarFotoMenu();
 
-  // Navegação do menu
+  // Ajustar texto do menu "Empresas" para "Prestadores" se o usuário for empresa
+  const menuEmpresasText = document.querySelector('.menu-item[data-nav="empresas"] .menu-text');
+  if (menuEmpresasText && loggedUser.tipo_usuario === 'empresa') {
+    menuEmpresasText.innerText = 'Prestadores';
+  }
+
   document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();
       const nav = item.getAttribute('data-nav');
       if (nav === 'sair') {
-        if (confirm('Deseja realmente sair da sua conta?')) {
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           window.location.href = 'login.html';
-        }
-        closeMenu();
-      } else if (nav === 'inicio') {
-        window.location.href = 'home.html';
-      } else if (nav === 'empresas') {
+        });
+      } else if (nav === 'inicio') window.location.href = 'home.html';
+      else if (nav === 'empresas') {
         if (loggedUser.tipo_usuario === 'prestador') window.location.href = 'buscar-empresas.html';
         else window.location.href = 'buscar-prestadores.html';
-      } else if (nav === 'agenda') {
-        window.location.href = 'agenda.html';
-      } else if (nav === 'perfil') {
-        window.location.href = 'meu_perfil.html';
-      } else if (nav === 'configuracoes') {
-        alert('Configurações em breve');
-        closeMenu();
-      } else if (nav === 'ajuda') {
-        alert('Central de ajuda em breve');
-        closeMenu();
-      } else {
-        closeMenu();
       }
+      else if (nav === 'agenda') window.location.href = 'agenda.html';
+      else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
+      else if (nav === 'configuracoes') showMessage('Configurações em breve', 'info');
+      else if (nav === 'ajuda') showMessage('Central de ajuda em breve', 'info');
+      else closeMenu();
     });
   });
 
-  // ========== INICIALIZAÇÃO ==========
   carregarEmpresa();
   carregarAvaliacoes();
 </script>
