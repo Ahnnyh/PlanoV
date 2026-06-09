@@ -44,7 +44,7 @@
   }
   .hero {
     position: relative;
-    height: 230px;
+    min-height: 260px; /* aumenta a área do hero para o avatar não cortar */
     flex-shrink: 0;
     background-image: url('img/superior_perfil.png');
     background-size: cover;
@@ -52,7 +52,7 @@
     background-color: #b8d0a5;
     border-top-left-radius: 44px;
     border-top-right-radius: 44px;
-    overflow: hidden;
+    overflow: visible; /* permite que o avatar vaze para fora */
   }
   .hero::after {
     content: '';
@@ -60,9 +60,10 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    height: 60px;
     background: linear-gradient(to bottom, transparent, var(--bg));
     pointer-events: none;
+    z-index: 1;
   }
   .hero-nav {
     position: absolute;
@@ -103,8 +104,8 @@
     content: url('img/logo.png');
   }
   .avatar-hero {
-    position: relative;
-    bottom: -130px;
+    position: absolute;
+    bottom: -30px; /* ajustado para ficar visível */
     left: 50%;
     transform: translateX(-50%);
     z-index: 20;
@@ -416,7 +417,7 @@
     color: white;
   }
 
-  /* MENU LATERAL */
+  /* MENU LATERAL (original, sem itens extras) */
   .menu-overlay {
     position: absolute;
     top: 0;
@@ -536,7 +537,7 @@
     .modal-star { width: 28px; height: 28px; }
   }
   @media (max-width: 340px) {
-    .hero { height: 180px; }
+    .hero { min-height: 220px; }
     .avatar-hero { width: 80px; height: 80px; }
     .avatar-hero svg { width: 50px; height: 50px; }
     .perfil-info h2 { font-size: 18px; }
@@ -803,15 +804,14 @@
           });
         }
         if (email) {
-        document.getElementById('btn-email')?.addEventListener('click', () => {
-          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
-          const newWindow = window.open(gmailUrl, '_blank');
-          if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-            // Fallback: mailto tradicional
-            window.location.href = `mailto:${email}`;
-          }
-        });
-      }
+          document.getElementById('btn-email')?.addEventListener('click', () => {
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+            const newWindow = window.open(gmailUrl, '_blank');
+            if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+              window.location.href = `mailto:${email}`;
+            }
+          });
+        }
       } else {
         contatoWrapper.style.display = 'none';
       }

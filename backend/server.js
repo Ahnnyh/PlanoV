@@ -3,6 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
 
+// Importação de modelos (necessário para a rota de delete)
+const User = require('./models/User');
+
+// Importação de middlewares
+const authenticateToken = require('./middlewares/authMiddleware');
+
+// Importação de rotas
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const companyRoutes = require('./routes/companyRoutes');
@@ -11,15 +18,29 @@ const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
 app.use(cors());
-app.use(express.json({ limit: '10mb' })); // Aumente o limite para fotos grandes
+app.use(express.json({ limit: '10mb' }));
 
+// Rotas da API
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/reviews', reviewRoutes);
 
-// Sincronizar sem alterar estrutura existente
+// Rota para excluir conta (protegida por token)
+app.delete('/api/user/delete', authenticateToken, async (req, res) => {
+  const userId = req.userId;
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+    await user.destroy(); // com CASCADE, deleta tudo relacionado
+    res.json({ message: 'Conta excluída com sucesso' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Sincronizar banco de dados (sem alterar estrutura existente)
 sequelize.sync({ alter: false }).then(() => {
   console.log('Banco de dados sincronizado');
   app.listen(process.env.PORT || 3000, () => {
