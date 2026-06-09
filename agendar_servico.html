@@ -696,6 +696,19 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   const parceiroSelect = document.getElementById('parceiro-select');
   let parceirosList = [];
 
+    // ========== DETECTAR SE É EDIÇÃO ==========
+  const urlParamsEdit = new URLSearchParams(window.location.search);
+  const editId = urlParamsEdit.get('edit_id');
+  let isEditing = false;
+  let currentAppointmentId = null;
+
+  if (editId) {
+    isEditing = true;
+    currentAppointmentId = editId;
+    document.querySelector('.title-bar h1').innerText = 'Editar Serviço';
+    document.getElementById('btnAgendar').innerText = 'Salvar Alterações';
+  }
+
   if (isPrestador) {
     labelParceiro.innerText = 'Empresa';
     carregarParceiros('companies');
@@ -729,6 +742,52 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     } catch (err) {
       console.error(err);
       parceiroSelect.innerHTML = '<option value="">Erro ao carregar</option>';
+    }
+  }
+
+    // ========== CARREGAR DADOS PARA EDIÇÃO ==========
+  async function carregarDadosParaEdicao(id) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/schedule/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!response.ok) throw new Error('Erro ao carregar agendamento');
+      const data = await response.json();
+      
+      document.getElementById('tipo-servico').value = data.tipo_servico;
+      document.getElementById('descricao').value = data.descricao || '';
+      
+      const inicioDate = new Date(data.inicio);
+      const fimDate = new Date(data.fim);
+      document.getElementById('data-inicio').value = inicioDate.toISOString().split('T')[0];
+      document.getElementById('data-fim').value = fimDate.toISOString().split('T')[0];
+      document.getElementById('hora-inicio').value = inicioDate.toTimeString().slice(0,5);
+      document.getElementById('hora-fim').value = fimDate.toTimeString().slice(0,5);
+      
+      selectedStartDate = inicioDate;
+      selectedEndDate = fimDate;
+      renderCalendar();
+      
+      setTimeout(() => {
+        if (isPrestador && data.empresa) {
+          for (let i = 0; i < parceiroSelect.options.length; i++) {
+            if (parseInt(parceiroSelect.options[i].value) === data.empresa.id) {
+              parceiroSelect.selectedIndex = i;
+              break;
+            }
+          }
+        } else if (!isPrestador && data.prestador) {
+          for (let i = 0; i < parceiroSelect.options.length; i++) {
+            if (parseInt(parceiroSelect.options[i].value) === data.prestador.id) {
+              parceiroSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }, 500);
+    } catch (err) {
+      console.error(err);
+      showMessage('Erro ao carregar dados do agendamento', 'error');
     }
   }
 
@@ -882,25 +941,46 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/schedule`, {
-        method: 'POST',
+           let url = `${API_BASE_URL}/schedule`;
+      let method = 'POST';
+      
+      if (isEditing && currentAppointmentId) {
+        url = `${API_BASE_URL}/schedule/${currentAppointmentId}`;
+        method = 'PUT';
+      }
+      
+      const response = await fetch(url, {
+        method: method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(payload)
       });
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Erro ao agendar');
       }
-      showMessage('Serviço agendado com sucesso!', 'success');
+
+      showMessage(isEditing ? 'Serviço atualizado com sucesso!' : 'Serviço agendado com sucesso!', 'success');
+      
       setTimeout(() => {
         window.location.href = 'agenda.html';
       }, 1500);
     } catch (err) {
       showMessage(err.message, 'error');
     }
+  }
+
+  // Se for edição, carregar os dados do agendamento
+  if (isEditing && currentAppointmentId) {
+    const checkSelect = setInterval(() => {
+      if (parceiroSelect.options.length > 1) {
+        clearInterval(checkSelect);
+        carregarDadosParaEdicao(currentAppointmentId);
+      }
+    }, 200);
   }
 
   document.getElementById('btnAgendar').addEventListener('click', enviarAgendamento);

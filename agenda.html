@@ -1,850 +1,1463 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>PlanoV - Agenda</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-/* ========== ESTILOS (mesmos do original, preservados) ========== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PlanoV - Agenda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== ESTILOS (mesmos do original, preservados) ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-:root {
-  --verde: #3a5f1e;
-  --laranja: #e07a1c;
-  --laranja-range: #f0a050;
-  --bg: #f7f4ee;
-  --branco: #ffffff;
-  --texto: #1a1a1a;
-  --muted: #777;
-  --borda: #e0ddd6;
-}
+    :root {
+      --verde: #3a5f1e;
+      --laranja: #e07a1c;
+      --laranja-range: #f0a050;
+      --bg: #f7f4ee;
+      --branco: #ffffff;
+      --texto: #1a1a1a;
+      --muted: #777;
+      --borda: #e0ddd6;
+    }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #d4cfc4;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 20px;
-}
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #d4cfc4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-.frame {
-  width: 100%;
-  max-width: 450px;
-  background: var(--bg);
-  border-radius: 44px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
+    .frame {
+      width: 100%;
+      max-width: 450px;
+      background: var(--bg);
+      border-radius: 44px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
 
-.header {
-  position: relative;
-  overflow: hidden;
-}
-.header-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url('img/superior.png');
-  background-size: cover;
-  background-position: left;
-}
-.header-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 52px 20px 18px;
-}
-.btn-icon {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background 0.2s;
-}
-.btn-icon:active { background: rgba(0, 0, 0, 0.05); }
-.btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
-.logo-wrap img { height: 40px; content: url('img/logo.png'); }
+    .header {
+      position: relative;
+      overflow: hidden;
+    }
 
-.body {
-  background: var(--bg);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 4px;
-}
-.page-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px 0;
-}
-.page-title h1 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--verde);
-}
-.btn-add {
-  background: var(--laranja);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: transform 0.1s;
-}
-.btn-add:active { transform: scale(0.95); }
-.btn-add svg { width: 24px; height: 24px; stroke: white; stroke-width: 2.5; fill: none; }
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('img/superior.png');
+      background-size: cover;
+      background-position: left;
+    }
 
-.saudacao { padding: 12px 20px 0; }
-.saudacao h2 { font-size: 16px; font-weight: 700; color: var(--texto); }
-.saudacao p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .header-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 52px 20px 18px;
+    }
 
-.cal-card {
-  margin: 16px 16px 0;
-  background: var(--branco);
-  border-radius: 20px;
-  padding: 14px 12px;
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
-}
-.cal-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.cal-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  color: var(--texto);
-  padding: 4px 12px;
-  border-radius: 40px;
-}
-.cal-btn:active { background: rgba(0,0,0,0.05); }
-.cal-selects { display: flex; gap: 8px; }
-.cal-selects select {
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1px solid var(--borda);
-  border-radius: 8px;
-  padding: 6px 28px 6px 12px;
-  background: #fff;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 6 6-6z' fill='%23555'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
-.week-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  margin-bottom: 8px;
-}
-.week-days span { font-size: 12px; font-weight: 500; color: var(--muted); padding: 6px 0; }
-.days-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-}
-.day {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: all 0.15s;
-}
-.day.other { color: #ccc; cursor: default; }
-.day.has-event { background-color: var(--laranja-range); color: white; font-weight: 600; }
-.day.selected { background-color: var(--laranja); color: white; box-shadow: 0 0 0 2px white; }
-.day:not(.other):hover { background: #f0ede5; }
-.event-card {
-  margin: 16px 16px 0;
-  background: var(--branco);
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-.event-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.event-row { font-size: 13px; margin-bottom: 4px; }
-.event-row span.label { font-weight: 700; }
-.bottom-img {
-  margin-top: 20px;
-  height: clamp(100px, 20vw, 140px);
-  background-image: url('img/inferior.png');
-  background-size: cover;
-  background-position: bottom;
-  border-radius: 0 0 44px 44px;
-}
+    .btn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
 
-/* Toast */
-.toast {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 40px;
-  font-size: 14px;
-  font-weight: 500;
-  z-index: 1100;
-  white-space: nowrap;
-  max-width: 90%;
-  white-space: normal;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  pointer-events: none;
-}
-.toast.success { background: var(--verde); }
-.toast.error { background: #c0392b; }
-.toast.info { background: var(--laranja); }
+    .btn-icon:active {
+      background: rgba(0, 0, 0, 0.05);
+    }
 
-/* Modal de confirmação */
-.modal-overlay-confirm {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(3px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-container {
-  background: white;
-  width: 85%;
-  max-width: 320px;
-  border-radius: 28px;
-  padding: 24px 20px;
-  box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-  text-align: center;
-}
-.modal-container h3 {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 16px;
-}
-.modal-container p {
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #555;
-}
-.modal-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-.modal-btn {
-  flex: 1;
-  padding: 10px;
-  border-radius: 40px;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-}
-.modal-btn.cancel {
-  background: #e0ddd6;
-  color: #333;
-}
-.modal-btn.save {
-  background: var(--verde);
-  color: white;
-}
+    .btn-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #2d4f14;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      fill: none;
+      stroke-linejoin: round;
+    }
 
-/* MENU LATERAL */
-.menu-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(2px);
-  z-index: 100;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s;
-}
-.menu-drawer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(280px, 85%);
-  min-width: 260px;
-  height: 100%;
-  background: white;
-  box-shadow: -8px 0 24px rgba(0,0,0,0.15);
-  transform: translateX(100%);
-  transition: transform 0.3s;
-  overflow-y: auto;
-  border-radius: 20px 0 0 20px;
-}
-.menu-overlay.open { opacity: 1; visibility: visible; }
-.menu-overlay.open .menu-drawer { transform: translateX(0); }
-.menu-header {
-  padding: 28px 20px 20px;
-  background: linear-gradient(135deg, #3a5f1e, #2d5016);
-  color: white;
-}
-.menu-user { display: flex; align-items: center; gap: 12px; }
-.menu-avatar {
-  width: 52px;
-  height: 52px;
-  background: linear-gradient(145deg, #d48f3b, #b56a1a);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
-.menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-.menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
-.menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
-.menu-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(255,255,255,0.2);
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.menu-nav { padding: 12px 0; }
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.menu-item:hover { background: #f0ede7; }
-.menu-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; }
-.divider { height: 1px; background: #e0ddd6; margin: 8px 16px; }
-.section-title { font-size: 13px; font-weight: 600; color: #888; padding: 12px 20px 4px; text-transform: uppercase; }
-.footer-menu { border-top: 1px solid #e0ddd6; margin-top: 8px; padding: 8px 0; }
+    .logo-wrap img {
+      height: 40px;
+      content: url('img/logo.png');
+    }
 
-@media (max-width: 360px) {
-  .header-content { padding: 52px 14px 18px; }
-  .page-title { padding: 12px 14px 0; }
-  .page-title h1 { font-size: 20px; }
-  .btn-add { width: 40px; height: 40px; }
-  .btn-add svg { width: 20px; height: 20px; }
-  .saudacao { padding: 8px 14px 0; }
-  .cal-card { margin: 12px 12px 0; padding: 12px 8px; }
-  .day { font-size: 12px; }
-  .week-days span { font-size: 10px; }
-  .cal-btn { font-size: 22px; padding: 2px 8px; }
-  .cal-selects select { font-size: 12px; padding: 4px 24px 4px 8px; }
-  .event-card { margin: 12px 12px 0; padding: 12px; }
-}
-</style>
+    .body {
+      background: var(--bg);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 4px;
+    }
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px 0;
+    }
+
+    .page-title h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--verde);
+    }
+
+    .btn-add {
+      background: var(--laranja);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s;
+    }
+
+    .btn-add:active {
+      transform: scale(0.95);
+    }
+
+    .btn-add svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .saudacao {
+      padding: 12px 20px 0;
+    }
+
+    .saudacao h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--texto);
+    }
+
+    .saudacao p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .cal-card {
+      margin: 16px 16px 0;
+      background: var(--branco);
+      border-radius: 20px;
+      padding: 14px 12px;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .cal-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--texto);
+      padding: 4px 12px;
+      border-radius: 40px;
+    }
+
+    .cal-btn:active {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .cal-selects {
+      display: flex;
+      gap: 8px;
+    }
+
+    .cal-selects select {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--borda);
+      border-radius: 8px;
+      padding: 6px 28px 6px 12px;
+      background: #fff;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 6 6-6z' fill='%23555'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .week-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .week-days span {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 6px 0;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    .day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.15s;
+    }
+
+    .day.other {
+      color: #ccc;
+      cursor: default;
+    }
+
+    .day.has-event {
+      background-color: var(--laranja-range);
+      color: white;
+      font-weight: 600;
+    }
+
+    .day.selected {
+      background-color: var(--laranja);
+      color: white;
+      box-shadow: 0 0 0 2px white;
+    }
+
+    .day:not(.other):hover {
+      background: #f0ede5;
+    }
+
+    .event-card {
+      margin: 16px 16px 0;
+      background: var(--branco);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .event-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .event-row {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .event-row span.label {
+      font-weight: 700;
+    }
+
+    .bottom-img {
+      margin-top: 20px;
+      height: clamp(100px, 20vw, 140px);
+      background-image: url('img/inferior.png');
+      background-size: cover;
+      background-position: bottom;
+      border-radius: 0 0 44px 44px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 1100;
+      white-space: nowrap;
+      max-width: 90%;
+      white-space: normal;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+    }
+
+    .toast.success {
+      background: var(--verde);
+    }
+
+    .toast.error {
+      background: #c0392b;
+    }
+
+    .toast.info {
+      background: var(--laranja);
+    }
+
+    /* Modal de confirmação */
+    .modal-overlay-confirm {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-container {
+      background: white;
+      width: 85%;
+      max-width: 320px;
+      border-radius: 28px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .modal-container h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--texto);
+      margin-bottom: 16px;
+    }
+
+    .modal-container p {
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .modal-btn.cancel {
+      background: #e0ddd6;
+      color: #333;
+    }
+
+    .modal-btn.save {
+      background: var(--verde);
+      color: white;
+    }
+
+    /* MENU LATERAL */
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s;
+    }
+
+    .menu-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(280px, 85%);
+      min-width: 260px;
+      height: 100%;
+      background: white;
+      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      overflow-y: auto;
+      border-radius: 20px 0 0 20px;
+    }
+
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu-overlay.open .menu-drawer {
+      transform: translateX(0);
+    }
+
+    .menu-header {
+      padding: 28px 20px 20px;
+      background: linear-gradient(135deg, #3a5f1e, #2d5016);
+      color: white;
+    }
+
+    .menu-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-avatar {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #d48f3b, #b56a1a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-avatar svg {
+      width: 30px;
+      height: 30px;
+      stroke: white;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .menu-user-info h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .menu-user-info p {
+      font-size: 12px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .menu-user-info p svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 2;
+    }
+
+    .menu-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .menu-nav {
+      padding: 12px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background: #f0ede7;
+    }
+
+    .menu-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e0ddd6;
+      margin: 8px 16px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      padding: 12px 20px 4px;
+      text-transform: uppercase;
+    }
+
+    .footer-menu {
+      border-top: 1px solid #e0ddd6;
+      margin-top: 8px;
+      padding: 8px 0;
+    }
+
+    /* ========== ESTILOS PARA STATUS DO CARD - OPÇÃO 3 ========== */
+
+    .event-card {
+      transition: all 0.3s ease;
+      background: var(--branco);
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(2px);
+    }
+
+    .event-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--verde);
+      margin-bottom: 12px;
+    }
+
+    .event-row {
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--texto);
+    }
+
+    .event-row span.label {
+      font-weight: 600;
+      color: var(--muted);
+      min-width: 70px;
+      display: inline-block;
+    }
+
+    /* Status AGENDADO */
+    .event-card:not(.concluido):not(.cancelado) {
+      border-right: 4px solid var(--laranja);
+    }
+
+    /* Status CONCLUÍDO */
+    .event-card.concluido {
+      background: #f1f8e9;
+      border-right: 4px solid #4caf50;
+    }
+
+    .event-card.concluido .event-name {
+      color: #2e7d32;
+    }
+
+    /* Status CANCELADO */
+    .event-card.cancelado {
+      background: #ffebee;
+      border-right: 4px solid #f44336;
+    }
+
+    .event-card.cancelado .event-name {
+      color: #c62828;
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+
+    .event-card.cancelado .event-row {
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+    }
+
+    /* Badge arredondado */
+    .status-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .status-badge.agendado {
+      background: linear-gradient(135deg, var(--laranja), #c96b15);
+      color: white;
+      box-shadow: 0 2px 6px rgba(224, 122, 28, 0.3);
+    }
+
+    .status-badge.concluido {
+      background: linear-gradient(135deg, #10b981, #0e9f6e);
+      color: white;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    }
+
+    .status-badge.cancelado {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Botões desabilitados para cards finalizados */
+    .event-card.cancelado .action-btn,
+    .event-card.concluido .action-btn {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .event-card.cancelado .icon-btn,
+    .event-card.concluido .icon-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ========== EFEITOS HOVER E ACTIVE PARA BOTÕES ========== */
+
+    /* Botão EDITAR */
+    #btn-editar {
+      transition: all 0.2s ease;
+    }
+    
+    #btn-editar:hover {
+      transform: scale(1.1);
+    }
+    
+    #btn-editar:hover svg {
+      stroke: #e07a1c;
+    }
+    
+    /* Botão EXCLUIR */
+    #btn-excluir {
+      transition: all 0.2s ease;
+    }
+    
+    #btn-excluir:hover {
+      transform: scale(1.1);
+    }
+    
+    #btn-excluir:hover svg {
+      stroke: #ef4444;
+    }
+    
+    /* Efeito active para editar e excluir */
+    #btn-editar:active,
+    #btn-excluir:active {
+      transform: scale(0.95);
+    }
+
+    /* Botão CONCLUIR */
+    #btn-concluir {
+      transition: all 0.2s ease;
+      background: #3A5F1E;
+    }
+    
+    #btn-concluir:hover {
+      background: #2d4f14;
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(58, 95, 30, 0.3);
+    }
+    
+    #btn-concluir:active {
+      transform: scale(0.98);
+    }
+    
+    /* Botão CANCELAR */
+    #btn-cancelar {
+      transition: all 0.2s ease;
+      background: #6C757D;
+    }
+    
+    #btn-cancelar:hover {
+      background: #dc2626;
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+    
+    #btn-cancelar:active {
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 360px) {
+      .header-content {
+        padding: 52px 14px 18px;
+      }
+
+      .page-title {
+        padding: 12px 14px 0;
+      }
+
+      .page-title h1 {
+        font-size: 20px;
+      }
+
+      .btn-add {
+        width: 40px;
+        height: 40px;
+      }
+
+      .btn-add svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .saudacao {
+        padding: 8px 14px 0;
+      }
+
+      .cal-card {
+        margin: 12px 12px 0;
+        padding: 12px 8px;
+      }
+
+      .day {
+        font-size: 12px;
+      }
+
+      .week-days span {
+        font-size: 10px;
+      }
+
+      .cal-btn {
+        font-size: 22px;
+        padding: 2px 8px;
+      }
+
+      .cal-selects select {
+        font-size: 12px;
+        padding: 4px 24px 4px 8px;
+      }
+
+      .event-card {
+        margin: 12px 12px 0;
+        padding: 12px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="frame">
-  <div class="header">
-    <div class="header-bg"></div>
-    <div class="header-content">
-      <button class="btn-icon" id="backButton">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div class="logo-wrap"><img alt="PlanoV logo"></div>
-      <button class="btn-icon" id="menuButton">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="body">
-    <div class="page-title">
-      <h1>Agenda</h1>
-      <div class="btn-add" id="btnAddAgendamento">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <line x1="12" y1="5" x2="12" y2="19"/>
-          <line x1="5" y1="12" x2="19" y2="12"/>
-        </svg>
+  <div class="frame">
+    <div class="header">
+      <div class="header-bg"></div>
+      <div class="header-content">
+        <button class="btn-icon" id="backButton">
+          <svg viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <div class="logo-wrap"><img alt="PlanoV logo"></div>
+        <button class="btn-icon" id="menuButton">
+          <svg viewBox="0 0 24 24">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
       </div>
     </div>
-    <div class="saudacao">
-      <h2 id="saudacao-nome">Olá, Usuário!</h2>
-      <p>Organize seus compromissos.</p>
-    </div>
-    <div class="cal-card">
-      <div class="cal-nav">
-        <button class="cal-btn" id="prev">‹</button>
-        <div class="cal-selects">
-          <select id="month-sel">
-            <option value="0">Jan</option><option value="1">Fev</option><option value="2">Mar</option><option value="3">Abr</option>
-            <option value="4">Mai</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Ago</option>
-            <option value="8" selected>Set</option><option value="9">Out</option><option value="10">Nov</option><option value="11">Dez</option>
-          </select>
-          <select id="year-sel"></select>
+
+    <div class="body">
+      <div class="page-title">
+        <h1>Agenda</h1>
+        <div class="btn-add" id="btnAddAgendamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
         </div>
-        <button class="cal-btn" id="next">›</button>
       </div>
-      <div class="week-days"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
-      <div class="days-grid" id="grid"></div>
-    </div>
-    <div class="event-card" id="ev-card" style="display:none">
-      <div class="event-name" id="ev-name">-</div>
-      <div class="event-row"><span class="label">Descrição:</span> <span id="ev-descricao">-</span></div>
-      <div class="event-row"><span class="label">Período:</span> <span id="ev-periodo">-</span></div>
-      <div class="event-row"><span class="label">Horário:</span> <span id="ev-horario">-</span></div>
-      <div class="event-row"><span class="label">Duração:</span> <span id="ev-duracao">-</span></div>
-      <div class="event-row"><span class="label">Parceiro:</span> <span id="ev-parceiro">-</span></div>
-      <div class="event-row"><span class="label">Status:</span> <span id="ev-status">-</span></div>
-    </div>
-  </div>
-  <div class="bottom-img"></div>
-
-  <!-- TOAST -->
-  <div id="toast" class="toast" style="display: none;">
-    <span id="toastMessage"></span>
-  </div>
-
-  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
-  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
-    <div class="modal-container">
-      <h3 id="confirmTitle">Confirmar</h3>
-      <p id="confirmMessage">Tem certeza?</p>
-      <div class="modal-buttons">
-        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
-        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      <div class="saudacao">
+        <h2 id="saudacao-nome">Olá, Usuário!</h2>
+        <p>Organize seus compromissos.</p>
       </div>
-    </div>
-  </div>
-
-  <!-- MENU LATERAL PADRONIZADO -->
-  <div class="menu-overlay" id="menuOverlay">
-    <div class="menu-drawer">
-      <button class="menu-close" id="closeMenuBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <div class="menu-header">
-        <div class="menu-user">
-          <div class="menu-avatar" id="menuAvatarContainer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
-              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
-              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
-              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
-              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
-            </svg>
+      <div class="cal-card">
+        <div class="cal-nav">
+          <button class="cal-btn" id="prev">‹</button>
+          <div class="cal-selects">
+            <select id="month-sel">
+              <option value="0">Jan</option>
+              <option value="1">Fev</option>
+              <option value="2">Mar</option>
+              <option value="3">Abr</option>
+              <option value="4">Mai</option>
+              <option value="5">Jun</option>
+              <option value="6">Jul</option>
+              <option value="7">Ago</option>
+              <option value="8" selected>Set</option>
+              <option value="9">Out</option>
+              <option value="10">Nov</option>
+              <option value="11">Dez</option>
+            </select>
+            <select id="year-sel"></select>
           </div>
-          <div class="menu-user-info">
-            <h4 id="menuNome">Carregando...</h4>
-            <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/><path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/></svg><span id="menuTipo">Usuário</span></p>
+          <button class="cal-btn" id="next">›</button>
+        </div>
+        <div class="week-days">
+          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+        </div>
+        <div class="days-grid" id="grid"></div>
+      </div>
+
+      <div class="event-card" id="ev-card" style="display:none">
+        <!-- Cabeçalho com título e ícones de editar/excluir -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div class="event-name" id="ev-name" style="font-size: 18px; font-weight: 700; color: var(--texto);">-</div>
+          <div style="display: flex; gap: 16px;">
+            <button id="btn-editar" class="icon-btn"
+              style="background: none; border: none; cursor: pointer; padding: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E58E26" stroke-width="2">
+                <path d="M17 3l4 4-7 7H10v-4l7-7z" />
+                <path d="M4 20h16" />
+              </svg>
+            </button>
+            <button id="btn-excluir" class="icon-btn"
+              style="background: none; border: none; cursor: pointer; padding: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D64545" stroke-width="2">
+                <path d="M4 7h16" />
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+                <path d="M5 7l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13" />
+                <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+              </svg>
+            </button>
           </div>
         </div>
+
+        <div class="event-row"><span class="label">Descrição:</span> <span id="ev-descricao">-</span></div>
+        <div class="event-row"><span class="label">Período:</span> <span id="ev-periodo">-</span></div>
+        <div class="event-row"><span class="label">Horário:</span> <span id="ev-horario">-</span></div>
+        <div class="event-row"><span class="label">Duração:</span> <span id="ev-duracao">-</span></div>
+        <div class="event-row"><span class="label">Parceiro:</span> <span id="ev-parceiro">-</span></div>
+        <div class="event-row"><span class="label">Status:</span> <span id="ev-status">-</span></div>
+
+        <div style="display: flex; gap: 12px; margin-top: 16px;">
+          <button id="btn-concluir" class="action-btn"
+            style="flex: 1; background: #3A5F1E; color: white; border: none; border-radius: 40px; padding: 12px; font-weight: 600; font-size: 14px; cursor: pointer;">✓
+            Concluir</button>
+          <button id="btn-cancelar" class="action-btn"
+            style="flex: 1; background: #6C757D; color: white; border: none; border-radius: 40px; padding: 12px; font-weight: 600; font-size: 14px; cursor: pointer;">✕
+            Cancelar</button>
+        </div>
       </div>
-      <div class="menu-nav">
-        <!-- Início -->
-        <div class="menu-item" data-nav="inicio">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <div class="menu-text">Início</div>
+
+    </div>
+    <div class="bottom-img"></div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast" style="display: none;">
+      <span id="toastMessage"></span>
+    </div>
+
+    <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+    <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
+      <div class="modal-container">
+        <h3 id="confirmTitle">Confirmar</h3>
+        <p id="confirmMessage">Tem certeza?</p>
+        <div class="modal-buttons">
+          <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+          <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
         </div>
-        <!-- Empresas/Prestadores (texto dinâmico) -->
-        <div class="menu-item" data-nav="empresas">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-          <div class="menu-text" id="menuTextEmpresas">Empresas</div>
+      </div>
+    </div>
+
+    <!-- MENU LATERAL PADRONIZADO -->
+    <div class="menu-overlay" id="menuOverlay">
+      <div class="menu-drawer">
+        <button class="menu-close" id="closeMenuBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <div class="menu-header">
+          <div class="menu-user">
+            <div class="menu-avatar" id="menuAvatarContainer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+                <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round" />
+                <path d="M12 10v10M8 20h8" stroke-linecap="round" />
+                <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round" />
+                <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="menu-user-info">
+              <h4 id="menuNome">Carregando...</h4>
+              <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round" />
+                  <path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round" />
+                  <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round" />
+                </svg><span id="menuTipo">Usuário</span></p>
+            </div>
+          </div>
         </div>
-        <!-- Minha Agenda -->
-        <div class="menu-item" data-nav="agenda">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
-          <div class="menu-text">Minha Agenda</div>
-        </div>
-        <div class="divider"></div>
-        <div class="section-title">CONFIGURAÇÕES</div>
-        <!-- Meu Perfil -->
-        <div class="menu-item" data-nav="perfil">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <div class="menu-text">Meu Perfil</div>
-        </div>
-        <!-- Configurações -->
-        <div class="menu-item" data-nav="configuracoes">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-          <div class="menu-text">Configurações</div>
-        </div>
-        <!-- Excluir conta (aparece apenas para logados) -->
-        <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div>
-          <div class="menu-text">Excluir conta</div>
-        </div>
-        <!-- Ajuda -->
-        <div class="menu-item" data-nav="ajuda">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="menu-text">Ajuda</div>
-        </div>
-        <div class="divider"></div>
-        <!-- Sair -->
-        <div class="menu-item" data-nav="sair">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
-          <div class="menu-text">Sair</div>
+        <div class="menu-nav">
+          <!-- Início -->
+          <div class="menu-item" data-nav="inicio">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg></div>
+            <div class="menu-text">Início</div>
+          </div>
+          <!-- Empresas/Prestadores (texto dinâmico) -->
+          <div class="menu-item" data-nav="empresas">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg></div>
+            <div class="menu-text" id="menuTextEmpresas">Empresas</div>
+          </div>
+          <!-- Minha Agenda -->
+          <div class="menu-item" data-nav="agenda">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+                <circle cx="12" cy="15" r="1" />
+                <circle cx="16" cy="15" r="1" />
+                <circle cx="8" cy="15" r="1" />
+              </svg></div>
+            <div class="menu-text">Minha Agenda</div>
+          </div>
+          <div class="divider"></div>
+          <div class="section-title">CONFIGURAÇÕES</div>
+          <!-- Meu Perfil -->
+          <div class="menu-item" data-nav="perfil">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg></div>
+            <div class="menu-text">Meu Perfil</div>
+          </div>
+          <!-- Configurações -->
+          <div class="menu-item" data-nav="configuracoes">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg></div>
+            <div class="menu-text">Configurações</div>
+          </div>
+          <!-- Excluir conta (aparece apenas para logados) -->
+          <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <line x1="10" y1="11" x2="10" y2="17" />
+                <line x1="14" y1="11" x2="14" y2="17" />
+              </svg></div>
+            <div class="menu-text">Excluir conta</div>
+          </div>
+          <!-- Ajuda -->
+          <div class="menu-item" data-nav="ajuda">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg></div>
+            <div class="menu-text">Ajuda</div>
+          </div>
+          <div class="divider"></div>
+          <!-- Sair -->
+          <div class="menu-item" data-nav="sair">
+            <div class="menu-icon"><svg viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg></div>
+            <div class="menu-text">Sair</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  const API_BASE_URL = 'http://localhost:3000/api';
-  let token = localStorage.getItem('token');
-  let user = JSON.parse(localStorage.getItem('user') || '{}');
+  <script>
+    const API_BASE_URL = 'http://localhost:3000/api';
+    let token = localStorage.getItem('token');
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  function showMessage(text, type = 'info') {
-    const toast = document.getElementById('toast');
-    const msgSpan = document.getElementById('toastMessage');
-    msgSpan.innerText = text;
-    toast.className = `toast ${type}`;
-    toast.style.display = 'block';
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 3000);
-  }
+    function showMessage(text, type = 'info') {
+      const toast = document.getElementById('toast');
+      const msgSpan = document.getElementById('toastMessage');
+      msgSpan.innerText = text;
+      toast.className = `toast ${type}`;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
 
-  function confirmAction(title, message, onConfirm) {
-    const modal = document.getElementById('confirmModal');
-    document.getElementById('confirmTitle').innerText = title;
-    document.getElementById('confirmMessage').innerHTML = message;
-    modal.style.display = 'flex';
-    const confirmBtn = document.getElementById('confirmOkBtn');
-    const cancelBtn = document.getElementById('confirmCancelBtn');
-    const handleConfirm = () => {
-      modal.style.display = 'none';
-      confirmBtn.removeEventListener('click', handleConfirm);
-      cancelBtn.removeEventListener('click', handleCancel);
-      onConfirm();
-    };
-    const handleCancel = () => {
-      modal.style.display = 'none';
-      confirmBtn.removeEventListener('click', handleConfirm);
-      cancelBtn.removeEventListener('click', handleCancel);
-    };
-    confirmBtn.addEventListener('click', handleConfirm);
-    cancelBtn.addEventListener('click', handleCancel);
-  }
+    function confirmAction(title, message, onConfirm) {
+      const modal = document.getElementById('confirmModal');
+      document.getElementById('confirmTitle').innerText = title;
+      document.getElementById('confirmMessage').innerHTML = message;
+      modal.style.display = 'flex';
+      const confirmBtn = document.getElementById('confirmOkBtn');
+      const cancelBtn = document.getElementById('confirmCancelBtn');
+      const handleConfirm = () => {
+        modal.style.display = 'none';
+        confirmBtn.removeEventListener('click', handleConfirm);
+        cancelBtn.removeEventListener('click', handleCancel);
+        onConfirm();
+      };
+      const handleCancel = () => {
+        modal.style.display = 'none';
+        confirmBtn.removeEventListener('click', handleConfirm);
+        cancelBtn.removeEventListener('click', handleCancel);
+      };
+      confirmBtn.addEventListener('click', handleConfirm);
+      cancelBtn.addEventListener('click', handleCancel);
+    }
 
-  if (!token || !user.id) {
-    showMessage('Você precisa estar logado para acessar a agenda.', 'error');
-    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
-  }
+    if (!token || !user.id) {
+      showMessage('Você precisa estar logado para acessar a agenda.', 'error');
+      setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+    }
 
-  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
-  function atualizarFotoMenu() {
-    const menuAvatarContainer = document.getElementById('menuAvatarContainer');
-    if (!menuAvatarContainer) return;
-    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
-    const foto = usuario.foto_perfil;
-    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
-      menuAvatarContainer.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
-    } else {
-      menuAvatarContainer.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+    // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
+    function atualizarFotoMenu() {
+      const menuAvatarContainer = document.getElementById('menuAvatarContainer');
+      if (!menuAvatarContainer) return;
+      const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+      const foto = usuario.foto_perfil;
+      if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+        menuAvatarContainer.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+      } else {
+        menuAvatarContainer.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
         <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
         <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
         <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
         <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
       </svg>`;
+      }
     }
-  }
 
-  // ========== SAUDAÇÃO E INFORMAÇÕES DO MENU ==========
-  document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
-  document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
-  const menuTipoSpan = document.getElementById('menuTipo');
-  if (menuTipoSpan && user.tipo_usuario) {
-    menuTipoSpan.innerText = user.tipo_usuario === 'prestador' ? 'Prestador' : (user.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
-  }
-  // Ajustar texto do menu "Empresas" para "Prestadores" se for empresa
-  const menuEmpresasText = document.getElementById('menuTextEmpresas');
-  if (menuEmpresasText) {
-    menuEmpresasText.innerText = user.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
-  }
-  // Atualizar foto do menu
-  atualizarFotoMenu();
+    // ========== SAUDAÇÃO E INFORMAÇÕES DO MENU ==========
+    document.getElementById('saudacao-nome').innerHTML = `Olá, ${user.nome}!`;
+    document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
+    const menuTipoSpan = document.getElementById('menuTipo');
+    if (menuTipoSpan && user.tipo_usuario) {
+      menuTipoSpan.innerText = user.tipo_usuario === 'prestador' ? 'Prestador' : (user.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
+    }
+    // Ajustar texto do menu "Empresas" para "Prestadores" se for empresa
+    const menuEmpresasText = document.getElementById('menuTextEmpresas');
+    if (menuEmpresasText) {
+      menuEmpresasText.innerText = user.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
+    }
+    // Atualizar foto do menu
+    atualizarFotoMenu();
 
-  // ========== VARIÁVEIS GLOBAIS ==========
-  let currentYear = new Date().getFullYear();
-  let currentMonth = new Date().getMonth();
-  let appointments = [];
-  let selectedDay = null;
+    // ========== VARIÁVEIS GLOBAIS ==========
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
+    let appointments = [];
+    let selectedDay = null;
 
-  const grid = document.getElementById('grid');
-  const monthSelect = document.getElementById('month-sel');
-  const yearSelect = document.getElementById('year-sel');
-  const evCard = document.getElementById('ev-card');
+    const grid = document.getElementById('grid');
+    const monthSelect = document.getElementById('month-sel');
+    const yearSelect = document.getElementById('year-sel');
+    const evCard = document.getElementById('ev-card');
 
-  // ========== FUNÇÕES AUXILIARES ==========
-  function isDateInRange(dateStr, startISO, endISO) {
-    const check = new Date(dateStr);
-    const start = new Date(startISO);
-    const end = new Date(endISO);
-    check.setHours(0,0,0,0);
-    start.setHours(0,0,0,0);
-    end.setHours(0,0,0,0);
-    return check >= start && check <= end;
-  }
+    // ========== FUNÇÕES AUXILIARES ==========
+        function isDateInRange(dateStr, startISO, endISO) {
+      // Cria as datas garantindo que estão no mesmo fuso horário (UTC)
+      const check = new Date(dateStr + 'T00:00:00');
+      const start = new Date(startISO);
+      const end = new Date(endISO);
+      
+      // Ajusta para início do dia (UTC)
+      check.setUTCHours(0, 0, 0, 0);
+      start.setUTCHours(0, 0, 0, 0);
+      end.setUTCHours(0, 0, 0, 0);
+      
+      return check >= start && check <= end;
+    }
 
-  function formatDateToDDMMYYYY(dateISO) {
-    const d = new Date(dateISO);
-    const day = d.getDate().toString().padStart(2,'0');
-    const month = (d.getMonth()+1).toString().padStart(2,'0');
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
+    function formatDateToDDMMYYYY(dateISO) {
+      const d = new Date(dateISO);
+      const day = d.getDate().toString().padStart(2, '0');
+      const month = (d.getMonth() + 1).toString().padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
 
-  function formatTimeFromISO(dateISO) {
-    const d = new Date(dateISO);
-    const hours = d.getHours().toString().padStart(2,'0');
-    const minutes = d.getMinutes().toString().padStart(2,'0');
-    return `${hours}:${minutes}`;
-  }
+    function formatTimeFromISO(dateISO) {
+      const d = new Date(dateISO);
+      const hours = d.getHours().toString().padStart(2, '0');
+      const minutes = d.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    }
 
-  function getDurationInDays(startISO, endISO) {
-    const start = new Date(startISO);
-    const end = new Date(endISO);
-    start.setHours(0,0,0,0);
-    end.setHours(0,0,0,0);
-    const diffTime = Math.abs(end - start);
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-  }
+    function getDurationInDays(startISO, endISO) {
+      const start = new Date(startISO);
+      const end = new Date(endISO);
+      start.setHours(0, 0, 0, 0);
+      end.setHours(0, 0, 0, 0);
+      const diffTime = Math.abs(end - start);
+      return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    }
 
-  // ========== BUSCAR AGENDAMENTOS ==========
-  async function fetchAppointments() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/schedule`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (!response.ok) throw new Error('Erro ao buscar agendamentos');
-      const data = await response.json();
-      appointments = data;
+    // ========== BUSCAR AGENDAMENTOS ==========
+    async function fetchAppointments() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/schedule`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!response.ok) throw new Error('Erro ao buscar agendamentos');
+        const data = await response.json();
+        appointments = data;
+        renderCalendar();
+      } catch (err) {
+        console.error(err);
+        appointments = [];
+        renderCalendar();
+      }
+    }
+
+    function renderCalendar() {
+      const year = currentYear;
+      const month = currentMonth;
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const prevMonthDays = new Date(year, month, 0).getDate();
+
+      monthSelect.value = month;
+      yearSelect.value = year;
+
+      grid.innerHTML = '';
+
+      for (let i = firstDay - 1; i >= 0; i--) {
+        const d = document.createElement('div');
+        d.className = 'day other';
+        d.textContent = prevMonthDays - i;
+        grid.appendChild(d);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const hasEvent = appointments.some(apt => {
+          if (!apt.inicio || !apt.fim) return false;
+          return isDateInRange(dateStr, apt.inicio, apt.fim);
+        });
+        const d = document.createElement('div');
+        d.className = 'day';
+        if (hasEvent) d.classList.add('has-event');
+        if (selectedDay === day) d.classList.add('selected');
+        d.textContent = day;
+        d.dataset.day = day;
+        d.addEventListener('click', () => selectDay(day));
+        grid.appendChild(d);
+      }
+
+      const totalCells = firstDay + daysInMonth;
+      const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+      for (let i = 1; i <= remaining; i++) {
+        const d = document.createElement('div');
+        d.className = 'day other';
+        d.textContent = i;
+        grid.appendChild(d);
+      }
+    }
+
+    function selectDay(day) {
+      selectedDay = day;
       renderCalendar();
-    } catch (err) {
-      console.error(err);
-      appointments = [];
-      renderCalendar();
-    }
-  }
-
-  function renderCalendar() {
-    const year = currentYear;
-    const month = currentMonth;
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const prevMonthDays = new Date(year, month, 0).getDate();
-
-    monthSelect.value = month;
-    yearSelect.value = year;
-
-    grid.innerHTML = '';
-
-    for (let i = firstDay - 1; i >= 0; i--) {
-      const d = document.createElement('div');
-      d.className = 'day other';
-      d.textContent = prevMonthDays - i;
-      grid.appendChild(d);
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-      const hasEvent = appointments.some(apt => {
+      const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const eventOnDay = appointments.find(apt => {
         if (!apt.inicio || !apt.fim) return false;
         return isDateInRange(dateStr, apt.inicio, apt.fim);
       });
-      const d = document.createElement('div');
-      d.className = 'day';
-      if (hasEvent) d.classList.add('has-event');
-      if (selectedDay === day) d.classList.add('selected');
-      d.textContent = day;
-      d.dataset.day = day;
-      d.addEventListener('click', () => selectDay(day));
-      grid.appendChild(d);
-    }
 
-    const totalCells = firstDay + daysInMonth;
-    const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
-    for (let i = 1; i <= remaining; i++) {
-      const d = document.createElement('div');
-      d.className = 'day other';
-      d.textContent = i;
-      grid.appendChild(d);
-    }
-  }
-
-  function selectDay(day) {
-    selectedDay = day;
-    renderCalendar();
-    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    const eventOnDay = appointments.find(apt => {
-      if (!apt.inicio || !apt.fim) return false;
-      return isDateInRange(dateStr, apt.inicio, apt.fim);
-    });
-
-    if (!eventOnDay) {
-      evCard.style.display = 'none';
-      return;
-    }
-
-    const ev = eventOnDay;
-    document.getElementById('ev-name').innerText = ev.tipo_servico;
-    document.getElementById('ev-descricao').innerText = ev.descricao || 'Sem descrição';
-    const dataInicio = formatDateToDDMMYYYY(ev.inicio);
-    const dataFim = formatDateToDDMMYYYY(ev.fim);
-    document.getElementById('ev-periodo').innerText = `${dataInicio} → ${dataFim}`;
-    const horaInicio = formatTimeFromISO(ev.inicio);
-    const horaFim = formatTimeFromISO(ev.fim);
-    document.getElementById('ev-horario').innerText = `${horaInicio} às ${horaFim}`;
-    const dias = getDurationInDays(ev.inicio, ev.fim);
-    document.getElementById('ev-duracao').innerText = `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
-    const parceiro = ev.prestador ? `${ev.prestador.nome} ${ev.prestador.sobrenome || ''}` : (ev.empresa ? `${ev.empresa.nome} ${ev.empresa.sobrenome || ''}` : 'Parceiro');
-    document.getElementById('ev-parceiro').innerText = parceiro;
-    document.getElementById('ev-status').innerText = ev.status;
-    evCard.style.display = 'block';
-  }
-
-  function changeMonth(delta) {
-    currentMonth += delta;
-    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-    else if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-    renderCalendar();
-    selectedDay = null;
-    evCard.style.display = 'none';
-  }
-
-  // ========== EVENT LISTENERS ==========
-  document.getElementById('prev').addEventListener('click', () => changeMonth(-1));
-  document.getElementById('next').addEventListener('click', () => changeMonth(1));
-  monthSelect.addEventListener('change', (e) => {
-    currentMonth = parseInt(e.target.value);
-    renderCalendar();
-    selectedDay = null;
-    evCard.style.display = 'none';
-  });
-  yearSelect.addEventListener('change', (e) => {
-    currentYear = parseInt(e.target.value);
-    renderCalendar();
-    selectedDay = null;
-    evCard.style.display = 'none';
-  });
-
-  const currentYearNum = new Date().getFullYear();
-  for (let y = currentYearNum - 2; y <= currentYearNum + 2; y++) {
-    const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y;
-    if (y === currentYearNum) opt.selected = true;
-    yearSelect.appendChild(opt);
-  }
-
-  document.getElementById('btnAddAgendamento').addEventListener('click', () => {
-    window.location.href = 'agendar_servico.html';
-  });
-
-  // ========== MENU LATERAL – NAVEGAÇÃO ==========
-  const menuOverlay = document.getElementById('menuOverlay');
-  const menuBtn = document.getElementById('menuButton');
-  const closeMenuBtn = document.getElementById('closeMenuBtn');
-  const backButton = document.getElementById('backButton');
-  function openMenu() { menuOverlay.classList.add('open'); }
-  function closeMenu() { menuOverlay.classList.remove('open'); }
-  menuBtn?.addEventListener('click', openMenu);
-  closeMenuBtn?.addEventListener('click', closeMenu);
-  menuOverlay?.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
-  backButton?.addEventListener('click', () => window.history.back());
-
-  // Função para excluir conta
-  async function excluirConta() {
-    confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente? Todos os seus dados serão removidos e você não poderá recuperá-los.', async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/user/delete`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.error || 'Erro ao excluir conta');
-        }
-        showMessage('Conta excluída com sucesso.', 'success');
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
-      } catch (err) {
-        showMessage(err.message, 'error');
+      if (!eventOnDay) {
+        evCard.style.display = 'none';
+        return;
       }
-    });
+
+      const ev = eventOnDay;
+
+      evCard.classList.remove('concluido', 'cancelado');
+      if (ev.status === 'concluido') evCard.classList.add('concluido');
+      if (ev.status === 'cancelado') evCard.classList.add('cancelado');
+
+      document.getElementById('ev-name').innerText = ev.tipo_servico;
+      document.getElementById('ev-descricao').innerText = ev.descricao || 'Sem descrição';
+      const dataInicio = formatDateToDDMMYYYY(ev.inicio);
+      const dataFim = formatDateToDDMMYYYY(ev.fim);
+      document.getElementById('ev-periodo').innerText = `${dataInicio} → ${dataFim}`;
+      const horaInicio = formatTimeFromISO(ev.inicio);
+      const horaFim = formatTimeFromISO(ev.fim);
+      document.getElementById('ev-horario').innerText = `${horaInicio} às ${horaFim}`;
+      const dias = getDurationInDays(ev.inicio, ev.fim);
+      document.getElementById('ev-duracao').innerText = `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
+      const parceiro = ev.prestador ? `${ev.prestador.nome} ${ev.prestador.sobrenome || ''}` : (ev.empresa ? `${ev.empresa.nome} ${ev.empresa.sobrenome || ''}` : 'Parceiro');
+      document.getElementById('ev-parceiro').innerText = parceiro;
+      document.getElementById('ev-status').innerText = ev.status;
+      evCard.style.display = 'block';
+
+      //  EVENT LISTENERS DOS BOTÕES:
+      const btnConcluir = document.getElementById('btn-concluir');
+      const btnCancelar = document.getElementById('btn-cancelar');
+
+            if (btnConcluir) {
+        btnConcluir.onclick = async () => {
+          if (ev.status === 'concluido') {
+            showMessage('Este serviço já está concluído.', 'error');
+            return;
+          }
+          confirmAction('Confirmar conclusão', 'Deseja marcar este serviço como concluído?', async () => {
+            try {
+              const response = await fetch(`${API_BASE_URL}/schedule/${ev.id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ status: 'concluido' })
+              });
+              if (!response.ok) throw new Error('Erro ao atualizar status');
+              
+              // ATUALIZAÇÃO INSTANTÂNEA
+              ev.status = 'concluido';
+              evCard.classList.remove('concluido', 'cancelado');
+              evCard.classList.add('concluido');
+              document.getElementById('ev-status').innerText = 'concluido';
+              
+              const statusBadge = document.getElementById('ev-status-badge');
+              if (statusBadge) {
+                statusBadge.textContent = '✓ CONCLUÍDO';
+                statusBadge.className = 'status-badge concluido';
+              }
+              
+              showMessage('Serviço concluído com sucesso!', 'success');
+              fetchAppointments();
+            } catch (err) {
+              showMessage(err.message, 'error');
+            }
+          });
+        };
+      }
+
+            if (btnCancelar) {
+        btnCancelar.onclick = async () => {
+          if (ev.status === 'cancelado') {
+            showMessage('Este serviço já está cancelado.', 'error');
+            return;
+          }
+          confirmAction('Confirmar cancelamento', 'Deseja cancelar este agendamento?', async () => {
+            try {
+              const response = await fetch(`${API_BASE_URL}/schedule/${ev.id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ status: 'cancelado' })
+              });
+              if (!response.ok) throw new Error('Erro ao cancelar');
+              
+              // ATUALIZAÇÃO INSTANTÂNEA
+              ev.status = 'cancelado';
+              evCard.classList.remove('concluido', 'cancelado');
+              evCard.classList.add('cancelado');
+              document.getElementById('ev-status').innerText = 'cancelado';
+              
+              const statusBadge = document.getElementById('ev-status-badge');
+              if (statusBadge) {
+                statusBadge.textContent = '✕ CANCELADO';
+                statusBadge.className = 'status-badge cancelado';
+              }
+              
+              showMessage('Serviço cancelado com sucesso!', 'success');
+              fetchAppointments();
+            } catch (err) {
+              showMessage(err.message, 'error');
+            }
+          });
+        };
+      }
+
+// BOTÃO EDITAR
+  const btnEditar = document.getElementById('btn-editar');
+  if (btnEditar) {
+    btnEditar.onclick = () => {
+      window.location.href = `agendar_servico.html?edit_id=${ev.id}`;
+    };
   }
 
-  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const nav = item.getAttribute('data-nav');
-      if (nav === 'sair') {
-        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
+  // BOTÃO EXCLUIR
+    // BOTÃO EXCLUIR
+  const btnExcluir = document.getElementById('btn-excluir');
+  if (btnExcluir) {
+    btnExcluir.onclick = async () => {
+      confirmAction('Excluir agendamento', 'Deseja realmente excluir este agendamento? Esta ação não poderá ser desfeita.', async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/schedule/${ev.id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (!response.ok) throw new Error('Erro ao excluir');
+          
+          // Fecha o card IMEDIATAMENTE
+          evCard.style.display = 'none';
+          selectedDay = null;
+          
+          // Mostra mensagem de sucesso
+          showMessage('Agendamento excluído com sucesso!', 'success');
+          
+          // Recarrega a lista e renderiza o calendário
+          await fetchAppointments();
+          
+        } catch (err) {
+          showMessage(err.message, 'error');
+        }
+      });
+    };
+  }
+}
+
+    
+
+    function changeMonth(delta) {
+      currentMonth += delta;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      else if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+      selectedDay = null;
+      evCard.style.display = 'none';
+    }
+
+    // ========== EVENT LISTENERS ==========
+    document.getElementById('prev').addEventListener('click', () => changeMonth(-1));
+    document.getElementById('next').addEventListener('click', () => changeMonth(1));
+    monthSelect.addEventListener('change', (e) => {
+      currentMonth = parseInt(e.target.value);
+      renderCalendar();
+      selectedDay = null;
+      evCard.style.display = 'none';
+    });
+    yearSelect.addEventListener('change', (e) => {
+      currentYear = parseInt(e.target.value);
+      renderCalendar();
+      selectedDay = null;
+      evCard.style.display = 'none';
+    });
+
+    const currentYearNum = new Date().getFullYear();
+    for (let y = currentYearNum - 2; y <= currentYearNum + 2; y++) {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      if (y === currentYearNum) opt.selected = true;
+      yearSelect.appendChild(opt);
+    }
+
+    document.getElementById('btnAddAgendamento').addEventListener('click', () => {
+      window.location.href = 'agendar_servico.html';
+    });
+
+    // ========== MENU LATERAL – NAVEGAÇÃO ==========
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuBtn = document.getElementById('menuButton');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const backButton = document.getElementById('backButton');
+    function openMenu() { menuOverlay.classList.add('open'); }
+    function closeMenu() { menuOverlay.classList.remove('open'); }
+    menuBtn?.addEventListener('click', openMenu);
+    closeMenuBtn?.addEventListener('click', closeMenu);
+    menuOverlay?.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+    backButton?.addEventListener('click', () => window.history.back());
+
+    // Função para excluir conta
+    async function excluirConta() {
+      confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente? Todos os seus dados serão removidos e você não poderá recuperá-los.', async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/user/delete`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error || 'Erro ao excluir conta');
+          }
+          showMessage('Conta excluída com sucesso.', 'success');
           localStorage.removeItem('token');
           localStorage.removeItem('user');
-          window.location.href = 'login.html';
-        });
-      } else if (nav === 'inicio') {
-        window.location.href = 'home.html';
-      } else if (nav === 'empresas') {
-        if (user.tipo_usuario === 'prestador') window.location.href = 'buscar-empresas.html';
-        else window.location.href = 'buscar-prestadores.html';
-      } else if (nav === 'agenda') {
-        closeMenu();
-      } else if (nav === 'perfil') {
-        window.location.href = 'meu_perfil.html';
-      } else if (nav === 'configuracoes') {
-        showMessage('Tela de configurações em desenvolvimento', 'info');
-        closeMenu();
-      } else if (nav === 'excluir-conta') {
-        excluirConta();
-      } else if (nav === 'ajuda') {
-        showMessage('Central de ajuda em breve', 'info');
-        closeMenu();
-      } else {
-        closeMenu();
-      }
-    });
-  });
+          setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
+        } catch (err) {
+          showMessage(err.message, 'error');
+        }
+      });
+    }
 
-  fetchAppointments();
-</script>
+    document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const nav = item.getAttribute('data-nav');
+        if (nav === 'sair') {
+          confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+          });
+        } else if (nav === 'inicio') {
+          window.location.href = 'home.html';
+        } else if (nav === 'empresas') {
+          if (user.tipo_usuario === 'prestador') window.location.href = 'buscar-empresas.html';
+          else window.location.href = 'buscar-prestadores.html';
+        } else if (nav === 'agenda') {
+          closeMenu();
+        } else if (nav === 'perfil') {
+          window.location.href = 'meu_perfil.html';
+        } else if (nav === 'configuracoes') {
+          showMessage('Tela de configurações em desenvolvimento', 'info');
+          closeMenu();
+        } else if (nav === 'excluir-conta') {
+          excluirConta();
+        } else if (nav === 'ajuda') {
+          showMessage('Central de ajuda em breve', 'info');
+          closeMenu();
+        } else {
+          closeMenu();
+        }
+      });
+    });
+
+    fetchAppointments();
+  </script>
 </body>
+
 </html>
