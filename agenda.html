@@ -1244,7 +1244,11 @@
             showMessage('Este serviço já está concluído.', 'error');
             return;
           }
-          confirmAction('Confirmar conclusão', 'Deseja marcar este serviço como concluído?', async () => {
+          confirmAction(
+  'Concluir agendamento',
+  `Ao concluir este serviço, o status atualizado ficará visível para ambas as partes envolvidas.<br><br>
+   Deseja marcar este agendamento como concluído?`,
+  async () => {
             try {
               const response = await fetch(`${API_BASE_URL}/schedule/${ev.id}/status`, {
                 method: 'PUT',
@@ -1280,7 +1284,12 @@
             showMessage('Este serviço já está cancelado.', 'error');
             return;
           }
-          confirmAction('Confirmar cancelamento', 'Deseja cancelar este agendamento?', async () => {
+          confirmAction(
+  'Cancelar agendamento',
+  `Este cancelamento ficará visível para ambas as partes envolvidas.<br><br>
+   O cancelamento poderá impactar a programação da outra parte.<br><br>
+   Deseja continuar?`,
+  async () => {
             try {
               const response = await fetch(`${API_BASE_URL}/schedule/${ev.id}/status`, {
                 method: 'PUT',
@@ -1323,7 +1332,12 @@
   const btnExcluir = document.getElementById('btn-excluir');
   if (btnExcluir) {
     btnExcluir.onclick = async () => {
-      confirmAction('Excluir agendamento', 'Deseja realmente excluir este agendamento? Esta ação não poderá ser desfeita.', async () => {
+      confirmAction(
+  'Excluir agendamento',
+  `Este agendamento será removido para ambas as partes envolvidas.<br><br>
+   <strong style="color:#e07a1c">A exclusão poderá impactar a organização da outra parte.</strong><br><br>
+   Deseja continuar?`,
+  async () => {
         try {
           const response = await fetch(`${API_BASE_URL}/schedule/${ev.id}`, {
             method: 'DELETE',

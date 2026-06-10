@@ -940,37 +940,51 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
       payload.prestador_id = parseInt(parceiroId);
     }
 
-    try {
-           let url = `${API_BASE_URL}/schedule`;
-      let method = 'POST';
-      
-      if (isEditing && currentAppointmentId) {
-        url = `${API_BASE_URL}/schedule/${currentAppointmentId}`;
-        method = 'PUT';
-      }
-      
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
+    // Define título e mensagem com base no modo (criação ou edição)
+    const tituloConfirmacao = isEditing ? 'Salvar alterações' : 'Confirmar serviço';
+    const mensagemConfirmacao = isEditing
+      ? `As alterações realizadas neste agendamento ficarão visíveis para ambas as partes envolvidas.<br><br>
+         Alterações ou cancelamentos realizados posteriormente também poderão impactar a outra parte.<br><br>
+         Deseja salvar as alterações?`
+      : `Este serviço ficará visível para você e para a outra parte envolvida.<br><br>
+         A outra parte poderá visualizar as informações deste agendamento.<br><br>
+         Deseja confirmar o agendamento?`;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Erro ao agendar');
-      }
+    // Abre o modal de confirmação antes de enviar
+    confirmAction(tituloConfirmacao, mensagemConfirmacao, async () => {
+        try {
+          let url = `${API_BASE_URL}/schedule`;
+          let method = 'POST';
+          
+          if (isEditing && currentAppointmentId) {
+            url = `${API_BASE_URL}/schedule/${currentAppointmentId}`;
+            method = 'PUT';
+          }
+          
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+          });
 
-      showMessage(isEditing ? 'Serviço atualizado com sucesso!' : 'Serviço agendado com sucesso!', 'success');
-      
-      setTimeout(() => {
-        window.location.href = 'agenda.html';
-      }, 1500);
-    } catch (err) {
-      showMessage(err.message, 'error');
-    }
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Erro ao agendar');
+          }
+
+          showMessage(isEditing ? 'Serviço atualizado com sucesso!' : 'Serviço agendado com sucesso!', 'success');
+          
+          setTimeout(() => {
+            window.location.href = 'agenda.html';
+          }, 1500);
+        } catch (err) {
+          showMessage(err.message, 'error');
+        }
+      }
+    );
   }
 
   // Se for edição, carregar os dados do agendamento
