@@ -1172,6 +1172,18 @@
     </div>
   </div>
 
+  <!-- MODAL DE INPUT (para adicionar serviço) -->
+<div id="inputModalServico" class="modal-overlay-confirm" style="display: none;">
+  <div class="modal-container">
+    <h3 id="inputModalServicoTitle">Adicionar serviço</h3>
+    <input type="text" id="inputModalServicoField" class="editable-input" placeholder="Ex: Colheita, Pulverização, Plantio..." style="width: 100%; margin-bottom: 16px; padding: 10px; border-radius: 12px; border: 1px solid var(--borda);">
+    <div class="modal-buttons">
+      <button id="inputModalServicoCancelBtn" class="modal-btn cancel">Cancelar</button>
+      <button id="inputModalServicoConfirmBtn" class="modal-btn save">Adicionar</button>
+    </div>
+  </div>
+</div>
+
   <script>
     const API_BASE_URL = 'http://localhost:3000/api';
     let token = localStorage.getItem('token');
@@ -1210,6 +1222,41 @@
       confirmBtn.addEventListener('click', handleConfirm);
       cancelBtn.addEventListener('click', handleCancel);
     }
+
+    function openInputModalServico(title, placeholder, onConfirm) {
+  const modal = document.getElementById('inputModalServico');
+  const titleEl = document.getElementById('inputModalServicoTitle');
+  const inputField = document.getElementById('inputModalServicoField');
+  const confirmBtn = document.getElementById('inputModalServicoConfirmBtn');
+  const cancelBtn = document.getElementById('inputModalServicoCancelBtn');
+
+  titleEl.innerText = title;
+  inputField.value = '';
+  inputField.placeholder = placeholder;
+  modal.style.display = 'flex';
+  inputField.focus();
+
+  const handleConfirm = () => {
+    const value = inputField.value.trim();
+    modal.style.display = 'none';
+    confirmBtn.removeEventListener('click', handleConfirm);
+    cancelBtn.removeEventListener('click', handleCancel);
+    if (value) onConfirm(value);
+  };
+
+  const handleCancel = () => {
+    modal.style.display = 'none';
+    confirmBtn.removeEventListener('click', handleConfirm);
+    cancelBtn.removeEventListener('click', handleCancel);
+  };
+
+  confirmBtn.addEventListener('click', handleConfirm);
+  cancelBtn.addEventListener('click', handleCancel);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) handleCancel();
+  }, { once: true });
+}
 
     function openInputModal(title, placeholder, onConfirm) {
       const modal = document.getElementById('inputModal');
@@ -1578,12 +1625,15 @@
 
     // Adicionar serviço (empresa)
     document.getElementById('add-servico-btn')?.addEventListener('click', () => {
-      const novoServico = prompt('Digite o serviço que contrata (ex: Colheita, Pulverização):');
-      if (novoServico && novoServico.trim()) {
-        servicosEmpresaList.push(novoServico.trim());
-        renderServicosEmpresaTags();
-      }
-    });
+  openInputModalServico(
+    'Adicionar serviço',
+    'Ex: Colheita, Pulverização, Plantio...',
+    (novoServico) => {
+      servicosEmpresaList.push(novoServico.trim());
+      renderServicosEmpresaTags();
+    }
+  );
+});
 
     // Adicionar equipamento (prestador)
     document.getElementById('add-maquina-btn')?.addEventListener('click', () => {
