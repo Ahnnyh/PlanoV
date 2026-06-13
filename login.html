@@ -356,10 +356,26 @@ body {
         throw new Error(data.error || 'Erro ao fazer login');
       }
 
-      // Sucesso: salvar token e dados do usuário
+      // Salva token e dados iniciais
       localStorage.setItem('token', data.token);
-      // Salva o objeto user completo (incluindo foto_perfil, se existir)
       localStorage.setItem('user', JSON.stringify(data.user));
+
+      // ========== CORREÇÃO: BUSCAR PERFIL COMPLETO PARA OBTER A FOTO ==========
+      try {
+        const profileResponse = await fetch(`${API_BASE_URL}/profile/${data.user.id}`, {
+          headers: { 'Authorization': `Bearer ${data.token}` }
+        });
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          const fullUser = profileData.user;
+          // Atualiza o localStorage com os dados completos (incluindo foto_perfil)
+          localStorage.setItem('user', JSON.stringify(fullUser));
+        } else {
+          console.warn('Não foi possível carregar o perfil completo. A foto pode não aparecer imediatamente.');
+        }
+      } catch (err) {
+        console.error('Erro ao buscar perfil completo:', err);
+      }
 
       showMessage('Login realizado com sucesso!', 'success');
       

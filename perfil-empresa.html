@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>PlanoV - Perfil da Empresa</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== (estilos mantidos, apenas adicionadas classes para as estrelas SVG e menu padronizado) ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    /* ===== ESTILOS (MESMOS DO ORIGINAL, COM AJUSTES PARA ESTRELAS E MENU) ===== */
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
     :root {
       --verde: #3a5f1e;
       --verde-btn: #2d5016;
@@ -28,7 +20,6 @@
       --muted: #888;
       --borda: #e0ddd6;
     }
-
     body {
       font-family: 'Poppins', sans-serif;
       background: #cdc8bc;
@@ -38,28 +29,24 @@
       min-height: 100vh;
       padding: 20px;
     }
-
     .frame {
       width: 100%;
       max-width: 450px;
       background: var(--bg);
       border-radius: 44px;
       overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
       position: relative;
       min-height: 700px;
       margin: 0 auto;
     }
-
-    /* HEADER */
     .header {
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
     }
-
     .header-bg {
       position: absolute;
       inset: 0;
@@ -67,7 +54,6 @@
       background-size: cover;
       background-position: left;
     }
-
     .header-content {
       position: relative;
       z-index: 1;
@@ -76,7 +62,6 @@
       justify-content: space-between;
       padding: 52px 20px 18px;
     }
-
     .btn-icon {
       background: none;
       border: none;
@@ -89,11 +74,7 @@
       border-radius: 50%;
       transition: background 0.2s;
     }
-
-    .btn-icon:active {
-      background: rgba(0, 0, 0, 0.05);
-    }
-
+    .btn-icon:active { background: rgba(0,0,0,0.05); }
     .btn-icon svg {
       width: 24px;
       height: 24px;
@@ -103,26 +84,14 @@
       fill: none;
       stroke-linejoin: round;
     }
-
-    .logo-wrap img {
-      height: 40px;
-      content: url('img/logo.png');
-    }
-
+    .logo-wrap img { height: 40px; content: url('img/logo.png'); }
     .title-bar {
       background: var(--verde);
       padding: 14px 20px;
       text-align: center;
       flex-shrink: 0;
     }
-
-    .title-bar h1 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    /* Hero com avatar e badge */
+    .title-bar h1 { font-size: 18px; font-weight: 700; color: #fff; }
     .perfil-hero {
       position: relative;
       background-image: url('img/inferior.png');
@@ -135,7 +104,6 @@
       align-items: center;
       flex-shrink: 0;
     }
-
     .perfil-hero::after {
       content: '';
       position: absolute;
@@ -145,7 +113,6 @@
       height: 60px;
       background: linear-gradient(to bottom, transparent, var(--bg));
     }
-
     .avatar-wrap {
       position: relative;
       width: 100px;
@@ -155,13 +122,7 @@
       overflow: hidden;
       background: #c8a96e;
     }
-
-    .avatar-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .avatar-placeholder {
       width: 100%;
       height: 100%;
@@ -170,12 +131,7 @@
       justify-content: center;
       background: linear-gradient(135deg, #8B6914, #c8a050);
     }
-
-    .avatar-placeholder svg {
-      width: 64px;
-      height: 64px;
-    }
-
+    .avatar-placeholder svg { width: 64px; height: 64px; }
     .badge-empresa {
       margin-top: 8px;
       background: var(--laranja);
@@ -185,7 +141,6 @@
       padding: 3px 14px;
       border-radius: 20px;
     }
-
     .body {
       flex: 1;
       overflow-y: auto;
@@ -193,11 +148,7 @@
       padding: 0 16px 100px;
       background: var(--bg);
     }
-
-    .body::-webkit-scrollbar {
-      display: none;
-    }
-
+    .body::-webkit-scrollbar { display: none; }
     .card {
       background: var(--branco);
       border-radius: 14px;
@@ -205,7 +156,6 @@
       padding: 14px 16px;
       margin-bottom: 12px;
     }
-
     .card-title {
       font-size: 15px;
       font-weight: 700;
@@ -215,40 +165,21 @@
       align-items: center;
       gap: 8px;
     }
-
-    .card-title svg {
-      width: 18px;
-      height: 18px;
-      stroke: var(--verde-card);
-      stroke-width: 2;
-      fill: none;
-    }
-
+    .card-title svg { width: 18px; height: 18px; stroke: var(--verde-card); stroke-width: 2; fill: none; }
     .info-row {
       font-size: 13px;
       color: var(--texto);
       margin-bottom: 6px;
       line-height: 1.5;
     }
-
-    .info-row .lbl {
-      font-weight: 700;
-      margin-right: 8px;
-    }
-
-    .sobre-texto {
-      font-size: 13px;
-      color: var(--texto);
-      line-height: 1.6;
-    }
-
+    .info-row .lbl { font-weight: 700; margin-right: 8px; }
+    .sobre-texto { font-size: 13px; color: var(--texto); line-height: 1.6; }
     .tags-wrap {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 6px;
     }
-
     .tag {
       background: #e8f0df;
       padding: 4px 12px;
@@ -257,7 +188,6 @@
       font-weight: 500;
       color: var(--verde-card);
     }
-
     .avaliacao-media {
       background: var(--branco);
       border-radius: 14px;
@@ -269,30 +199,10 @@
       gap: 8px;
       margin-bottom: 12px;
     }
-
-    .star-big {
-      width: 24px;
-      height: 24px;
-      fill: var(--laranja);
-      stroke: none;
-    }
-
-    .media-valor {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--texto);
-    }
-
-    .media-label {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .reviews-list {
-      list-style: none;
-      margin-top: 6px;
-    }
-
+    .star-big { width: 24px; height: 24px; fill: var(--laranja); stroke: none; }
+    .media-valor { font-size: 18px; font-weight: 700; color: var(--texto); }
+    .media-label { font-size: 13px; color: var(--muted); }
+    .reviews-list { list-style: none; margin-top: 6px; }
     .review-item {
       background: var(--branco);
       border-radius: 14px;
@@ -300,45 +210,17 @@
       padding: 12px;
       margin-bottom: 10px;
     }
-
     .review-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
     }
-
-    .review-author {
-      font-weight: 600;
-      font-size: 13px;
-      color: var(--texto);
-    }
-
-    .stars {
-      display: flex;
-      gap: 2px;
-    }
-
-   .stars svg {
-  width: 14px;
-  height: 14px;
-  stroke: none;
-}
-
-    .stars svg.empty {
-      fill: #e0ddd6;
-    }
-
-    .review-text {
-      font-size: 12px;
-      color: #555;
-      line-height: 1.4;
-    }
-
-    .avaliar-area {
-      margin-top: 12px;
-    }
-
+    .review-author { font-weight: 600; font-size: 13px; color: var(--texto); }
+    .stars { display: flex; gap: 2px; }
+    .stars svg { width: 14px; height: 14px; stroke: none; }
+    .review-text { font-size: 12px; color: #555; line-height: 1.4; }
+    .avaliar-area { margin-top: 12px; }
     .avaliar-btn {
       background: var(--verde-btn);
       color: white;
@@ -350,7 +232,6 @@
       cursor: pointer;
       width: 100%;
     }
-
     .avaliar-form {
       background: #faf9f6;
       border-radius: 20px;
@@ -358,18 +239,13 @@
       margin-top: 12px;
       display: none;
     }
-
-    .avaliar-form.open {
-      display: block;
-    }
-
+    .avaliar-form.open { display: block; }
     .stars-select {
       display: flex;
       gap: 8px;
       margin: 12px 0;
       justify-content: center;
     }
-
     .star-select {
       width: 28px;
       height: 28px;
@@ -378,11 +254,7 @@
       stroke: none;
       transition: fill 0.1s;
     }
-
-    .star-select.selected {
-      fill: var(--laranja);
-    }
-
+    .star-select.selected { fill: var(--laranja); }
     textarea {
       width: 100%;
       border: 1px solid #e2dacf;
@@ -393,7 +265,6 @@
       margin: 12px 0;
       resize: vertical;
     }
-
     .btn-enviar {
       background: var(--verde-btn);
       color: white;
@@ -404,59 +275,43 @@
       width: 100%;
       cursor: pointer;
     }
-
-    /* Modais */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0,0,0,0.6);
       backdrop-filter: blur(3px);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .modal-container {
       background: white;
       width: 85%;
       max-width: 320px;
       border-radius: 28px;
       padding: 24px 20px;
-      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
       text-align: center;
     }
-
-    .modal-container h3 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--texto);
-      margin-bottom: 16px;
-    }
-
+    .modal-container h3 { font-size: 20px; font-weight: 700; color: var(--texto); margin-bottom: 16px; }
     .modal-stars {
       display: flex;
       justify-content: center;
       gap: 8px;
       margin: 16px 0;
     }
-
     .modal-star {
       width: 32px;
       height: 32px;
       cursor: pointer;
-      fill: #ddd;
-      stroke: none;
-      transition: fill 0.1s;
     }
-
-    .modal-star.selected {
-      fill: var(--laranja);
-    }
-
+    /* CORREÇÃO: estrelas do modal usam apenas classes */
+    .modal-star svg { fill: #ddd; stroke: none; transition: fill 0.1s; }
+    .modal-star.selected svg { fill: var(--laranja); }
     .modal-container textarea {
       width: 100%;
       border: 1px solid var(--borda);
@@ -467,13 +322,11 @@
       resize: vertical;
       margin: 8px 0 16px;
     }
-
     .modal-buttons {
       display: flex;
       gap: 12px;
       justify-content: center;
     }
-
     .modal-btn {
       flex: 1;
       padding: 10px;
@@ -483,29 +336,15 @@
       border: none;
       cursor: pointer;
     }
-
-    .modal-btn.cancel {
-      background: #e0ddd6;
-      color: #333;
-    }
-
-    .modal-btn.save {
-      background: var(--verde-btn);
-      color: white;
-    }
-
-    .modal-btn.delete {
-      background: #c0392b;
-      color: white;
-    }
-
-    /* Toast */
+    .modal-btn.cancel { background: #e0ddd6; color: #333; }
+    .modal-btn.save { background: var(--verde-btn); color: white; }
+    .modal-btn.delete { background: #c0392b; color: white; }
     .toast {
       position: fixed;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0,0,0,0.85);
       backdrop-filter: blur(8px);
       color: white;
       padding: 10px 20px;
@@ -517,22 +356,12 @@
       max-width: 90%;
       white-space: normal;
       text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       pointer-events: none;
     }
-
-    .toast.success {
-      background: var(--verde-btn);
-    }
-
-    .toast.error {
-      background: #c0392b;
-    }
-
-    .toast.info {
-      background: var(--laranja);
-    }
-
+    .toast.success { background: var(--verde-btn); }
+    .toast.error { background: #c0392b; }
+    .toast.info { background: var(--laranja); }
     /* MENU LATERAL PADRONIZADO */
     .menu-overlay {
       position: absolute;
@@ -540,14 +369,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0,0,0,0.4);
       backdrop-filter: blur(2px);
       z-index: 100;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.25s ease, visibility 0.25s;
     }
-
     .menu-drawer {
       position: absolute;
       top: 0;
@@ -556,36 +384,22 @@
       min-width: 260px;
       height: 100%;
       background: var(--branco);
-      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+      box-shadow: -8px 0 24px rgba(0,0,0,0.15);
       z-index: 101;
       transform: translateX(100%);
       transition: transform 0.3s;
       overflow-y: auto;
       border-radius: 20px 0 0 20px;
     }
-
-    .menu-overlay.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .menu-overlay.open .menu-drawer {
-      transform: translateX(0);
-    }
-
+    .menu-overlay.open { opacity: 1; visibility: visible; }
+    .menu-overlay.open .menu-drawer { transform: translateX(0); }
     .menu-header {
       padding: 28px 20px 20px;
       background: linear-gradient(135deg, #3a5f1e, #2d5016);
       color: white;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
-
-    .menu-user {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .menu-user { display: flex; align-items: center; gap: 12px; }
     .menu-avatar {
       width: 52px;
       height: 52px;
@@ -595,66 +409,24 @@
       align-items: center;
       justify-content: center;
     }
-
-    .menu-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .menu-avatar svg {
-      width: 30px;
-      height: 30px;
-      stroke: white;
-      stroke-width: 1.8;
-      fill: none;
-    }
-
-    .menu-user-info h4 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .menu-user-info p {
-      font-size: 12px;
-      opacity: 0.85;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .menu-user-info p svg {
-      width: 14px;
-      height: 14px;
-      stroke: white;
-      stroke-width: 2;
-    }
-
+    .menu-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
+    .menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+    .menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
     .menu-close {
       position: absolute;
       top: 16px;
       right: 16px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.2);
       border: none;
       width: 36px;
       height: 36px;
       border-radius: 50%;
       cursor: pointer;
     }
-
-    .menu-close svg {
-      width: 20px;
-      height: 20px;
-      stroke: white;
-      stroke-width: 2;
-    }
-
-    .menu-nav {
-      padding: 12px 0 20px;
-    }
-
+    .menu-close svg { width: 20px; height: 20px; stroke: white; stroke-width: 2; }
+    .menu-nav { padding: 12px 0 20px; }
     .menu-item {
       display: flex;
       align-items: center;
@@ -665,36 +437,11 @@
       color: var(--texto);
       cursor: pointer;
     }
-
-    .menu-item:hover {
-      background: #f0ede7;
-    }
-
-    .menu-item .menu-icon {
-      width: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .menu-item .menu-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      fill: none;
-    }
-
-    .menu-item .menu-text {
-      flex: 1;
-    }
-
-    .divider {
-      height: 1px;
-      background: var(--borda);
-      margin: 8px 16px;
-    }
-
+    .menu-item:hover { background: #f0ede7; }
+    .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
+    .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; }
+    .menu-item .menu-text { flex: 1; }
+    .divider { height: 1px; background: var(--borda); margin: 8px 16px; }
     .section-title {
       font-size: 13px;
       font-weight: 600;
@@ -703,825 +450,522 @@
       padding: 12px 20px 4px;
       text-transform: uppercase;
     }
-
-    .footer-menu {
-      border-top: 1px solid var(--borda);
-      margin-top: 8px;
-      padding: 8px 0;
-    }
-
+    .footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
+    .menu-item[data-nav="excluir-conta"] .menu-text { color: #dc2626; font-weight: 600; }
+    .menu-item[data-nav="excluir-conta"] .menu-icon svg { stroke: #dc2626; }
     @media (max-width: 400px) {
-      .header-content {
-        padding: 52px 16px 14px;
-      }
-
-      .btn-icon {
-        width: 40px;
-        height: 40px;
-      }
-
-      .btn-icon svg {
-        width: 22px;
-        height: 22px;
-      }
-
-      .logo-wrap img {
-        height: 36px;
-      }
-
-      .title-bar {
-        padding: 12px 16px;
-      }
-
-      .title-bar h1 {
-        font-size: 16px;
-      }
-
-      .perfil-hero {
-        padding-top: 20px;
-        padding-bottom: 35px;
-      }
-
-      .avatar-wrap {
-        width: 80px;
-        height: 80px;
-      }
-
-      .body {
-        padding: 0 12px 100px;
-      }
-
-      .card {
-        padding: 12px 14px;
-      }
-
-      .stars svg {
-        width: 12px;
-        height: 12px;
-      }
-
-      .star-select {
-        width: 24px;
-        height: 24px;
-      }
-
-      .modal-star {
-        width: 28px;
-        height: 28px;
-      }
+      .header-content { padding: 52px 16px 14px; }
+      .btn-icon { width: 40px; height: 40px; }
+      .btn-icon svg { width: 22px; height: 22px; }
+      .logo-wrap img { height: 36px; }
+      .title-bar { padding: 12px 16px; }
+      .title-bar h1 { font-size: 16px; }
+      .perfil-hero { padding-top: 20px; padding-bottom: 35px; }
+      .avatar-wrap { width: 80px; height: 80px; }
+      .body { padding: 0 12px 100px; }
+      .card { padding: 12px 14px; }
+      .stars svg { width: 12px; height: 12px; }
+      .star-select { width: 24px; height: 24px; }
+      .modal-star { width: 28px; height: 28px; }
     }
   </style>
 </head>
-
 <body>
-  <div class="frame">
-    <!-- HEADER -->
-    <div class="header">
-      <div class="header-bg"></div>
-      <div class="header-content">
-        <button class="btn-icon" id="backButton">
-          <svg viewBox="0 0 24 24">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
-        <div class="logo-wrap"><img alt="PlanoV"></div>
-        <button class="btn-icon" id="menuButton">
-          <svg viewBox="0 0 24 24">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-      </div>
+<div class="frame">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <button class="btn-icon" id="backButton"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="logo-wrap"><img alt="PlanoV"></div>
+      <button class="btn-icon" id="menuButton"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     </div>
-    <div class="title-bar">
-      <h1>Perfil da Empresa</h1>
-    </div>
+  </div>
+  <div class="title-bar"><h1>Perfil da Empresa</h1></div>
 
-    <!-- HERO COM AVATAR -->
-    <div class="perfil-hero">
-      <div class="avatar-wrap" id="avatarWrap">
-        <div class="avatar-placeholder" id="avatarPlaceholder">
-          <svg viewBox="0 0 60 60">
-            <circle cx="30" cy="20" r="12" fill="#f5d59a" />
-            <path d="M10 52c0-11 9-18 20-18s20 7 20 18" fill="#4a7c28" />
-            <ellipse cx="30" cy="10" rx="14" ry="4" fill="#8B5E14" />
-            <rect x="16" y="6" width="28" height="6" rx="3" fill="#a06820" />
-          </svg>
-        </div>
-        <img id="avatarImg" src=""
-          style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+  <!-- HERO COM AVATAR -->
+  <div class="perfil-hero">
+    <div class="avatar-wrap" id="avatarWrap">
+      <div class="avatar-placeholder" id="avatarPlaceholder">
+        <svg viewBox="0 0 60 60"><circle cx="30" cy="20" r="12" fill="#f5d59a"/><path d="M10 52c0-11 9-18 20-18s20 7 20 18" fill="#4a7c28"/><ellipse cx="30" cy="10" rx="14" ry="4" fill="#8B5E14"/><rect x="16" y="6" width="28" height="6" rx="3" fill="#a06820"/></svg>
       </div>
-      <div class="badge-empresa" id="badgeEmpresa">Empresa</div>
+      <img id="avatarImg" src="" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    </div>
+    <div class="badge-empresa" id="badgeEmpresa">Empresa</div>
+  </div>
+
+  <div class="body">
+    <div style="text-align: center; margin: 8px 0 16px;">
+      <h2 id="empresaNome" style="font-size: 22px; font-weight: 700; color: var(--texto);">Carregando...</h2>
     </div>
 
-    <div class="body">
-      <div style="text-align: center; margin: 8px 0 16px;">
-        <h2 id="empresaNome" style="font-size: 22px; font-weight: 700; color: var(--texto);">Carregando...</h2>
-      </div>
-
-      <!-- INFORMAÇÕES DA EMPRESA (NICHO, CULTIVO, REGIÃO) -->
-      <div class="card" id="infoEmpresaCard" style="display: none;">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" stroke="currentColor">
-            <rect x="2" y="7" width="20" height="14" rx="2" />
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-          </svg>
-          Informações da Empresa
-        </div>
-        <div class="info-row" id="rowTipo"><span class="lbl">Segmento:</span> <span id="empresaTipo">-</span></div>
-        <div class="info-row" id="rowCultivo"><span class="lbl">Cultivo principal:</span> <span
-            id="empresaCultivo">-</span></div>
-        <div class="info-row" id="rowRegiao"><span class="lbl">Região de atuação:</span> <span
-            id="empresaRegiao">-</span></div>
-        <div class="info-row" id="rowCidade">
-          <span class="lbl">Cidade - UF:</span>
-          <span id="empresaCidade">-</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          Sobre
-        </div>
-        <div class="sobre-texto" id="sobreTexto">-</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" stroke="currentColor">
-            <rect x="2" y="7" width="20" height="14" rx="2" />
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-          </svg>
-          Serviços que contrata
-        </div>
-        <div class="tags-wrap" id="servicosTags"></div>
-      </div>
-
-      <div class="avaliacao-media">
-        <svg class="star-big" viewBox="0 0 24 24">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-        </svg>
-        <span class="media-valor" id="mediaNota">-</span>
-        <span class="media-label" id="mediaLabel">avaliação média</span>
-      </div>
-
-      <div>
-        <div class="card-title" style="margin-bottom: 8px;">Avaliações</div>
-        <ul class="reviews-list" id="reviewsList"></ul>
-      </div>
-
-      <div id="avaliarArea" class="avaliar-area" style="display: none;">
-        <button class="avaliar-btn" id="toggleFormBtn">Avaliar esta empresa</button>
-        <div id="avaliarForm" class="avaliar-form">
-          <div class="stars-select" id="starsSelect"></div>
-          <textarea id="comentarioInput" rows="2" placeholder="Deixe seu comentário (opcional)"></textarea>
-          <button class="btn-enviar" id="enviarAvaliacaoBtn">Enviar avaliação</button>
-        </div>
-      </div>
+    <!-- INFORMAÇÕES DA EMPRESA -->
+    <div class="card" id="infoEmpresaCard" style="display: none;">
+      <div class="card-title"><svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Informações da Empresa</div>
+      <div class="info-row" id="rowTipo"><span class="lbl">Segmento:</span> <span id="empresaTipo">-</span></div>
+      <div class="info-row" id="rowCultivo"><span class="lbl">Cultivo principal:</span> <span id="empresaCultivo">-</span></div>
+      <div class="info-row" id="rowRegiao"><span class="lbl">Região de atuação:</span> <span id="empresaRegiao">-</span></div>
+      <div class="info-row" id="rowCidade"><span class="lbl">Cidade - UF:</span> <span id="empresaCidade">-</span></div>
     </div>
 
-    <!-- TOAST -->
-    <div id="toast" class="toast" style="display: none;">
-      <span id="toastMessage"></span>
+    <div class="card">
+      <div class="card-title"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Sobre</div>
+      <div class="sobre-texto" id="sobreTexto">-</div>
     </div>
 
-    <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
-    <div id="confirmModal" class="modal-overlay" style="display: none;">
-      <div class="modal-container">
-        <h3 id="confirmTitle">Confirmar</h3>
-        <p id="confirmMessage">Tem certeza?</p>
-        <div class="modal-buttons">
-          <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
-          <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-title"><svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Serviços que contrata</div>
+      <div class="tags-wrap" id="servicosTags"></div>
     </div>
 
-    <!-- MODAL DE EDIÇÃO -->
-    <div id="editModal" class="modal-overlay" style="display: none;">
-      <div class="modal-container">
-        <h3>Editar Avaliação</h3>
-        <div class="modal-stars" id="editStars"></div>
-        <textarea id="editComentario" rows="3" placeholder="Seu comentário..."></textarea>
-        <div class="modal-buttons">
-          <button id="cancelEditBtn" class="modal-btn cancel">Cancelar</button>
-          <button id="saveEditBtn" class="modal-btn save">Salvar</button>
-        </div>
-      </div>
+    <div class="avaliacao-media">
+      <svg class="star-big" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="media-valor" id="mediaNota">-</span>
+      <span class="media-label" id="mediaLabel">avaliação média</span>
     </div>
 
-    <!-- MENU LATERAL PADRONIZADO -->
-    <div class="menu-overlay" id="menuOverlay">
-      <div class="menu-drawer">
-        <button class="menu-close" id="closeMenuBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-        <div class="menu-header">
-          <div class="menu-user">
-            <div class="menu-avatar" id="menuAvatar">
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
-                <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" />
-                <path d="M12 10v10M8 20h8" />
-                <path d="M5 18c1.5-1 3-1.5 5-1.5" />
-                <path d="M19 18c-1.5-1-3-1.5-5-1.5" />
-              </svg>
-            </div>
-            <div class="menu-user-info">
-              <h4 id="menuNome">Carregando...</h4>
-              <p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                  <path d="M12 3v6c0 2.5-2 4-4 4" />
-                  <path d="M12 9c2 0 4 1.5 4 4" />
-                  <path d="M6 21c2-2 4-3 6-3s4 1 6 3" />
-                </svg><span id="menuTipo">Usuário</span></p>
-            </div>
-          </div>
-        </div>
-        <div class="menu-nav">
-          <!-- Início -->
-          <div class="menu-item" data-nav="inicio">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg></div>
-            <div class="menu-text">Início</div>
-          </div>
-          <!-- Empresas/Prestadores (texto dinâmico) -->
-          <div class="menu-item" data-nav="empresas">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-              </svg></div>
-            <div class="menu-text" id="menuTextEmpresas">Empresas</div>
-          </div>
-          <!-- Minha Agenda -->
-          <div class="menu-item" data-nav="agenda">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-                <circle cx="12" cy="15" r="1" />
-                <circle cx="16" cy="15" r="1" />
-                <circle cx="8" cy="15" r="1" />
-              </svg></div>
-            <div class="menu-text">Minha Agenda</div>
-          </div>
-          <div class="divider"></div>
-          <div class="section-title">CONFIGURAÇÕES</div>
-          <!-- Meu Perfil -->
-          <div class="menu-item" data-nav="perfil">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg></div>
-            <div class="menu-text">Meu Perfil</div>
-          </div>
-          <!-- Configurações -->
-          <div class="menu-item" data-nav="configuracoes">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="3" />
-                <path
-                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-              </svg></div>
-            <div class="menu-text">Configurações</div>
-          </div>
-          <!-- Excluir conta -->
-          <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <polyline points="3 6 5 6 21 6" />
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                <line x1="10" y1="11" x2="10" y2="17" />
-                <line x1="14" y1="11" x2="14" y2="17" />
-              </svg></div>
-            <div class="menu-text">Excluir conta</div>
-          </div>
-          <!-- Ajuda -->
-          <div class="menu-item" data-nav="ajuda">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg></div>
-            <div class="menu-text">Ajuda</div>
-          </div>
-          <div class="divider"></div>
-          <!-- Sair -->
-          <div class="menu-item" data-nav="sair">
-            <div class="menu-icon"><svg viewBox="0 0 24 24">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                <polyline points="16 17 21 12 16 7" />
-                <line x1="21" y1="12" x2="9" y2="12" />
-              </svg></div>
-            <div class="menu-text">Sair</div>
-          </div>
-        </div>
+    <div>
+      <div class="card-title" style="margin-bottom: 8px;">Avaliações</div>
+      <ul class="reviews-list" id="reviewsList"></ul>
+    </div>
+
+    <div id="avaliarArea" class="avaliar-area" style="display: none;">
+      <button class="avaliar-btn" id="toggleFormBtn">Avaliar esta empresa</button>
+      <div id="avaliarForm" class="avaliar-form">
+        <div class="stars-select" id="starsSelect"></div>
+        <textarea id="comentarioInput" rows="2" placeholder="Deixe seu comentário (opcional)"></textarea>
+        <button class="btn-enviar" id="enviarAvaliacaoBtn">Enviar avaliação</button>
       </div>
     </div>
   </div>
 
-  <script>
-    const API_BASE_URL = 'http://localhost:3000/api';
-    let token = localStorage.getItem('token');
-    let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const urlParams = new URLSearchParams(window.location.search);
-    const empresaId = urlParams.get('id');
-    if (!empresaId) {
-      showMessage('Empresa não especificada.', 'error');
-      setTimeout(() => { window.location.href = 'buscar-empresas.html'; }, 1500);
-    }
+  <!-- TOAST -->
+  <div id="toast" class="toast" style="display: none;"><span id="toastMessage"></span></div>
 
-    // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
-    function atualizarFotoMenu() {
-      const menuAvatarDiv = document.getElementById('menuAvatar');
-      if (!menuAvatarDiv) return;
-      const usuario = JSON.parse(localStorage.getItem('user') || '{}');
-      const foto = usuario.foto_perfil;
-      if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
-        menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="confirmModal" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+      <h3 id="confirmTitle">Confirmar</h3>
+      <p id="confirmMessage">Tem certeza?</p>
+      <div class="modal-buttons">
+        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE EDIÇÃO -->
+  <div id="editModal" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+      <h3>Editar Avaliação</h3>
+      <div class="modal-stars" id="editStars"></div>
+      <textarea id="editComentario" rows="3" placeholder="Seu comentário..."></textarea>
+      <div class="modal-buttons">
+        <button id="cancelEditBtn" class="modal-btn cancel">Cancelar</button>
+        <button id="saveEditBtn" class="modal-btn save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU LATERAL COMPLETO -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-drawer">
+      <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar" id="menuAvatarContainer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg>
+          </div>
+          <div class="menu-user-info"><h4 id="menuNome">Carregando...</h4><p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4"/><path d="M12 9c2 0 4 1.5 4 4"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3"/></svg><span id="menuTipo">Usuário</span></p></div>
+        </div>
+      </div>
+      <div class="menu-nav">
+        <div class="menu-item" data-nav="inicio"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="menu-text">Início</div></div>
+        <div class="menu-item" data-nav="empresas"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="menu-text" id="menuTextEmpresas">Empresas</div></div>
+        <div class="menu-item" data-nav="agenda"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div><div class="menu-text">Minha Agenda</div></div>
+        <div class="divider"></div>
+        <div class="section-title">CONFIGURAÇÕES</div>
+        <div class="menu-item" data-nav="perfil"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text">Meu Perfil</div></div>
+        <div class="menu-item" data-nav="configuracoes"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="menu-text">Configurações</div></div>
+        <div class="menu-item" data-nav="ajuda"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="menu-text">Ajuda</div></div>
+        <div class="divider"></div>
+        <div class="menu-item" data-nav="sair"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><div class="menu-text">Sair</div></div>
+        <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta"><div class="menu-icon"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div><div class="menu-text">Excluir conta</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_BASE_URL = 'http://localhost:3000/api';
+  let token = localStorage.getItem('token');
+  let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
+  const urlParams = new URLSearchParams(window.location.search);
+  const empresaId = urlParams.get('id');
+  if (!empresaId) {
+    showMessage('Empresa não especificada.', 'error');
+    setTimeout(() => { window.location.href = 'buscar-empresas.html'; }, 1500);
+  }
+
+  function atualizarFotoMenu() {
+    const menuAvatarDiv = document.getElementById('menuAvatarContainer');
+    if (!menuAvatarDiv) return;
+    const usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    const foto = usuario.foto_perfil;
+    if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
+      menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
+    } else {
+      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg>`;
+    }
+  }
+
+  const empresaNomeEl = document.getElementById('empresaNome');
+  const sobreTextoEl = document.getElementById('sobreTexto');
+  const servicosTagsEl = document.getElementById('servicosTags');
+  const mediaNotaEl = document.getElementById('mediaNota');
+  const mediaLabelEl = document.getElementById('mediaLabel');
+  const reviewsListEl = document.getElementById('reviewsList');
+  const avatarImg = document.getElementById('avatarImg');
+  const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+  const infoEmpresaCard = document.getElementById('infoEmpresaCard');
+  const empresaTipoSpan = document.getElementById('empresaTipo');
+  const empresaCultivoSpan = document.getElementById('empresaCultivo');
+  const empresaRegiaoSpan = document.getElementById('empresaRegiao');
+  const empresaCidadeSpan = document.getElementById('empresaCidade');
+  let currentReviewId = null;
+  let selectedEditRating = 0;
+
+  function showMessage(text, type = 'info') {
+    const toast = document.getElementById('toast');
+    const msgSpan = document.getElementById('toastMessage');
+    msgSpan.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
+  }
+
+  function confirmAction(title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    document.getElementById('confirmTitle').innerText = title;
+    document.getElementById('confirmMessage').innerHTML = message;
+    modal.style.display = 'flex';
+    const confirmBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    const handleConfirm = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      onConfirm();
+    };
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
+  }
+
+  function starSvg(filled = true, size = 14) {
+    const fillColor = filled ? 'var(--laranja)' : '#e0ddd6';
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${fillColor}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+  }
+
+  function generateStars(nota, size = 14) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) html += starSvg(i <= nota, size);
+    return html;
+  }
+
+  async function carregarEmpresa() {
+    try {
+      const res = await fetch(`${API_BASE_URL}/profile/${empresaId}`, { headers: token ? { 'Authorization': `Bearer ${token}` } : {} });
+      if (!res.ok) throw new Error('Erro ao carregar empresa');
+      const data = await res.json();
+      const user = data.user;
+
+      empresaNomeEl.innerText = user.nome || 'Empresa';
+      sobreTextoEl.innerText = user.sobre || 'Sem descrição.';
+
+      let hasInfo = false;
+      if (user.nicho && user.nicho.trim() !== '') { empresaTipoSpan.innerText = user.nicho; hasInfo = true; }
+      else empresaTipoSpan.innerText = 'Não informado';
+      if (user.cultivo && user.cultivo.trim() !== '') { empresaCultivoSpan.innerText = user.cultivo; hasInfo = true; }
+      else empresaCultivoSpan.innerText = 'Não informado';
+      if (user.regiao && user.regiao.trim() !== '') { empresaRegiaoSpan.innerText = user.regiao; hasInfo = true; }
+      else empresaRegiaoSpan.innerText = 'Não informado';
+      let cidadeTexto = user.cidade || '';
+      if (user.estado && user.estado.trim() !== '') cidadeTexto += cidadeTexto ? ` - ${user.estado}` : user.estado;
+      if (cidadeTexto.trim() !== '') { empresaCidadeSpan.innerText = cidadeTexto; hasInfo = true; }
+      else empresaCidadeSpan.innerText = 'Não informado';
+      if (hasInfo || (user.nicho || user.cultivo || user.regiao)) infoEmpresaCard.style.display = 'block';
+
+      if (user.foto_perfil && (user.foto_perfil.startsWith('http') || user.foto_perfil.startsWith('data:image'))) {
+        avatarImg.src = user.foto_perfil;
+        avatarImg.style.display = 'block';
+        avatarPlaceholder.style.display = 'none';
       } else {
-        menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
-        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
-        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
-        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
-        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
-      </svg>`;
+        avatarImg.style.display = 'none';
+        avatarPlaceholder.style.display = 'flex';
       }
-    }
 
-    // DOM elements
-    const empresaNomeEl = document.getElementById('empresaNome');
-    const sobreTextoEl = document.getElementById('sobreTexto');
-    const servicosTagsEl = document.getElementById('servicosTags');
-    const mediaNotaEl = document.getElementById('mediaNota');
-    const mediaLabelEl = document.getElementById('mediaLabel');
-    const reviewsListEl = document.getElementById('reviewsList');
-    const avatarImg = document.getElementById('avatarImg');
-    const avatarPlaceholder = document.getElementById('avatarPlaceholder');
-    const infoEmpresaCard = document.getElementById('infoEmpresaCard');
-    const empresaTipoSpan = document.getElementById('empresaTipo');
-    const empresaCultivoSpan = document.getElementById('empresaCultivo');
-    const empresaRegiaoSpan = document.getElementById('empresaRegiao');
-    const empresaCidadeSpan = document.getElementById('empresaCidade');
-
-    let currentReviewId = null;
-    let selectedEditRating = 0;
-
-    function showMessage(text, type = 'info') {
-      const toast = document.getElementById('toast');
-      const msgSpan = document.getElementById('toastMessage');
-      msgSpan.innerText = text;
-      toast.className = `toast ${type}`;
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 3000);
-    }
-
-    function confirmAction(title, message, onConfirm) {
-      const modal = document.getElementById('confirmModal');
-      document.getElementById('confirmTitle').innerText = title;
-      document.getElementById('confirmMessage').innerHTML = message;
-      modal.style.display = 'flex';
-      const confirmBtn = document.getElementById('confirmOkBtn');
-      const cancelBtn = document.getElementById('confirmCancelBtn');
-      const handleConfirm = () => {
-        modal.style.display = 'none';
-        confirmBtn.removeEventListener('click', handleConfirm);
-        cancelBtn.removeEventListener('click', handleCancel);
-        onConfirm();
-      };
-      const handleCancel = () => {
-        modal.style.display = 'none';
-        confirmBtn.removeEventListener('click', handleConfirm);
-        cancelBtn.removeEventListener('click', handleCancel);
-      };
-      confirmBtn.addEventListener('click', handleConfirm);
-      cancelBtn.addEventListener('click', handleCancel);
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
-    }
-
-    // Gerar SVG de estrela
-    function starSvg(filled = true, size = 14) {
-      const fillColor = filled ? 'var(--laranja)' : '#e0ddd6';
-      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${fillColor}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
-    }
-
-    function generateStars(nota, size = 14) {
-      let html = '';
-      for (let i = 1; i <= 5; i++) {
-        html += starSvg(i <= nota, size);
+      let servicos = [];
+      if (user.servicos_contrata) {
+        try { servicos = JSON.parse(user.servicos_contrata); } catch(e) { servicos = user.servicos_contrata.split(',').map(s => s.trim()); }
       }
-      return html;
+      servicosTagsEl.innerHTML = '';
+      if (servicos.length) servicos.forEach(s => { const tag = document.createElement('span'); tag.className = 'tag'; tag.innerText = s; servicosTagsEl.appendChild(tag); });
+      else servicosTagsEl.innerHTML = '<span class="tag">Não informado</span>';
+    } catch (err) {
+      console.error(err);
+      empresaNomeEl.innerText = 'Erro';
+      sobreTextoEl.innerText = 'Não foi possível carregar os dados.';
+      showMessage('Erro ao carregar perfil da empresa.', 'error');
     }
+  }
 
-    async function carregarEmpresa() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/profile/${empresaId}`, {
-          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-        });
-        if (!res.ok) throw new Error('Erro ao carregar empresa');
-        const data = await res.json();
-        const user = data.user;
+  async function carregarAvaliacoes() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/reviews/${empresaId}`);
+      if (!response.ok) throw new Error('Erro ao carregar avaliações');
+      const data = await response.json();
+      const media = data.media ? parseFloat(data.media) : 0;
+      const total = data.total || 0;
+      mediaNotaEl.innerText = media > 0 ? media.toFixed(1) : '—';
+      mediaLabelEl.innerText = media > 0 ? `avaliação média (${total} avaliações)` : 'sem avaliações';
+      reviewsListEl.innerHTML = '';
 
-        empresaNomeEl.innerText = user.nome || 'Empresa';
-        sobreTextoEl.innerText = user.sobre || 'Sem descrição.';
-
-        // Preencher informações da empresa
-        let hasInfo = false;
-        if (user.nicho && user.nicho.trim() !== '') {
-          empresaTipoSpan.innerText = user.nicho;
-          hasInfo = true;
-        } else {
-          empresaTipoSpan.innerText = 'Não informado';
-        }
-        if (user.cultivo && user.cultivo.trim() !== '') {
-          empresaCultivoSpan.innerText = user.cultivo;
-          hasInfo = true;
-        } else {
-          empresaCultivoSpan.innerText = 'Não informado';
-        }
-        if (user.regiao && user.regiao.trim() !== '') {
-          empresaRegiaoSpan.innerText = user.regiao;
-          hasInfo = true;
-        } else {
-          empresaRegiaoSpan.innerText = 'Não informado';
-        }
-        // Cidade - UF
-        let cidadeTexto = user.cidade || '';
-        if (user.estado && user.estado.trim() !== '') {
-          cidadeTexto += cidadeTexto ? ` - ${user.estado}` : user.estado;
-        }
-        if (cidadeTexto.trim() !== '') {
-          empresaCidadeSpan.innerText = cidadeTexto;
-          hasInfo = true;
-        } else {
-          empresaCidadeSpan.innerText = 'Não informado';
-        }
-        if (hasInfo || (user.nicho || user.cultivo || user.regiao)) {
-          infoEmpresaCard.style.display = 'block';
-        }
-
-        // Avatar
-        if (user.foto_perfil && (user.foto_perfil.startsWith('http') || user.foto_perfil.startsWith('data:image'))) {
-          avatarImg.src = user.foto_perfil;
-          avatarImg.style.display = 'block';
-          avatarPlaceholder.style.display = 'none';
-        } else {
-          avatarImg.style.display = 'none';
-          avatarPlaceholder.style.display = 'flex';
-        }
-
-        // Serviços que contrata
-        let servicos = [];
-        if (user.servicos_contrata) {
-          try {
-            servicos = JSON.parse(user.servicos_contrata);
-          } catch (e) {
-            servicos = user.servicos_contrata.split(',').map(s => s.trim());
-          }
-        }
-        servicosTagsEl.innerHTML = '';
-        if (servicos.length) {
-          servicos.forEach(s => {
-            const tag = document.createElement('span');
-            tag.className = 'tag';
-            tag.innerText = s;
-            servicosTagsEl.appendChild(tag);
-          });
-        } else {
-          servicosTagsEl.innerHTML = '<span class="tag">Não informado</span>';
-        }
-      } catch (err) {
-        console.error(err);
-        empresaNomeEl.innerText = 'Erro';
-        sobreTextoEl.innerText = 'Não foi possível carregar os dados.';
-        showMessage('Erro ao carregar perfil da empresa.', 'error');
-      }
-    }
-
-    async function carregarAvaliacoes() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/reviews/${empresaId}`);
-        if (!response.ok) throw new Error('Erro ao carregar avaliações');
-        const data = await response.json();
-
-        const media = data.media ? parseFloat(data.media) : 0;
-        const total = data.total || 0;
-        mediaNotaEl.innerText = media > 0 ? media.toFixed(1) : '—';
-        mediaLabelEl.innerText = media > 0 ? `avaliação média (${total} avaliações)` : 'sem avaliações';
-
-        const container = reviewsListEl;
-        container.innerHTML = '';
-
-        if (data.reviews && data.reviews.length) {
-          data.reviews.forEach(rev => {
-            const estrelasHtml = generateStars(rev.nota);
-            const isAuthor = (token && loggedUser.id && rev.avaliador && rev.avaliador.id === loggedUser.id);
-
-            const foto = rev.avaliador.foto_perfil;
-            const avatarHtml = foto && (foto.startsWith('data:image') || foto.startsWith('http'))
-              ? `<img src="${foto}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`
-              : `<svg viewBox="0 0 24 24" width="20" height="20" fill="#aaa"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;
-
-            const reviewDiv = document.createElement('li');
-            reviewDiv.className = 'review-item';
-            reviewDiv.innerHTML = `
+      if (data.reviews && data.reviews.length) {
+        data.reviews.forEach(rev => {
+          const estrelasHtml = generateStars(rev.nota);
+          const isAuthor = (token && loggedUser.id && rev.avaliador && rev.avaliador.id === loggedUser.id);
+          const foto = rev.avaliador.foto_perfil;
+          const avatarHtml = foto && (foto.startsWith('data:image') || foto.startsWith('http'))
+            ? `<img src="${foto}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`
+            : `<svg viewBox="0 0 24 24" width="20" height="20" fill="#aaa"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;
+          const reviewDiv = document.createElement('li');
+          reviewDiv.className = 'review-item';
+          reviewDiv.innerHTML = `
             <div class="review-header" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
               <div style="display:flex; align-items:center; gap:10px;">
-                <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;background:#ddd;display:flex;align-items:center;justify-content:center;">
-                  ${avatarHtml}
-                </div>
-                <div class="review-author" style="font-weight:600;">${escapeHtml(rev.avaliador.nome)}</div>
+                <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;background:#ddd;display:flex;align-items:center;justify-content:center;">${avatarHtml}</div>
+                <div class="review-author">${escapeHtml(rev.avaliador.nome)}</div>
                 <div class="stars">${estrelasHtml}</div>
               </div>
               ${isAuthor ? `
                 <div style="display:flex; gap:6px;">
                   <button class="edit-review" data-id="${rev.id}" data-nota="${rev.nota}" data-comentario="${escapeHtml(rev.comentario || '')}" style="background:none; border:none; cursor:pointer; padding:4px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17 3l4 4-7 7H10v-4l7-7z"/>
-                      <path d="M4 20h16"/>
-                    </svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg>
                   </button>
                   <button class="delete-review" data-id="${rev.id}" style="background:none; border:none; cursor:pointer; padding:4px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="3 6 5 6 21 6"/>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                      <line x1="10" y1="11" x2="10" y2="17"/>
-                      <line x1="14" y1="11" x2="14" y2="17"/>
-                    </svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                   </button>
                 </div>
               ` : ''}
             </div>
             <div class="review-text" style="margin-top:6px; padding-left:46px;">${escapeHtml(rev.comentario || '')}</div>
           `;
-            container.appendChild(reviewDiv);
-          });
-
-          // Botões editar
-          document.querySelectorAll('.edit-review').forEach(btn => {
-            btn.addEventListener('click', () => {
-              const id = btn.getAttribute('data-id');
-              const nota = parseInt(btn.getAttribute('data-nota'));
-              const comentario = btn.getAttribute('data-comentario');
-              currentReviewId = id;
-              selectedEditRating = nota;
-
-              const starsContainer = document.getElementById('editStars');
-              starsContainer.innerHTML = '';
-              for (let i = 1; i <= 5; i++) {
-                const starDiv = document.createElement('div');
-                starDiv.className = 'modal-star' + (i <= nota ? ' selected' : '');
-                starDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
-                starDiv.addEventListener('click', () => {
-                  selectedEditRating = i;
-                  document.querySelectorAll('#editStars .modal-star').forEach((s, idx) => {
-                    if (idx < selectedEditRating) s.classList.add('selected');
-                    else s.classList.remove('selected');
-                  });
-                });
-                starsContainer.appendChild(starDiv);
-              }
-              document.getElementById('editComentario').value = comentario;
-              document.getElementById('editModal').style.display = 'flex';
-            });
-          });
-
-          // Botões excluir
-          document.querySelectorAll('.delete-review').forEach(btn => {
-            btn.addEventListener('click', () => {
-              const id = btn.getAttribute('data-id');
-              confirmAction('Excluir Avaliação', 'Tem certeza que deseja excluir esta avaliação? Esta ação não pode ser desfeita.', async () => {
-                try {
-                  const res = await fetch(`${API_BASE_URL}/reviews/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                  });
-                  if (!res.ok) throw new Error(await res.text());
-                  showMessage('Avaliação removida!', 'success');
-                  carregarAvaliacoes();
-                } catch (err) {
-                  showMessage('Erro ao excluir: ' + err.message, 'error');
-                }
-              });
-            });
-          });
-        } else {
-          container.innerHTML = '<div style="text-align:center; color:#888;">Nenhuma avaliação ainda.</div>';
-        }
-      } catch (err) {
-        console.error(err);
-        reviewsListEl.innerHTML = '<div style="text-align:center; color:#888;">Erro ao carregar avaliações.</div>';
-        showMessage('Erro ao carregar avaliações.', 'error');
-      }
-    }
-
-    // Modal de edição
-    document.getElementById('saveEditBtn')?.addEventListener('click', async () => {
-      if (selectedEditRating === 0) {
-        showMessage('Selecione uma nota!', 'error');
-        return;
-      }
-      const novoComentario = document.getElementById('editComentario').value.trim();
-      try {
-        const res = await fetch(`${API_BASE_URL}/reviews/${currentReviewId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ nota: selectedEditRating, comentario: novoComentario })
+          reviewsListEl.appendChild(reviewDiv);
         });
-        if (!res.ok) throw new Error(await res.text());
-        showMessage('Avaliação atualizada!', 'success');
-        document.getElementById('editModal').style.display = 'none';
-        carregarAvaliacoes();
-      } catch (err) {
-        showMessage('Erro: ' + err.message, 'error');
+
+        // ========== CORREÇÃO DO MODAL DE EDIÇÃO ==========
+        document.querySelectorAll('.edit-review').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const nota = parseInt(btn.getAttribute('data-nota'));
+            const comentario = btn.getAttribute('data-comentario');
+            currentReviewId = id;
+            selectedEditRating = nota;
+
+            const starsContainer = document.getElementById('editStars');
+            starsContainer.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+              const starDiv = document.createElement('div');
+              starDiv.className = 'modal-star';
+              starDiv.setAttribute('data-value', i);
+              starDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+              // Define visual inicial baseado na nota atual
+              if (i <= nota) {
+                starDiv.classList.add('selected');
+              } else {
+                starDiv.classList.remove('selected');
+              }
+              // Evento de clique: atualiza visualmente todas as estrelas
+              starDiv.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const newValue = parseInt(starDiv.getAttribute('data-value'));
+                selectedEditRating = newValue;
+                // Atualiza todas as estrelas do modal
+                document.querySelectorAll('#editStars .modal-star').forEach((s, idx) => {
+                  if (idx < selectedEditRating) {
+                    s.classList.add('selected');
+                  } else {
+                    s.classList.remove('selected');
+                  }
+                });
+              });
+              starsContainer.appendChild(starDiv);
+            }
+            document.getElementById('editComentario').value = comentario;
+            document.getElementById('editModal').style.display = 'flex';
+          });
+        });
+
+        document.querySelectorAll('.delete-review').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            confirmAction('Excluir Avaliação', 'Tem certeza que deseja excluir esta avaliação?', async () => {
+              try {
+                const res = await fetch(`${API_BASE_URL}/reviews/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+                if (!res.ok) throw new Error(await res.text());
+                showMessage('Avaliação removida!', 'success');
+                carregarAvaliacoes();
+              } catch (err) { showMessage('Erro ao excluir: ' + err.message, 'error'); }
+            });
+          });
+        });
+      } else {
+        reviewsListEl.innerHTML = '<div style="text-align:center; color:#888;">Nenhuma avaliação ainda.</div>';
       }
-    });
+    } catch (err) {
+      console.error(err);
+      reviewsListEl.innerHTML = '<div style="text-align:center; color:#888;">Erro ao carregar avaliações.</div>';
+      showMessage('Erro ao carregar avaliações.', 'error');
+    }
+  }
 
-    document.getElementById('cancelEditBtn')?.addEventListener('click', () => {
+  document.getElementById('saveEditBtn')?.addEventListener('click', async () => {
+    if (selectedEditRating === 0) { showMessage('Selecione uma nota!', 'error'); return; }
+    const novoComentario = document.getElementById('editComentario').value.trim();
+    try {
+      const res = await fetch(`${API_BASE_URL}/reviews/${currentReviewId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ nota: selectedEditRating, comentario: novoComentario })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      showMessage('Avaliação atualizada!', 'success');
       document.getElementById('editModal').style.display = 'none';
+      carregarAvaliacoes();
+    } catch (err) { showMessage('Erro: ' + err.message, 'error'); }
+  });
+
+  document.getElementById('cancelEditBtn')?.addEventListener('click', () => { document.getElementById('editModal').style.display = 'none'; });
+
+  const starsSelectDiv = document.getElementById('starsSelect');
+  const starsSelectArray = [];
+  for (let i = 1; i <= 5; i++) {
+    const starSvgElem = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    starSvgElem.setAttribute('viewBox', '0 0 24 24');
+    starSvgElem.setAttribute('width', '28');
+    starSvgElem.setAttribute('height', '28');
+    starSvgElem.classList.add('star-select');
+    starSvgElem.setAttribute('data-value', i);
+    starSvgElem.innerHTML = '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
+    starSvgElem.style.fill = '#ddd';
+    starsSelectDiv.appendChild(starSvgElem);
+    starsSelectArray.push(starSvgElem);
+  }
+  let currentRating = 0;
+  function setSelectStars(rating) {
+    starsSelectArray.forEach((star, idx) => { star.style.fill = idx < rating ? 'var(--laranja)' : '#ddd'; star.classList.toggle('selected', idx < rating); });
+  }
+  starsSelectArray.forEach(star => {
+    star.addEventListener('click', () => { currentRating = parseInt(star.getAttribute('data-value')); setSelectStars(currentRating); });
+  });
+
+  const avaliarArea = document.getElementById('avaliarArea');
+  const toggleFormBtn = document.getElementById('toggleFormBtn');
+  const avaliarForm = document.getElementById('avaliarForm');
+  const enviarBtn = document.getElementById('enviarAvaliacaoBtn');
+  const comentarioInput = document.getElementById('comentarioInput');
+
+  if (token && loggedUser.id && loggedUser.id != empresaId) {
+    avaliarArea.style.display = 'block';
+    toggleFormBtn.addEventListener('click', () => { avaliarForm.classList.toggle('open'); });
+    enviarBtn.addEventListener('click', async () => {
+      if (currentRating === 0) { showMessage('Selecione uma classificação em estrelas.', 'error'); return; }
+      const comentario = comentarioInput.value.trim();
+      try {
+        const res = await fetch(`${API_BASE_URL}/reviews`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ avaliado_id: parseInt(empresaId), nota: currentRating, comentario: comentario })
+        });
+        if (!res.ok) { const err = await res.json(); throw new Error(err.error || 'Erro ao enviar avaliação'); }
+        showMessage('Avaliação enviada com sucesso!', 'success');
+        comentarioInput.value = '';
+        currentRating = 0;
+        setSelectStars(0);
+        avaliarForm.classList.remove('open');
+        carregarAvaliacoes();
+      } catch (err) { showMessage(err.message, 'error'); }
     });
+  } else {
+    avaliarArea.style.display = 'none';
+  }
 
-    // Nova avaliação - gerar estrelas SVG
-    const starsSelectDiv = document.getElementById('starsSelect');
-    const starsSelectArray = [];
-    for (let i = 1; i <= 5; i++) {
-      const starSvgElem = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      starSvgElem.setAttribute('viewBox', '0 0 24 24');
-      starSvgElem.setAttribute('width', '28');
-      starSvgElem.setAttribute('height', '28');
-      starSvgElem.classList.add('star-select');
-      starSvgElem.setAttribute('data-value', i);
-      starSvgElem.innerHTML = '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
-      starSvgElem.style.fill = '#ddd';
-      starsSelectDiv.appendChild(starSvgElem);
-      starsSelectArray.push(starSvgElem);
-    }
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuBtn = document.getElementById('menuButton');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const backButton = document.getElementById('backButton');
+  function openMenu() { menuOverlay.classList.add('open'); }
+  function closeMenu() { menuOverlay.classList.remove('open'); }
+  menuBtn?.addEventListener('click', openMenu);
+  closeMenuBtn?.addEventListener('click', closeMenu);
+  menuOverlay?.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+  backButton?.addEventListener('click', () => window.history.back());
 
-    let currentRating = 0;
+  const menuNome = document.getElementById('menuNome');
+  const menuTipo = document.getElementById('menuTipo');
+  if (token && loggedUser.id) {
+    menuNome.innerText = `${loggedUser.nome || ''} ${loggedUser.sobrenome || ''}`.trim() || 'Usuário';
+    menuTipo.innerText = loggedUser.tipo_usuario === 'prestador' ? 'Prestador' : (loggedUser.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
+  } else {
+    menuNome.innerText = 'Visitante';
+    menuTipo.innerText = 'Convidado';
+  }
+  atualizarFotoMenu();
 
-    function setSelectStars(rating) {
-      starsSelectArray.forEach((star, idx) => {
-        if (idx < rating) {
-          star.style.fill = 'var(--laranja)';
-          star.classList.add('selected');
-        } else {
-          star.style.fill = '#ddd';
-          star.classList.remove('selected');
-        }
-      });
-    }
+  const menuEmpresasText = document.getElementById('menuTextEmpresas');
+  if (menuEmpresasText) menuEmpresasText.innerText = loggedUser.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
 
-    starsSelectArray.forEach(star => {
-      star.addEventListener('click', () => {
-        currentRating = parseInt(star.getAttribute('data-value'));
-        setSelectStars(currentRating);
-      });
+  async function excluirConta() {
+    confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente?', async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/user/delete`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao excluir conta'); }
+        showMessage('Conta excluída com sucesso.', 'success');
+        localStorage.removeItem('token'); localStorage.removeItem('user');
+        setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
+      } catch (err) { showMessage(err.message, 'error'); }
     });
+  }
 
-    const avaliarArea = document.getElementById('avaliarArea');
-    const toggleFormBtn = document.getElementById('toggleFormBtn');
-    const avaliarForm = document.getElementById('avaliarForm');
-    const enviarBtn = document.getElementById('enviarAvaliacaoBtn');
-    const comentarioInput = document.getElementById('comentarioInput');
-
-    if (token && loggedUser.id && loggedUser.id != empresaId) {
-      avaliarArea.style.display = 'block';
-      toggleFormBtn.addEventListener('click', () => {
-        avaliarForm.classList.toggle('open');
-      });
-      enviarBtn.addEventListener('click', async () => {
-        if (currentRating === 0) {
-          showMessage('Selecione uma classificação em estrelas.', 'error');
-          return;
-        }
-        const comentario = comentarioInput.value.trim();
-        try {
-          const res = await fetch(`${API_BASE_URL}/reviews`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              avaliado_id: parseInt(empresaId),
-              nota: currentRating,
-              comentario: comentario
-            })
-          });
-          if (!res.ok) {
-            const err = await res.json();
-            throw new Error(err.error || 'Erro ao enviar avaliação');
-          }
-          showMessage('Avaliação enviada com sucesso!', 'success');
-          setTimeout(() => window.location.reload(), 1500);
-        } catch (err) {
-          showMessage(err.message, 'error');
-        }
-      });
-    } else {
-      avaliarArea.style.display = 'none';
-    }
-
-    // ========== MENU LATERAL – NAVEGAÇÃO E EXCLUSÃO ==========
-    const menuOverlay = document.getElementById('menuOverlay');
-    const menuBtn = document.getElementById('menuButton');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
-    const backButton = document.getElementById('backButton');
-    function openMenu() { menuOverlay.classList.add('open'); }
-    function closeMenu() { menuOverlay.classList.remove('open'); }
-    if (menuBtn) menuBtn.addEventListener('click', openMenu);
-    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
-    if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
-    if (backButton) backButton.addEventListener('click', () => window.history.back());
-
-    const menuNome = document.getElementById('menuNome');
-    const menuTipo = document.getElementById('menuTipo');
-    if (token && loggedUser.id) {
-      menuNome.innerText = `${loggedUser.nome || ''} ${loggedUser.sobrenome || ''}`.trim() || 'Usuário';
-      menuTipo.innerText = loggedUser.tipo_usuario === 'prestador' ? 'Prestador' : (loggedUser.tipo_usuario === 'empresa' ? 'Empresa' : 'Usuário');
-    } else {
-      menuNome.innerText = 'Visitante';
-      menuTipo.innerText = 'Convidado';
-    }
-    atualizarFotoMenu();
-
-    // Ajustar texto do segundo item do menu (Empresas/Prestadores)
-    const menuEmpresasText = document.getElementById('menuTextEmpresas');
-    if (menuEmpresasText) {
-      menuEmpresasText.innerText = loggedUser.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
-    }
-
-    // Função para excluir conta
-    async function excluirConta() {
-      confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente? Todos os seus dados serão removidos e você não poderá recuperá-los.', async () => {
-        try {
-          const response = await fetch(`${API_BASE_URL}/user/delete`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-          if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.error || 'Erro ao excluir conta');
-          }
-          showMessage('Conta excluída com sucesso.', 'success');
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
-        } catch (err) {
-          showMessage(err.message, 'error');
-        }
-      });
-    }
-
-    document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const nav = item.getAttribute('data-nav');
-        if (nav === 'sair') {
-          confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = 'login.html';
-          });
-        } else if (nav === 'inicio') {
-          window.location.href = 'home.html';
-        } else if (nav === 'empresas') {
-          if (loggedUser.tipo_usuario === 'prestador') window.location.href = 'buscar-empresas.html';
-          else window.location.href = 'buscar-prestadores.html';
-        } else if (nav === 'agenda') {
-          window.location.href = 'agenda.html';
-        } else if (nav === 'perfil') {
-          window.location.href = 'meu_perfil.html';
-        } else if (nav === 'configuracoes') {
-          showMessage('Tela de configurações em desenvolvimento', 'info');
-          closeMenu();
-        } else if (nav === 'excluir-conta') {
-          excluirConta();
-        } else if (nav === 'ajuda') {
-          showMessage('Central de ajuda em breve', 'info');
-          closeMenu();
-        } else {
-          closeMenu();
-        }
-      });
+  document.querySelectorAll('.menu-item[data-nav]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nav = item.getAttribute('data-nav');
+      if (nav === 'sair') {
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => { localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'login.html'; });
+      } else if (nav === 'inicio') window.location.href = 'home.html';
+      else if (nav === 'empresas') window.location.href = (loggedUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      else if (nav === 'agenda') window.location.href = 'agenda.html';
+      else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
+      else if (nav === 'configuracoes') showMessage('Tela de configurações em desenvolvimento', 'info');
+      else if (nav === 'excluir-conta') excluirConta();
+      else if (nav === 'ajuda') showMessage('Central de ajuda em breve', 'info');
+      closeMenu();
     });
+  });
 
-    carregarEmpresa();
-    carregarAvaliacoes();
-  </script>
+  carregarEmpresa();
+  carregarAvaliacoes();
+</script>
 </body>
-
 </html>

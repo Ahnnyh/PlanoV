@@ -7,473 +7,78 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    :root {
-      --verde: #3a5f1e;
-      --verde-btn: #2d5016;
-      --laranja: #e07a1c;
-      --bg: #f7f4ee;
-      --branco: #ffffff;
-      --texto: #1a1a1a;
-      --muted: #777;
-      --borda: #e0ddd6;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #cdc8bc;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .frame {
-      width: 100%;
-      max-width: 450px;
-      background: var(--bg);
-      border-radius: 44px;
-      overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-    .header {
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      height: 178px;
-    }
-    .header-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 150%;
-      object-fit: cover;
-      display: block;
-    }
-    .header-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 52px 20px 18px;
-    }
-    .btn-icon {
-      background: none;
-      border: none;
-      cursor: pointer;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background 0.2s;
-    }
-    .btn-icon:active { background: rgba(0, 0, 0, 0.05); }
-    .btn-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: #2d4f14;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      fill: none;
-      stroke-linejoin: round;
-    }
-    .logo-wrap img {
-      height: 40px;
-      display: block;
-      content: url('IMG/logo.png');
-    }
-    .search-wrap {
-      position: relative;
-      z-index: 1;
-      padding: 0 20px 20px;
-    }
-    .search-bar {
-      background: var(--branco);
-      border-radius: 40px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--borda);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
-    .search-icon {
-      width: 20px;
-      height: 20px;
-      stroke: var(--muted);
-      stroke-width: 2.5;
-      flex-shrink: 0;
-    }
-    .search-bar input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      padding: 8px 0;
-    }
+    :root { --verde: #3a5f1e; --verde-btn: #2d5016; --laranja: #e07a1c; --bg: #f7f4ee; --branco: #ffffff; --texto: #1a1a1a; --muted: #777; --borda: #e0ddd6; }
+    body { font-family: 'Poppins', sans-serif; background: #cdc8bc; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
+    .frame { width: 100%; max-width: 450px; background: var(--bg); border-radius: 44px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.4); position: relative; display: flex; flex-direction: column; }
+    .header { position: relative; overflow: hidden; flex-shrink: 0; height: 178px; }
+    .header-bg { position: absolute; inset: 0; width: 100%; height: 150%; object-fit: cover; display: block; }
+    .header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 52px 20px 18px; }
+    .btn-icon { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
+    .btn-icon:active { background: rgba(0,0,0,0.05); }
+    .btn-icon svg { width: 24px; height: 24px; stroke: #2d4f14; stroke-width: 2.5; stroke-linecap: round; fill: none; stroke-linejoin: round; }
+    .logo-wrap img { height: 40px; display: block; content: url('IMG/logo.png'); }
+    .search-wrap { position: relative; z-index: 1; padding: 0 20px 20px; }
+    .search-bar { background: var(--branco); border-radius: 40px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--borda); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .search-icon { width: 20px; height: 20px; stroke: var(--muted); stroke-width: 2.5; flex-shrink: 0; }
+    .search-bar input { flex: 1; border: none; outline: none; background: transparent; font-family: 'Poppins', sans-serif; font-size: 14px; padding: 8px 0; }
     .search-bar input::placeholder { color: var(--muted); }
-    .title-bar {
-      background: var(--verde);
-      padding: 14px 20px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .title-bar h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.2px;
-    }
-    .body {
-      flex: 1;
-      background: var(--bg);
-      padding: 20px 16px 30px;
-      overflow-y: auto;
-    }
-    .cards-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card {
-      background: var(--branco);
-      border-radius: 18px;
-      border: 1px solid var(--borda);
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      transition: transform 0.1s, box-shadow 0.1s;
-    }
+    .title-bar { background: var(--verde); padding: 14px 20px; text-align: center; flex-shrink: 0; }
+    .title-bar h2 { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 0.2px; }
+    .body { flex: 1; background: var(--bg); padding: 20px 16px 30px; overflow-y: auto; }
+    .cards-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .card-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .card { background: var(--branco); border-radius: 18px; border: 1px solid var(--borda); padding: 14px; display: flex; gap: 12px; transition: transform 0.1s, box-shadow 0.1s; }
     .card:active { transform: scale(0.99); }
-    .card-foto-wrap {
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #c8a96e, #b58d4a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .avatar-inicial {
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-      text-transform: uppercase;
-    }
-    .card-foto-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .card-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .card-nome {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--texto);
-    }
-    .card-prod {
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .card-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 6px;
-    }
-    .card-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .star {
-      width: 16px;
-      height: 16px;
-      fill: var(--laranja);
-      stroke: none;
-    }
-    .card-nota {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--texto);
-    }
-    .btn-visualizar {
-      background: var(--verde-btn);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 6px 18px;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-    }
-    .btn-visualizar:active {
-      transform: scale(0.96);
-      background: #3a6620;
-    }
-    .empty-msg {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 14px;
-      display: none;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-size: 14px;
-      font-weight: 500;
-      z-index: 1100;
-      white-space: nowrap;
-      max-width: 90%;
-      white-space: normal;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      pointer-events: none;
-    }
+    .card-foto-wrap { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #c8a96e, #b58d4a); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .avatar-inicial { font-size: 28px; font-weight: 700; color: white; text-transform: uppercase; }
+    .card-foto-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .card-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .card-nome { font-size: 16px; font-weight: 700; color: var(--texto); }
+    .card-prod { font-size: 13px; color: var(--muted); }
+    .card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+    .card-rating { display: flex; align-items: center; gap: 4px; }
+    .star { width: 16px; height: 16px; fill: var(--laranja); stroke: none; }
+    .card-nota { font-size: 13px; font-weight: 600; color: var(--texto); }
+    .btn-visualizar { background: var(--verde-btn); color: white; border: none; border-radius: 30px; padding: 6px 18px; font-size: 12px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+    .btn-visualizar:active { transform: scale(0.96); background: #3a6620; }
+    .empty-msg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; display: none; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); color: white; padding: 10px 20px; border-radius: 40px; font-size: 14px; font-weight: 500; z-index: 1100; white-space: nowrap; max-width: 90%; white-space: normal; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); pointer-events: none; }
     .toast.success { background: var(--verde); }
     .toast.error { background: #c0392b; }
     .toast.info { background: var(--laranja); }
-
-    /* Modal de confirmação */
-    .modal-overlay-confirm {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(3px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-container {
-      background: white;
-      width: 85%;
-      max-width: 320px;
-      border-radius: 28px;
-      padding: 24px 20px;
-      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-    .modal-container h3 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--texto);
-      margin-bottom: 16px;
-    }
-    .modal-container p {
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: #555;
-    }
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
-    .modal-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-    }
-    .modal-btn.cancel {
-      background: #e0ddd6;
-      color: #333;
-    }
-    .modal-btn.save {
-      background: var(--verde);
-      color: white;
-    }
-
-    /* MENU LATERAL PADRONIZADO */
-    .menu-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(2px);
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s;
-    }
-    .menu-drawer {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: min(280px, 85%);
-      min-width: 260px;
-      height: 100%;
-      background: #ffffff;
-      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
-      z-index: 101;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      overflow-y: auto;
-      border-radius: 20px 0 0 20px;
-    }
-    .menu-overlay.open {
-      opacity: 1;
-      visibility: visible;
-    }
-    .menu-overlay.open .menu-drawer {
-      transform: translateX(0);
-    }
-    .menu-header {
-      padding: 28px 20px 20px;
-      background: linear-gradient(135deg, #3a5f1e, #2d5016);
-      color: white;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    .menu-user {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .menu-avatar {
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(145deg, #d48f3b, #b56a1a);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .menu-avatar svg {
-      width: 30px;
-      height: 30px;
-      stroke: white;
-      stroke-width: 1.8;
-      fill: none;
-    }
-    .menu-user-info h4 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .menu-user-info p {
-      font-size: 12px;
-      opacity: 0.85;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .menu-user-info p svg {
-      width: 14px;
-      height: 14px;
-      stroke: white;
-      stroke-width: 2;
-    }
-    .menu-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-    .menu-close svg {
-      width: 20px;
-      height: 20px;
-      stroke: white;
-      stroke-width: 2;
-    }
-    .menu-nav {
-      padding: 12px 0 20px;
-    }
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 20px;
-      font-size: 15px;
-      font-weight: 500;
-      color: #1a1a1a;
-      transition: background 0.2s;
-      cursor: pointer;
-    }
-    .menu-item:hover, .menu-item:active {
-      background: #f0ede7;
-    }
-    .menu-item .menu-icon {
-      width: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .menu-item .menu-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .menu-item .menu-text {
-      flex: 1;
-    }
-    .divider {
-      height: 1px;
-      background: #e0ddd6;
-      margin: 8px 16px;
-    }
-    .section-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #888;
-      letter-spacing: 0.5px;
-      padding: 12px 20px 4px;
-      text-transform: uppercase;
-    }
-    .footer-menu {
-      border-top: 1px solid #e0ddd6;
-      margin-top: 8px;
-      padding: 8px 0;
-    }
+    .modal-overlay-confirm { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+    .modal-container { background: white; width: 85%; max-width: 320px; border-radius: 28px; padding: 24px 20px; box-shadow: 0 20px 30px rgba(0,0,0,0.3); text-align: center; }
+    .modal-container h3 { font-size: 20px; font-weight: 700; color: var(--texto); margin-bottom: 16px; }
+    .modal-container p { font-size: 14px; margin-bottom: 20px; color: #555; }
+    .modal-buttons { display: flex; gap: 12px; justify-content: center; }
+    .modal-btn { flex: 1; padding: 10px; border-radius: 40px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
+    .modal-btn.cancel { background: #e0ddd6; color: #333; }
+    .modal-btn.save { background: var(--verde); color: white; }
+    /* MENU LATERAL */
+    .menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s; }
+    .menu-drawer { position: absolute; top: 0; right: 0; width: min(280px, 85%); min-width: 260px; height: 100%; background: #ffffff; box-shadow: -8px 0 24px rgba(0,0,0,0.15); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1); overflow-y: auto; border-radius: 20px 0 0 20px; }
+    .menu-overlay.open { opacity: 1; visibility: visible; }
+    .menu-overlay.open .menu-drawer { transform: translateX(0); }
+    .menu-header { padding: 28px 20px 20px; background: linear-gradient(135deg, #3a5f1e, #2d5016); color: white; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .menu-user { display: flex; align-items: center; gap: 12px; }
+    .menu-avatar { width: 52px; height: 52px; background: linear-gradient(145deg, #d48f3b, #b56a1a); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
+    .menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+    .menu-user-info p svg { width: 14px; height: 14px; stroke: white; stroke-width: 2; }
+    .menu-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+    .menu-close svg { width: 20px; height: 20px; stroke: white; stroke-width: 2; }
+    .menu-nav { padding: 12px 0 20px; }
+    .menu-item { display: flex; align-items: center; gap: 14px; padding: 12px 20px; font-size: 15px; font-weight: 500; color: #1a1a1a; transition: background 0.2s; cursor: pointer; }
+    .menu-item:hover, .menu-item:active { background: #f0ede7; }
+    .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
+    .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .menu-item .menu-text { flex: 1; }
+    .divider { height: 1px; background: #e0ddd6; margin: 8px 16px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
+    .footer-menu { border-top: 1px solid #e0ddd6; margin-top: 8px; padding: 8px 0; }
+    .menu-item[data-nav="excluir-conta"] .menu-text { color: #dc2626; font-weight: 600; }
+    .menu-item[data-nav="excluir-conta"] .menu-icon svg { stroke: #dc2626; }
     @media (max-width: 400px) {
       .header-content { padding: 52px 16px 18px; }
       .search-wrap { padding: 0 16px 16px; }
@@ -511,17 +116,12 @@
     </div>
     <div class="search-wrap">
       <div class="search-bar">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="search-input" placeholder="Buscar empresa..." autocomplete="off" />
       </div>
     </div>
   </div>
-  <div class="title-bar">
-    <h2>Empresas</h2>
-  </div>
+  <div class="title-bar"><h2>Empresas</h2></div>
   <div class="body">
     <div class="cards-wrap">
       <ul class="card-list" id="card-list"></ul>
@@ -529,92 +129,35 @@
     </div>
   </div>
 
-  <!-- TOAST -->
-  <div id="toast" class="toast" style="display: none;">
-    <span id="toastMessage"></span>
-  </div>
-
-  <!-- MODAL DE CONFIRMAÇÃO GENÉRICO -->
+  <div id="toast" class="toast" style="display: none;"><span id="toastMessage"></span></div>
   <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
-    <div class="modal-container">
-      <h3 id="confirmTitle">Confirmar</h3>
-      <p id="confirmMessage">Tem certeza?</p>
-      <div class="modal-buttons">
-        <button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button>
-        <button id="confirmOkBtn" class="modal-btn save">Confirmar</button>
-      </div>
-    </div>
+    <div class="modal-container"><h3 id="confirmTitle">Confirmar</h3><p id="confirmMessage">Tem certeza?</p><div class="modal-buttons"><button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button><button id="confirmOkBtn" class="modal-btn save">Confirmar</button></div></div>
   </div>
 
-  <!-- MENU LATERAL PADRONIZADO -->
+  <!-- MENU LATERAL COMPLETO -->
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
-      <button class="menu-close" id="closeMenuBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar" id="menuAvatar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
-              <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
-              <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
-              <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
-              <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
-            </svg>
+          <div class="menu-avatar" id="menuAvatarContainer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg>
           </div>
-          <div class="menu-user-info">
-            <h4 id="menuNome">Carregando...</h4>
-            <p>
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4" stroke-linecap="round"/><path d="M12 9c2 0 4 1.5 4 4" stroke-linecap="round"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke-linecap="round"/></svg>
-              <span id="menuTipo">Usuário</span>
-            </p>
-          </div>
+          <div class="menu-user-info"><h4 id="menuNome">Carregando...</h4><p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4"/><path d="M12 9c2 0 4 1.5 4 4"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3"/></svg><span id="menuTipo">Usuário</span></p></div>
         </div>
       </div>
       <div class="menu-nav">
-        <!-- Início -->
-        <div class="menu-item" data-nav="inicio">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <div class="menu-text">Início</div>
-        </div>
-        <!-- Empresas/Prestadores (texto dinâmico) -->
-        <div class="menu-item" data-nav="empresas">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-          <div class="menu-text" id="menuTextEmpresas">Empresas</div>
-        </div>
-        <!-- Minha Agenda -->
-        <div class="menu-item" data-nav="agenda">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div>
-          <div class="menu-text">Minha Agenda</div>
-        </div>
+        <div class="menu-item" data-nav="inicio"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="menu-text">Início</div></div>
+        <div class="menu-item" data-nav="empresas"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="menu-text" id="menuTextEmpresas">Empresas</div></div>
+        <div class="menu-item" data-nav="agenda"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="15" r="1"/></svg></div><div class="menu-text">Minha Agenda</div></div>
         <div class="divider"></div>
         <div class="section-title">CONFIGURAÇÕES</div>
-        <!-- Meu Perfil -->
-        <div class="menu-item" data-nav="perfil">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <div class="menu-text">Meu Perfil</div>
-        </div>
-        <!-- Configurações -->
-        <div class="menu-item" data-nav="configuracoes">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-          <div class="menu-text">Configurações</div>
-        </div>
-        <!-- Excluir conta -->
-        <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div>
-          <div class="menu-text">Excluir conta</div>
-        </div>
-        <!-- Ajuda -->
-        <div class="menu-item" data-nav="ajuda">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="menu-text">Ajuda</div>
-        </div>
+        <div class="menu-item" data-nav="perfil"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text">Meu Perfil</div></div>
+        <div class="menu-item" data-nav="configuracoes"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="menu-text">Configurações</div></div>
+        <div class="menu-item" data-nav="ajuda"><div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="menu-text">Ajuda</div></div>
         <div class="divider"></div>
-        <!-- Sair -->
-        <div class="menu-item" data-nav="sair">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
-          <div class="menu-text">Sair</div>
-        </div>
+        <div class="menu-item" data-nav="sair"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><div class="menu-text">Sair</div></div>
+        <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta"><div class="menu-icon"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div><div class="menu-text">Excluir conta</div></div>
       </div>
     </div>
   </div>
@@ -625,16 +168,13 @@
   let token = localStorage.getItem('token');
   let user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  // ========== FUNÇÕES DE NOTIFICAÇÃO ==========
   function showMessage(text, type = 'info') {
     const toast = document.getElementById('toast');
     const msgSpan = document.getElementById('toastMessage');
     msgSpan.innerText = text;
     toast.className = `toast ${type}`;
     toast.style.display = 'block';
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 3000);
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
   }
 
   function confirmAction(title, message, onConfirm) {
@@ -664,55 +204,40 @@
     setTimeout(() => { window.location.href = 'login.html'; }, 1500);
   }
 
-  // ========== FUNÇÃO UNIFICADA PARA ATUALIZAR FOTO DO MENU ==========
   function atualizarFotoMenu() {
-    const menuAvatarDiv = document.getElementById('menuAvatar');
+    const menuAvatarDiv = document.getElementById('menuAvatarContainer');
     if (!menuAvatarDiv) return;
     const usuario = JSON.parse(localStorage.getItem('user') || '{}');
     const foto = usuario.foto_perfil;
     if (foto && (foto.startsWith('data:image') || foto.startsWith('http'))) {
       menuAvatarDiv.innerHTML = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover; border-radius:50%;">`;
     } else {
-      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
-        <path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z" stroke-linecap="round"/>
-        <path d="M12 10v10M8 20h8" stroke-linecap="round"/>
-        <path d="M5 18c1.5-1 3-1.5 5-1.5" stroke-linecap="round"/>
-        <path d="M19 18c-1.5-1-3-1.5-5-1.5" stroke-linecap="round"/>
-      </svg>`;
+      menuAvatarDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg>`;
     }
   }
 
-  // ========== ATUALIZAR MENU LATERAL ==========
-  const menuNome = document.getElementById('menuNome');
+  document.getElementById('menuNome').innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
   const menuTipo = document.getElementById('menuTipo');
-  if (menuNome) menuNome.innerText = `${user.nome} ${user.sobrenome || ''}`.trim();
   if (menuTipo) {
     if (user.tipo_usuario === 'prestador') menuTipo.innerText = 'Prestador';
     else if (user.tipo_usuario === 'empresa') menuTipo.innerText = 'Empresa';
     else menuTipo.innerText = 'Usuário';
   }
-  // Ajustar texto do segundo item do menu (Empresas/Prestadores)
   const menuEmpresasText = document.getElementById('menuTextEmpresas');
-  if (menuEmpresasText) {
-    menuEmpresasText.innerText = user.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
-  }
+  if (menuEmpresasText) menuEmpresasText.innerText = user.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
   atualizarFotoMenu();
 
   const cardList = document.getElementById('card-list');
   const searchInput = document.getElementById('search-input');
   const emptyMsg = document.getElementById('empty-msg');
 
-  // Buscar média de avaliações para um usuário
   async function fetchMediaAvaliacoes(usuarioId) {
     try {
       const response = await fetch(`${API_BASE_URL}/reviews/${usuarioId}`);
       if (!response.ok) return null;
       const data = await response.json();
       return data.media ? data.media.toFixed(1) : null;
-    } catch (err) {
-      console.error(`Erro ao buscar média para ${usuarioId}`, err);
-      return null;
-    }
+    } catch (err) { console.error(err); return null; }
   }
 
   async function carregarEmpresas(searchTerm = '') {
@@ -730,13 +255,7 @@
       }
       emptyMsg.style.display = 'none';
       cardList.innerHTML = '';
-
-      // Buscar média de cada empresa em paralelo
-      const cardsData = await Promise.all(empresas.map(async (emp) => {
-        const media = await fetchMediaAvaliacoes(emp.id);
-        return { emp, media };
-      }));
-
+      const cardsData = await Promise.all(empresas.map(async (emp) => ({ emp, media: await fetchMediaAvaliacoes(emp.id) })));
       cardsData.forEach(({ emp, media }) => {
         const nomeCompleto = `${emp.nome} ${emp.sobrenome || ''}`.trim();
         const inicial = emp.nome ? emp.nome.charAt(0).toUpperCase() : 'E';
@@ -745,73 +264,38 @@
         const foto = emp.foto_perfil && (emp.foto_perfil.startsWith('data:image') || emp.foto_perfil.startsWith('http')) ? emp.foto_perfil : null;
         const card = document.createElement('li');
         card.className = 'card';
-        card.innerHTML = `
-          <div class="card-foto-wrap">
-            ${foto ? `<img src="${foto}" alt="Avatar">` : `<span class="avatar-inicial">${inicial}</span>`}
-          </div>
-          <div class="card-info">
-            <span class="card-nome">${nomeCompleto}</span>
-            <span class="card-prod">${descricao}</span>
-            <div class="card-bottom">
-              <div class="card-rating">
-                <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span class="card-nota">${nota}</span>
-              </div>
-              <button class="btn-visualizar" data-id="${emp.id}">Visualizar</button>
-            </div>
-          </div>
-        `;
+        card.innerHTML = `<div class="card-foto-wrap">${foto ? `<img src="${foto}" alt="Avatar">` : `<span class="avatar-inicial">${inicial}</span>`}</div><div class="card-info"><span class="card-nome">${nomeCompleto}</span><span class="card-prod">${descricao}</span><div class="card-bottom"><div class="card-rating"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="card-nota">${nota}</span></div><button class="btn-visualizar" data-id="${emp.id}">Visualizar</button></div></div>`;
         const btn = card.querySelector('.btn-visualizar');
-        btn.addEventListener('click', () => {
-          window.location.href = `perfil-empresa.html?id=${emp.id}`;
-        });
+        btn.addEventListener('click', () => { window.location.href = `perfil-empresa.html?id=${emp.id}`; });
         cardList.appendChild(card);
       });
-    } catch (err) {
-      console.error(err);
-      cardList.innerHTML = '';
-      emptyMsg.style.display = 'block';
-      emptyMsg.innerText = 'Erro ao carregar empresas. Tente novamente.';
-    }
+    } catch (err) { console.error(err); cardList.innerHTML = ''; emptyMsg.style.display = 'block'; emptyMsg.innerText = 'Erro ao carregar empresas. Tente novamente.'; }
   }
 
   let debounceTimeout;
   searchInput.addEventListener('input', () => {
     clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => {
-      carregarEmpresas(searchInput.value.trim());
-    }, 500);
+    debounceTimeout = setTimeout(() => carregarEmpresas(searchInput.value.trim()), 500);
   });
 
-  // ========== MENU LATERAL – NAVEGAÇÃO E EXCLUSÃO ==========
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
   function openMenu() { menuOverlay.classList.add('open'); }
   function closeMenu() { menuOverlay.classList.remove('open'); }
-  if (menuBtn) menuBtn.addEventListener('click', openMenu);
-  if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
-  if (menuOverlay) menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+  menuBtn?.addEventListener('click', openMenu);
+  closeMenuBtn?.addEventListener('click', closeMenu);
+  menuOverlay?.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
 
-  // Função para excluir conta
   async function excluirConta() {
-    confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente? Todos os seus dados serão removidos e você não poderá recuperá-los.', async () => {
+    confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente? Todos os seus dados serão removidos.', async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/user/delete`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.error || 'Erro ao excluir conta');
-        }
+        const response = await fetch(`${API_BASE_URL}/user/delete`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao excluir conta'); }
         showMessage('Conta excluída com sucesso.', 'success');
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
-      } catch (err) {
-        showMessage(err.message, 'error');
-      }
+        localStorage.removeItem('token'); localStorage.removeItem('user');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+      } catch (err) { showMessage(err.message, 'error'); }
     });
   }
 
@@ -820,32 +304,15 @@
       e.stopPropagation();
       const nav = item.getAttribute('data-nav');
       if (nav === 'sair') {
-        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          window.location.href = 'login.html';
-        });
-      } else if (nav === 'inicio') {
-        window.location.href = 'home.html';
-      } else if (nav === 'empresas') {
-        // Redireciona conforme o tipo: prestador vê empresas, empresa vê prestadores
-        if (user.tipo_usuario === 'prestador') window.location.href = 'buscar-empresas.html';
-        else window.location.href = 'buscar-prestadores.html';
-      } else if (nav === 'agenda') {
-        window.location.href = 'agenda.html';
-      } else if (nav === 'perfil') {
-        window.location.href = 'meu_perfil.html';
-      } else if (nav === 'configuracoes') {
-        showMessage('Tela de configurações em desenvolvimento', 'info');
-        closeMenu();
-      } else if (nav === 'excluir-conta') {
-        excluirConta();
-      } else if (nav === 'ajuda') {
-        showMessage('Central de ajuda em breve', 'info');
-        closeMenu();
-      } else {
-        closeMenu();
-      }
+        confirmAction('Sair', 'Deseja realmente sair da sua conta?', () => { localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'login.html'; });
+      } else if (nav === 'inicio') window.location.href = 'home.html';
+      else if (nav === 'empresas') window.location.href = user.tipo_usuario === 'prestador' ? 'buscar-empresas.html' : 'buscar-prestadores.html';
+      else if (nav === 'agenda') window.location.href = 'agenda.html';
+      else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
+      else if (nav === 'configuracoes') { showMessage('Tela de configurações em desenvolvimento', 'info'); closeMenu(); }
+      else if (nav === 'excluir-conta') excluirConta();
+      else if (nav === 'ajuda') { showMessage('Central de ajuda em breve', 'info'); closeMenu(); }
+      else closeMenu();
     });
   });
 

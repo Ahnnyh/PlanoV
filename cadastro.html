@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
 :root {
   --verde: #3a5f1e;
   --verde-claro: #5a8530;
@@ -19,7 +18,6 @@
   --borda: #dedad2;
   --laranja: #e07a1c;
 }
-
 body {
   font-family: 'Poppins', sans-serif;
   background: #cdc8bc;
@@ -29,7 +27,6 @@ body {
   min-height: 100vh;
   padding: 20px;
 }
-
 .frame {
   width: 100%;
   max-width: 450px;
@@ -43,7 +40,6 @@ body {
   background: #000;
   margin: 0 auto;
 }
-
 .bg-full {
   position: absolute;
   inset: 0;
@@ -52,20 +48,12 @@ body {
   background-position: center;
   z-index: 0;
 }
-
 .bg-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.10) 0%,
-    rgba(0,0,0,0.15) 35%,
-    rgba(0,0,0,0.55) 65%,
-    rgba(0,0,0,0.75) 100%
-  );
+  background: linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.75) 100%);
   z-index: 1;
 }
-
 .header {
   position: relative;
   z-index: 2;
@@ -74,7 +62,6 @@ body {
   justify-content: space-between;
   padding: 52px 20px 18px;
 }
-
 .btn-icon {
   background: none;
   border: none;
@@ -88,7 +75,6 @@ body {
   transition: background 0.2s;
 }
 .btn-icon:active { background: rgba(255,255,255,0.15); }
-
 .btn-icon svg {
   width: 24px;
   height: 24px;
@@ -98,13 +84,11 @@ body {
   fill: none;
   stroke-linejoin: round;
 }
-
 .logo-wrap img {
   height: 44px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
 }
-
 .body {
   flex: 1;
   overflow-y: auto;
@@ -114,8 +98,6 @@ body {
   z-index: 2;
 }
 .body::-webkit-scrollbar { display: none; }
-
-/* CARD DE ESCOLHA */
 .tipo-card {
   background: rgba(255, 255, 255, 0.96);
   border-radius: 20px;
@@ -124,7 +106,6 @@ body {
   backdrop-filter: blur(2px);
   text-align: center;
 }
-
 .tipo-title {
   font-size: 20px;
   font-weight: 700;
@@ -142,13 +123,11 @@ body {
   stroke-width: 2;
   fill: none;
 }
-
 .tipo-opcoes {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
 .tipo-opcao {
   background: #eef4e4;
   border-radius: 20px;
@@ -190,8 +169,6 @@ body {
   font-size: 13px;
   color: var(--muted);
 }
-
-/* FORMULÁRIO */
 .form-card {
   background: rgba(255, 255, 255, 0.96);
   border-radius: 20px;
@@ -199,7 +176,6 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   backdrop-filter: blur(2px);
 }
-
 .card-title {
   font-size: 18px;
   font-weight: 700;
@@ -218,7 +194,6 @@ body {
   stroke-width: 2;
   fill: none;
 }
-
 .field-group {
   margin-bottom: 14px;
 }
@@ -253,7 +228,6 @@ select.input-field {
   background-position: right 14px center;
   cursor: pointer;
 }
-
 .btn-wrap {
   padding: 16px 0 0;
   display: flex;
@@ -283,8 +257,6 @@ select.input-field {
   color: #333;
 }
 .btn-voltar:active { transform: scale(0.98); }
-
-/* Toast */
 .toast {
   position: fixed;
   top: 20px;
@@ -308,7 +280,6 @@ select.input-field {
 .toast.success { background: var(--verde-btn); }
 .toast.error { background: #c0392b; }
 .toast.info { background: var(--laranja); }
-
 @media (max-width: 400px) {
   .header { padding: 52px 16px 14px; }
   .btn-icon { width: 40px; height: 40px; }
@@ -333,30 +304,53 @@ select.input-field {
 </style>
 </head>
 <body>
-
 <div class="frame">
   <div class="bg-full"></div>
   <div class="bg-overlay"></div>
-
   <div class="header">
-    <button class="btn-icon" id="backButton" aria-label="Voltar">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
+    <button class="btn-icon" id="backButton" aria-label="Voltar"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="logo-wrap"><img src="img/logo.png" alt="PlanoV"></div>
     <div style="width:44px"></div>
   </div>
-
   <div class="body" id="bodyContent"></div>
 </div>
-
-<div id="toast" class="toast" style="display: none;">
-  <span id="toastMessage"></span>
-</div>
+<div id="toast" class="toast" style="display: none;"><span id="toastMessage"></span></div>
 
 <script>
   const API_BASE_URL = 'http://localhost:3000/api';
   const bodyDiv = document.getElementById('bodyContent');
   let tipoSelecionado = null;
+
+  // Mapeamento de cidades por UF (principais cidades)
+  const cidadesPorUF = {
+    AC: ['Rio Branco', 'Cruzeiro do Sul', 'Sena Madureira', 'Tarauacá', 'Feijó'],
+    AL: ['Maceió', 'Arapiraca', 'Rio Largo', 'Palmeira dos Índios', 'União dos Palmares'],
+    AP: ['Macapá', 'Santana', 'Laranjal do Jari', 'Oiapoque', 'Mazagão'],
+    AM: ['Manaus', 'Parintins', 'Itacoatiara', 'Manacapuru', 'Coari'],
+    BA: ['Salvador', 'Feira de Santana', 'Vitória da Conquista', 'Camaçari', 'Juazeiro', 'Ilhéus'],
+    CE: ['Fortaleza', 'Caucaia', 'Juazeiro do Norte', 'Sobral', 'Crato'],
+    DF: ['Brasília', 'Ceilândia', 'Taguatinga', 'Samambaia', 'Planaltina'],
+    ES: ['Vitória', 'Vila Velha', 'Serra', 'Cariacica', 'Linhares'],
+    GO: ['Goiânia', 'Aparecida de Goiânia', 'Anápolis', 'Rio Verde', 'Luziânia'],
+    MA: ['São Luís', 'Imperatriz', 'Caxias', 'Timon', 'Codó'],
+    MT: ['Cuiabá', 'Várzea Grande', 'Rondonópolis', 'Sinop', 'Tangará da Serra'],
+    MS: ['Campo Grande', 'Dourados', 'Três Lagoas', 'Corumbá', 'Ponta Porã'],
+    MG: ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim', 'Montes Claros'],
+    PA: ['Belém', 'Ananindeua', 'Santarém', 'Marabá', 'Castanhal'],
+    PB: ['João Pessoa', 'Campina Grande', 'Santa Rita', 'Patos', 'Bayeux'],
+    PR: ['Curitiba', 'Londrina', 'Maringá', 'Ponta Grossa', 'Cascavel', 'São José dos Pinhais'],
+    PE: ['Recife', 'Jaboatão dos Guararapes', 'Olinda', 'Caruaru', 'Petrolina'],
+    PI: ['Teresina', 'Parnaíba', 'Picos', 'Floriano', 'Campo Maior'],
+    RJ: ['Rio de Janeiro', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'Niterói', 'Campos dos Goytacazes'],
+    RN: ['Natal', 'Mossoró', 'Parnamirim', 'São Gonçalo do Amarante', 'Ceará-Mirim'],
+    RS: ['Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas', 'Santa Maria', 'Gravataí'],
+    RO: ['Porto Velho', 'Ji-Paraná', 'Ariquemes', 'Vilhena', 'Cacoal'],
+    RR: ['Boa Vista', 'Rorainópolis', 'Caracaraí', 'Alto Alegre', 'Mucajaí'],
+    SC: ['Florianópolis', 'Joinville', 'Blumenau', 'São José', 'Criciúma', 'Chapecó'],
+    SP: ['São Paulo', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André', 'Ribeirão Preto', 'São José dos Campos'],
+    SE: ['Aracaju', 'Nossa Senhora do Socorro', 'Lagarto', 'Itabaiana', 'São Cristóvão'],
+    TO: ['Palmas', 'Araguaína', 'Gurupi', 'Porto Nacional', 'Paraíso do Tocantins']
+  };
 
   function showMessage(text, type = 'info') {
     const toast = document.getElementById('toast');
@@ -364,175 +358,96 @@ select.input-field {
     msgSpan.innerText = text;
     toast.className = `toast ${type}`;
     toast.style.display = 'block';
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 3000);
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
   }
 
   function renderEscolhaTipo() {
     bodyDiv.innerHTML = `
       <div class="tipo-card">
-        <div class="tipo-title">
-          <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Tipo de conta
-        </div>
+        <div class="tipo-title"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Tipo de conta</div>
         <div class="tipo-opcoes">
-          <div class="tipo-opcao" data-tipo="empresa">
-            <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            <div class="texto">
-              <h3>Empresa</h3>
-              <p>Contrate prestadores de serviço</p>
-            </div>
-          </div>
-          <div class="tipo-opcao" data-tipo="prestador">
-            <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <div class="texto">
-              <h3>Prestador</h3>
-              <p>Ofereça seus serviços no campo</p>
-            </div>
-          </div>
+          <div class="tipo-opcao" data-tipo="empresa"><svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><div class="texto"><h3>Empresa</h3><p>Contrate prestadores de serviço</p></div></div>
+          <div class="tipo-opcao" data-tipo="prestador"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><div class="texto"><h3>Prestador</h3><p>Ofereça seus serviços no campo</p></div></div>
         </div>
       </div>
     `;
     document.querySelectorAll('.tipo-opcao').forEach(el => {
-      el.addEventListener('click', () => {
-        const tipo = el.getAttribute('data-tipo');
-        tipoSelecionado = tipo;
-        renderFormulario(tipo);
-      });
+      el.addEventListener('click', () => { tipoSelecionado = el.getAttribute('data-tipo'); renderFormulario(tipoSelecionado); });
     });
+  }
+
+  function atualizarDatalistCidade(uf) {
+    const cidadeInput = document.getElementById('cidade');
+    if (!cidadeInput) return;
+    let datalist = document.getElementById('cidadesList');
+    if (!datalist) {
+      datalist = document.createElement('datalist');
+      datalist.id = 'cidadesList';
+      document.body.appendChild(datalist);
+      cidadeInput.setAttribute('list', 'cidadesList');
+    }
+    datalist.innerHTML = '';
+    if (uf && cidadesPorUF[uf]) {
+      cidadesPorUF[uf].forEach(cidade => {
+        const option = document.createElement('option');
+        option.value = cidade;
+        datalist.appendChild(option);
+      });
+    }
   }
 
   function renderFormulario(tipo) {
     if (tipo === 'empresa') {
       bodyDiv.innerHTML = `
-        <div class="form-card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            Cadastro de Empresa
-          </div>
-          <div class="field-group">
-            <label class="field-label">Nome da empresa *</label>
-            <input type="text" class="input-field" id="nome" placeholder="Ex: Fazenda Modelo Ltda">
-          </div>
-          <div class="field-group">
-            <label class="field-label">E-mail *</label>
-            <input type="email" class="input-field" id="email" placeholder="contato@empresa.com">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Senha *</label>
-            <input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Telefone / WhatsApp *</label>
-            <input type="tel" class="input-field" id="whatsapp" placeholder="(00) 00000-0000">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Cidade</label>
-            <input type="text" class="input-field" id="cidade" placeholder="Sua cidade">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Estado (UF)</label>
-            <input type="text" class="input-field" id="estado" placeholder="Ex: SP" maxlength="2">
-          </div>
-          <div class="btn-wrap">
-            <button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button>
-            <button class="btn-cadastrar btn-voltar" id="btnVoltarTipo">Voltar e escolher tipo</button>
-          </div>
-        </div>
-      `;
+        <div class="form-card"><div class="card-title"><svg viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Cadastro de Empresa</div>
+          <div class="field-group"><label class="field-label">Nome da empresa *</label><input type="text" class="input-field" id="nome" placeholder="Ex: Fazenda Modelo Ltda"></div>
+          <div class="field-group"><label class="field-label">E-mail *</label><input type="email" class="input-field" id="email" placeholder="contato@empresa.com"></div>
+          <div class="field-group"><label class="field-label">Senha *</label><input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres"></div>
+          <div class="field-group"><label class="field-label">Telefone / WhatsApp *</label><input type="tel" class="input-field" id="whatsapp" placeholder="(00) 00000-0000"></div>
+          <div class="field-group"><label class="field-label">Estado (UF) *</label><select class="input-field" id="estado"><option value="">Selecione...</option><option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AP">Amapá</option><option value="AM">Amazonas</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option><option value="MG">Minas Gerais</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PR">Paraná</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="SC">Santa Catarina</option><option value="SP">São Paulo</option><option value="SE">Sergipe</option><option value="TO">Tocantins</option></select></div>
+          <div class="field-group"><label class="field-label">Cidade</label><input type="text" class="input-field" id="cidade" placeholder="Digite sua cidade" autocomplete="off"></div>
+          <div class="btn-wrap"><button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button><button class="btn-cadastrar btn-voltar" id="btnVoltarTipo">Voltar e escolher tipo</button></div>
+        </div>`;
     } else {
       bodyDiv.innerHTML = `
-        <div class="form-card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Cadastro de Prestador
-          </div>
-          <div class="field-group">
-            <label class="field-label">Nome completo *</label>
-            <input type="text" class="input-field" id="nome" placeholder="Seu nome">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Sobrenome</label>
-            <input type="text" class="input-field" id="sobrenome" placeholder="Seu sobrenome">
-          </div>
-          <div class="field-group">
-            <label class="field-label">E-mail *</label>
-            <input type="email" class="input-field" id="email" placeholder="exemplo@email.com">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Senha *</label>
-            <input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Telefone / WhatsApp *</label>
-            <input type="tel" class="input-field" id="whatsapp" placeholder="(00) 00000-0000">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Cidade</label>
-            <input type="text" class="input-field" id="cidade" placeholder="Sua cidade">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Estado (UF)</label>
-            <input type="text" class="input-field" id="estado" placeholder="Ex: SP" maxlength="2">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Tipo de serviço principal *</label>
-            <select class="input-field" id="servicos">
-              <option value="">Selecione...</option>
-              <option value="Colheita">Colheita</option>
-              <option value="Pulverização">Pulverização</option>
-              <option value="Plantio">Plantio</option>
-              <option value="Irrigação">Irrigação</option>
-              <option value="Outros">Outros</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label class="field-label">Anos de experiência</label>
-            <input type="text" class="input-field" id="experiencia" placeholder="Ex: 5 anos">
-          </div>
-          <div class="btn-wrap">
-            <button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button>
-            <button class="btn-cadastrar btn-voltar" id="btnVoltarTipo">Voltar e escolher tipo</button>
-          </div>
-        </div>
-      `;
+        <div class="form-card"><div class="card-title"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Cadastro de Prestador</div>
+          <div class="field-group"><label class="field-label">Nome completo *</label><input type="text" class="input-field" id="nome" placeholder="Seu nome"></div>
+          <div class="field-group"><label class="field-label">Sobrenome</label><input type="text" class="input-field" id="sobrenome" placeholder="Seu sobrenome"></div>
+          <div class="field-group"><label class="field-label">E-mail *</label><input type="email" class="input-field" id="email" placeholder="exemplo@email.com"></div>
+          <div class="field-group"><label class="field-label">Senha *</label><input type="password" class="input-field" id="senha" placeholder="Mínimo 6 caracteres"></div>
+          <div class="field-group"><label class="field-label">Telefone / WhatsApp *</label><input type="tel" class="input-field" id="whatsapp" placeholder="(00) 00000-0000"></div>
+          <div class="field-group"><label class="field-label">Estado (UF) *</label><select class="input-field" id="estado"><option value="">Selecione...</option><option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AP">Amapá</option><option value="AM">Amazonas</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option><option value="MG">Minas Gerais</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PR">Paraná</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="SC">Santa Catarina</option><option value="SP">São Paulo</option><option value="SE">Sergipe</option><option value="TO">Tocantins</option></select></div>
+          <div class="field-group"><label class="field-label">Cidade</label><input type="text" class="input-field" id="cidade" placeholder="Digite sua cidade" autocomplete="off"></div>
+          <div class="field-group"><label class="field-label">Tipo de serviço principal *</label><select class="input-field" id="servicos"><option value="">Selecione...</option><option value="Colheita">Colheita</option><option value="Pulverização">Pulverização</option><option value="Plantio">Plantio</option><option value="Irrigação">Irrigação</option><option value="Outros">Outros</option></select></div>
+          <div class="btn-wrap"><button class="btn-cadastrar" id="btnCadastrar">Cadastrar</button><button class="btn-cadastrar btn-voltar" id="btnVoltarTipo">Voltar e escolher tipo</button></div>
+        </div>`;
     }
-
+    // Evento para atualizar datalist de cidades quando UF mudar
+    const estadoSelect = document.getElementById('estado');
+    if (estadoSelect) {
+      estadoSelect.addEventListener('change', () => {
+        const uf = estadoSelect.value;
+        atualizarDatalistCidade(uf);
+      });
+      // Forçar uma atualização inicial se já houver valor
+      if (estadoSelect.value) atualizarDatalistCidade(estadoSelect.value);
+    }
     document.getElementById('btnCadastrar')?.addEventListener('click', () => realizarCadastro(tipo));
     document.getElementById('btnVoltarTipo')?.addEventListener('click', renderEscolhaTipo);
   }
 
   async function realizarCadastro(tipo) {
     let payload = { tipo_usuario: tipo };
-
     if (tipo === 'empresa') {
       const nome = document.getElementById('nome')?.value.trim();
       const email = document.getElementById('email')?.value.trim();
       const senha = document.getElementById('senha')?.value.trim();
       const whatsapp = document.getElementById('whatsapp')?.value.trim();
       const cidade = document.getElementById('cidade')?.value.trim();
-      const estado = document.getElementById('estado')?.value.trim();
-
-      if (!nome || !email || !senha || !whatsapp) {
-        showMessage('Preencha todos os campos obrigatórios (*).', 'error');
-        return;
-      }
-      if (senha.length < 6) {
-        showMessage('A senha deve ter no mínimo 6 caracteres.', 'error');
-        return;
-      }
-
-      payload.nome = nome;
-      payload.sobrenome = '';
-      payload.email = email;
-      payload.senha = senha;
-      payload.whatsapp = whatsapp;
-      payload.cidade = cidade || null;
-      payload.estado = estado || null;
-      payload.nicho = '';
-      payload.cultivo = '';
-      payload.regiao = '';
+      const estado = document.getElementById('estado')?.value;
+      if (!nome || !email || !senha || !whatsapp) { showMessage('Preencha todos os campos obrigatórios (*).', 'error'); return; }
+      if (senha.length < 6) { showMessage('A senha deve ter no mínimo 6 caracteres.', 'error'); return; }
+      payload = { ...payload, nome, sobrenome: '', email, senha, whatsapp, cidade: cidade || null, estado: estado || null, nicho: '', cultivo: '', regiao: '' };
     } else {
       const nome = document.getElementById('nome')?.value.trim();
       const sobrenome = document.getElementById('sobrenome')?.value.trim();
@@ -540,53 +455,25 @@ select.input-field {
       const senha = document.getElementById('senha')?.value.trim();
       const whatsapp = document.getElementById('whatsapp')?.value.trim();
       const cidade = document.getElementById('cidade')?.value.trim();
-      const estado = document.getElementById('estado')?.value.trim();
+      const estado = document.getElementById('estado')?.value;
       const servicos = document.getElementById('servicos')?.value;
-      const experiencia = document.getElementById('experiencia')?.value.trim();
-
-      if (!nome || !email || !senha || !whatsapp || !servicos) {
-        showMessage('Preencha todos os campos obrigatórios (*).', 'error');
-        return;
-      }
-      if (senha.length < 6) {
-        showMessage('A senha deve ter no mínimo 6 caracteres.', 'error');
-        return;
-      }
-
-      payload.nome = nome;
-      payload.sobrenome = sobrenome || '';
-      payload.email = email;
-      payload.senha = senha;
-      payload.whatsapp = whatsapp;
-      payload.cidade = cidade || null;
-      payload.estado = estado || null;
-      payload.servicos = servicos;
-      payload.experiencia = experiencia || '';
+      if (!nome || !email || !senha || !whatsapp || !servicos) { showMessage('Preencha todos os campos obrigatórios (*).', 'error'); return; }
+      if (senha.length < 6) { showMessage('A senha deve ter no mínimo 6 caracteres.', 'error'); return; }
+      payload = { ...payload, nome, sobrenome: sobrenome || '', email, senha, whatsapp, cidade: cidade || null, estado: estado || null, servicos };
     }
 
     const btn = document.getElementById('btnCadastrar');
     const originalText = btn.innerText;
     btn.innerText = 'Cadastrando...';
     btn.disabled = true;
-
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
+      const response = await fetch(`${API_BASE_URL}/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.error || 'Erro no cadastro');
-
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-
       showMessage('Cadastro realizado com sucesso!', 'success');
-      setTimeout(() => {
-        window.location.href = 'meu_perfil.html';
-      }, 1500);
+      setTimeout(() => { window.location.href = 'meu_perfil.html'; }, 1500);
     } catch (err) {
       showMessage(err.message, 'error');
       btn.innerText = originalText;
@@ -594,16 +481,7 @@ select.input-field {
     }
   }
 
-  // Controle do botão voltar do header
-  function voltarPagina() {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      // Se não houver histórico, volta para a tela de escolha
-      renderEscolhaTipo();
-    }
-  }
-
+  function voltarPagina() { window.history.length > 1 ? window.history.back() : renderEscolhaTipo(); }
   document.getElementById('backButton')?.addEventListener('click', voltarPagina);
   renderEscolhaTipo();
 </script>

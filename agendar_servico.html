@@ -430,6 +430,15 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
 .section-title { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
 .footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
 
+/* Estilo especial para o item "Excluir conta" (vermelho) */
+.menu-item[data-nav="excluir-conta"] .menu-text {
+  color: #dc2626;
+  font-weight: 600;
+}
+.menu-item[data-nav="excluir-conta"] .menu-icon svg {
+  stroke: #dc2626;
+}
+
 @media (max-width: 380px) {
   .header-content { padding: 52px 14px 18px; }
   .title-bar h1 { font-size: 16px; }
@@ -509,9 +518,22 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
         </div>
       </div>
 
+      <!-- TIPO DE SERVIÇO (select com opção "Outros" + campo extra) -->
       <div class="field-group">
         <label class="field-label">Tipo de Serviço</label>
-        <input type="text" class="full-input" id="tipo-servico" placeholder="Ex: Colheita, Pulverização, Plantação...">
+        <div class="input-wrap">
+          <select id="tipo-servico-select" class="full-input">
+            <option value="">Selecione...</option>
+            <option value="Colheita">Colheita</option>
+            <option value="Pulverização">Pulverização</option>
+            <option value="Plantio">Plantio</option>
+            <option value="Irrigação">Irrigação</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+        <div id="outros-servico-wrap" style="display: none; margin-top: 8px;">
+          <input type="text" id="tipo-servico-outros" class="full-input" placeholder="Digite o serviço...">
+        </div>
       </div>
 
       <div class="field-group">
@@ -593,11 +615,6 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
           <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
           <div class="menu-text">Configurações</div>
         </div>
-        <!-- Excluir conta -->
-        <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta">
-          <div class="menu-icon"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div>
-          <div class="menu-text">Excluir conta</div>
-        </div>
         <!-- Ajuda -->
         <div class="menu-item" data-nav="ajuda">
           <div class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
@@ -608,6 +625,11 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
         <div class="menu-item" data-nav="sair">
           <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
           <div class="menu-text">Sair</div>
+        </div>
+        <!-- Excluir conta (no final, em vermelho) -->
+        <div class="menu-item" data-nav="excluir-conta" id="menuExcluirConta">
+          <div class="menu-icon"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div>
+          <div class="menu-text">Excluir conta</div>
         </div>
       </div>
     </div>
@@ -696,7 +718,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   const parceiroSelect = document.getElementById('parceiro-select');
   let parceirosList = [];
 
-    // ========== DETECTAR SE É EDIÇÃO ==========
+  // ========== DETECTAR SE É EDIÇÃO ==========
   const urlParamsEdit = new URLSearchParams(window.location.search);
   const editId = urlParamsEdit.get('edit_id');
   let isEditing = false;
@@ -745,7 +767,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     }
   }
 
-    // ========== CARREGAR DADOS PARA EDIÇÃO ==========
+  // ========== CARREGAR DADOS PARA EDIÇÃO ==========
   async function carregarDadosParaEdicao(id) {
     try {
       const response = await fetch(`${API_BASE_URL}/schedule/${id}`, {
@@ -754,13 +776,30 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
       if (!response.ok) throw new Error('Erro ao carregar agendamento');
       const data = await response.json();
       
-      document.getElementById('tipo-servico').value = data.tipo_servico;
+      // Preencher tipo de serviço no select
+      const tipoServico = data.tipo_servico;
+      const selectServico = document.getElementById('tipo-servico-select');
+      const optionExists = Array.from(selectServico.options).some(opt => opt.value === tipoServico);
+      if (optionExists) {
+        selectServico.value = tipoServico;
+        if (tipoServico === 'Outros') {
+          document.getElementById('outros-servico-wrap').style.display = 'block';
+          document.getElementById('tipo-servico-outros').value = '';
+        }
+      } else {
+        selectServico.value = 'Outros';
+        document.getElementById('outros-servico-wrap').style.display = 'block';
+        document.getElementById('tipo-servico-outros').value = tipoServico;
+      }
+      
       document.getElementById('descricao').value = data.descricao || '';
       
       const inicioDate = new Date(data.inicio);
       const fimDate = new Date(data.fim);
-      document.getElementById('data-inicio').value = inicioDate.toISOString().split('T')[0];
-      document.getElementById('data-fim').value = fimDate.toISOString().split('T')[0];
+      const inicioDateStr = inicioDate.toISOString().split('T')[0];
+      const fimDateStr = fimDate.toISOString().split('T')[0];
+      document.getElementById('data-inicio').value = inicioDateStr;
+      document.getElementById('data-fim').value = fimDateStr;
       document.getElementById('hora-inicio').value = inicioDate.toTimeString().slice(0,5);
       document.getElementById('hora-fim').value = fimDate.toTimeString().slice(0,5);
       
@@ -879,6 +918,28 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     renderCalendar();
   }
 
+  // ========== SINCRONIZAR INPUTS -> CALENDÁRIO ==========
+  function syncCalendarFromInputs() {
+    const inicioVal = dataInicioInput.value;
+    const fimVal = dataFimInput.value;
+    if (inicioVal) {
+      const parts = inicioVal.split('-');
+      selectedStartDate = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    } else {
+      selectedStartDate = null;
+    }
+    if (fimVal) {
+      const parts = fimVal.split('-');
+      selectedEndDate = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    } else {
+      selectedEndDate = null;
+    }
+    renderCalendar();
+  }
+
+  dataInicioInput.addEventListener('change', syncCalendarFromInputs);
+  dataFimInput.addEventListener('change', syncCalendarFromInputs);
+
   document.getElementById('prev').addEventListener('click', () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar();
@@ -889,15 +950,66 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   });
 
   function initCalendarFromInputs() {
-    if (dataInicioInput.value) {
-      const parts = dataInicioInput.value.split('-');
-      selectedStartDate = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    syncCalendarFromInputs();
+  }
+
+  // ========== VALIDAÇÃO DE CONFLITO DE HORÁRIOS ==========
+  async function verificarConflitos(parceiroId, inicio, fim) {
+    const url = isPrestador 
+      ? `${API_BASE_URL}/schedule` 
+      : `${API_BASE_URL}/schedule?prestador_id=${parceiroId}`;
+    
+    try {
+      const response = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!response.ok) return false;
+      const appointments = await response.json();
+      
+      const novoInicio = new Date(inicio);
+      const novoFim = new Date(fim);
+      
+      for (const apt of appointments) {
+        if (isEditing && apt.id == currentAppointmentId) continue;
+        
+        const aptInicio = new Date(apt.inicio);
+        const aptFim = new Date(apt.fim);
+        
+        if (novoInicio < aptFim && novoFim > aptInicio) {
+          if (!isPrestador && apt.prestador_id && apt.prestador_id != parceiroId) {
+            continue;
+          }
+          return true;
+        }
+      }
+      return false;
+    } catch (err) {
+      console.error('Erro ao verificar conflitos:', err);
+      return false;
     }
-    if (dataFimInput.value) {
-      const parts = dataFimInput.value.split('-');
-      selectedEndDate = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  }
+
+  // ========== GERENCIAR OPÇÃO "OUTROS" NO TIPO DE SERVIÇO ==========
+  const selectServico = document.getElementById('tipo-servico-select');
+  const outrosWrap = document.getElementById('outros-servico-wrap');
+  const outrosInput = document.getElementById('tipo-servico-outros');
+
+  selectServico.addEventListener('change', () => {
+    if (selectServico.value === 'Outros') {
+      outrosWrap.style.display = 'block';
+      outrosInput.focus();
+    } else {
+      outrosWrap.style.display = 'none';
+      outrosInput.value = '';
     }
-    renderCalendar();
+  });
+
+  function getTipoServicoValue() {
+    if (selectServico.value === 'Outros') {
+      const outrosVal = outrosInput.value.trim();
+      return outrosVal || 'Outros';
+    }
+    return selectServico.value;
   }
 
   // ========== ENVIAR AGENDAMENTO ==========
@@ -914,7 +1026,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     const fimDate = dataFimInput.value;
     const horaInicio = document.getElementById('hora-inicio').value;
     const horaFim = document.getElementById('hora-fim').value;
-    const tipoServico = document.getElementById('tipo-servico').value.trim();
+    const tipoServico = getTipoServicoValue();
     const descricao = document.getElementById('descricao').value.trim();
 
     if (!inicioDate || !fimDate) {
@@ -933,6 +1045,14 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
     const inicio = `${inicioDate}T${horaInicio}:00`;
     const fim = `${fimDate}T${horaFim}:00`;
 
+    const temConflito = await verificarConflitos(parceiroId, inicio, fim);
+    if (temConflito) {
+      showMessage(isPrestador 
+        ? 'Você já possui um serviço agendado nesse período. Por favor, escolha outro horário.' 
+        : 'Este prestador já possui um serviço agendado nesse período. Escolha outro horário ou outro prestador.', 'error');
+      return;
+    }
+
     let payload = { tipo_servico: tipoServico, descricao: descricao, inicio: inicio, fim: fim };
     if (isPrestador) {
       payload.empresa_id = parseInt(parceiroId);
@@ -940,17 +1060,14 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
       payload.prestador_id = parseInt(parceiroId);
     }
 
-    // Define título e mensagem com base no modo (criação ou edição)
     const tituloConfirmacao = isEditing ? 'Salvar alterações' : 'Confirmar serviço';
     const mensagemConfirmacao = isEditing
       ? `As alterações realizadas neste agendamento ficarão visíveis para ambas as partes envolvidas.<br><br>
-         Alterações ou cancelamentos realizados posteriormente também poderão impactar a outra parte.<br><br>
          Deseja salvar as alterações?`
       : `Este serviço ficará visível para você e para a outra parte envolvida.<br><br>
          A outra parte poderá visualizar as informações deste agendamento.<br><br>
          Deseja confirmar o agendamento?`;
 
-    // Abre o modal de confirmação antes de enviar
     confirmAction(tituloConfirmacao, mensagemConfirmacao, async () => {
         try {
           let url = `${API_BASE_URL}/schedule`;
@@ -1027,7 +1144,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
         showMessage('Conta excluída com sucesso.', 'success');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
       } catch (err) {
         showMessage(err.message, 'error');
       }

@@ -7,18 +7,32 @@ const { jwtSecret, jwtExpiresIn, resetTokenExpiresIn } = require('../config/auth
 const { enviarEmail } = require('../utils/emailService');
 
 // Registro
+// Registro
 exports.register = async (req, res) => {
   try {
-    const { nome, sobrenome, email, senha, tipo_usuario, endereco, cidade, estado } = req.body;
+    const { nome, sobrenome, email, senha, tipo_usuario, endereco, cidade, estado, whatsapp } = req.body;
     const existing = await User.findOne({ where: { email } });
     if (existing) return res.status(400).json({ error: 'Email já cadastrado' });
 
     const user = await User.create({
-      nome, sobrenome, email, senha, tipo_usuario, endereco, cidade, estado
+      nome, sobrenome, email, senha, tipo_usuario, endereco, cidade, estado, whatsapp
     });
 
     const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: jwtExpiresIn });
-    res.status(201).json({ token, user: { id: user.id, nome, email, tipo_usuario } });
+    res.status(201).json({
+      token,
+      user: {
+        id: user.id,
+        nome: user.nome,
+        sobrenome: user.sobrenome,
+        email: user.email,
+        tipo_usuario: user.tipo_usuario,
+        foto_perfil: user.foto_perfil || null,
+        cidade: user.cidade,
+        estado: user.estado,
+        whatsapp: user.whatsapp
+      }
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -42,7 +56,11 @@ exports.login = async (req, res) => {
         nome: user.nome,
         sobrenome: user.sobrenome,
         email: user.email,
-        tipo_usuario: user.tipo_usuario
+        tipo_usuario: user.tipo_usuario,
+        foto_perfil: user.foto_perfil || null,
+        cidade: user.cidade,
+        estado: user.estado,
+        whatsapp: user.whatsapp
       }
     });
   } catch (err) {
