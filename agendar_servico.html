@@ -13,6 +13,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* TEMA CLARO (padrão) */
 :root {
   --verde:        #3a5f1e;
   --verde-btn:    #2d5016;
@@ -23,6 +24,26 @@
   --texto:        #1a1a1a;
   --muted:        #888;
   --borda:        #dedad2;
+  --card-bg:      #ffffff;
+  --header-gradient-start: #3a5f1e;
+  --header-gradient-end:   #2d5016;
+}
+
+/* TEMA ESCURO */
+body.dark-theme {
+  --verde:        #5a8530;
+  --verde-btn:    #4a7020;
+  --laranja:      #f0a050;
+  --laranja-mid:  #c97a20;
+  --bg:           #121212;
+  --branco:       #1e1e1e;
+  --texto:        #e0e0e0;
+  --muted:        #aaa;
+  --borda:        #333;
+  --card-bg:      #1e1e1e;
+  --header-gradient-start: #1a3a0a;
+  --header-gradient-end:   #0f2a05;
+  background: #0a0a0a;
 }
 
 body {
@@ -33,6 +54,10 @@ body {
   align-items: flex-start;
   min-height: 100vh;
   padding: 20px;
+  transition: background 0.2s, color 0.2s;
+}
+body.dark-theme {
+  background: #0a0a0a;
 }
 
 .frame {
@@ -91,6 +116,9 @@ body {
   fill: none;
   stroke-linejoin: round;
 }
+body.dark-theme .btn-icon svg {
+  stroke: #9bc46e;
+}
 .logo-wrap img { height: 40px; content: url('img/logo.png'); }
 
 .title-bar {
@@ -113,10 +141,11 @@ body {
 /* CALENDÁRIO INTERATIVO */
 .cal-card {
   margin: 16px 16px 0;
-  background: var(--branco);
+  background: var(--card-bg);
   border-radius: 16px;
   padding: 14px 12px 16px;
   box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  border: 1px solid var(--borda);
 }
 .cal-nav {
   display: flex;
@@ -143,7 +172,7 @@ body {
   border: 1px solid var(--borda);
   border-radius: 8px;
   padding: 6px 20px;
-  background: #fff;
+  background: var(--branco);
 }
 .week-days {
   display: grid;
@@ -169,8 +198,9 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
-.wday.muted { color: #ccc; cursor: default; }
+.wday.muted { color: var(--muted); opacity: 0.6; cursor: default; }
 .wday:hover:not(.muted) { background: #f0ede5; }
+body.dark-theme .wday:hover:not(.muted) { background: #2a2a2a; }
 .wday.selected-start {
   background: var(--laranja);
   color: white;
@@ -219,6 +249,8 @@ input[type="text"].full-input {
   padding: 12px;
   border-radius: 12px;
   border: 1px solid var(--borda);
+  background: var(--branco);
+  color: var(--texto);
 }
 input[type="text"].full-input:focus { border-color: var(--verde); }
 .textarea-wrap {
@@ -306,7 +338,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   justify-content: center;
 }
 .modal-container {
-  background: white;
+  background: var(--branco);
   width: 85%;
   max-width: 320px;
   border-radius: 28px;
@@ -323,7 +355,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
 .modal-container p {
   font-size: 14px;
   margin-bottom: 20px;
-  color: #555;
+  color: var(--muted);
 }
 .modal-buttons {
   display: flex;
@@ -381,7 +413,7 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
 .menu-overlay.open .menu-drawer { transform: translateX(0); }
 .menu-header {
   padding: 28px 20px 20px;
-  background: linear-gradient(135deg, #3a5f1e, #2d5016);
+  background: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
   color: white;
   border-bottom: 1px solid rgba(255,255,255,0.2);
 }
@@ -423,11 +455,12 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   cursor: pointer;
 }
 .menu-item:hover, .menu-item:active { background: #f0ede7; }
+body.dark-theme .menu-item:hover, body.dark-theme .menu-item:active { background: #2a2a2a; }
 .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
 .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; }
 .menu-item .menu-text { flex: 1; }
 .divider { height: 1px; background: var(--borda); margin: 8px 16px; }
-.section-title { font-size: 13px; font-weight: 600; color: #888; letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
+.section-title { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; padding: 12px 20px 4px; text-transform: uppercase; }
 .footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
 
 /* Estilo especial para o item "Excluir conta" (vermelho) */
@@ -640,6 +673,12 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
   const API_BASE_URL = 'http://localhost:3000/api';
   let token = localStorage.getItem('token');
   let user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  // ========== APLICA TEMA ESCURO SALVO ==========
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (savedDarkMode) {
+    document.body.classList.add('dark-theme');
+  }
 
   // ========== FUNÇÕES DE NOTIFICAÇÃO ==========
   function showMessage(text, type = 'info') {
@@ -1171,13 +1210,11 @@ input[type="text"].full-input:focus { border-color: var(--verde); }
       } else if (nav === 'perfil') {
         window.location.href = 'meu_perfil.html';
       } else if (nav === 'configuracoes') {
-        showMessage('Tela de configurações em desenvolvimento', 'info');
-        closeMenu();
+        window.location.href = 'configuracoes.html';
       } else if (nav === 'excluir-conta') {
         excluirConta();
       } else if (nav === 'ajuda') {
-        showMessage('Central de ajuda em breve', 'info');
-        closeMenu();
+        window.location.href = 'ajuda.html';
       } else {
         closeMenu();
       }

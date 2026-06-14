@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+/* TEMA CLARO (padrão) */
 :root {
   --verde: #3a5f1e;
   --verde-claro: #5a8530;
@@ -17,7 +19,26 @@
   --muted: #888;
   --borda: #dedad2;
   --laranja: #e07a1c;
+  --card-bg-light: rgba(255, 255, 255, 0.96);
+  --overlay-light: linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.75) 100%);
 }
+
+/* TEMA ESCURO */
+body.dark-theme {
+  --verde: #5a8530;
+  --verde-claro: #7da050;
+  --verde-btn: #4a7020;
+  --bg: #121212;
+  --branco: #1e1e1e;
+  --texto: #e0e0e0;
+  --muted: #aaa;
+  --borda: #333;
+  --laranja: #f0a050;
+  --card-bg-light: rgba(30, 30, 30, 0.96);
+  --overlay-light: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.5) 35%, rgba(0,0,0,0.7) 65%, rgba(0,0,0,0.85) 100%);
+  background: #0a0a0a;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #cdc8bc;
@@ -26,7 +47,12 @@ body {
   align-items: flex-start;
   min-height: 100vh;
   padding: 20px;
+  transition: background 0.2s, color 0.2s;
 }
+body.dark-theme {
+  background: #0a0a0a;
+}
+
 .frame {
   width: 100%;
   max-width: 450px;
@@ -51,7 +77,7 @@ body {
 .bg-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.75) 100%);
+  background: var(--overlay-light);
   z-index: 1;
 }
 .header {
@@ -99,12 +125,13 @@ body {
 }
 .body::-webkit-scrollbar { display: none; }
 .tipo-card {
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--card-bg-light);
   border-radius: 20px;
   padding: 28px 20px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   backdrop-filter: blur(2px);
   text-align: center;
+  transition: background 0.2s;
 }
 .tipo-title {
   font-size: 20px;
@@ -139,14 +166,23 @@ body {
   align-items: center;
   gap: 16px;
 }
+body.dark-theme .tipo-opcao {
+  background: #2a2a2a;
+}
 .tipo-opcao:hover {
   background: #e2ecd4;
   transform: scale(0.98);
+}
+body.dark-theme .tipo-opcao:hover {
+  background: #3a3a3a;
 }
 .tipo-opcao.selecionado {
   border-color: var(--verde);
   background: #fff8e8;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+body.dark-theme .tipo-opcao.selecionado {
+  background: #2a3a1a;
 }
 .tipo-opcao svg {
   width: 48px;
@@ -170,11 +206,12 @@ body {
   color: var(--muted);
 }
 .form-card {
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--card-bg-light);
   border-radius: 20px;
   padding: 20px 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   backdrop-filter: blur(2px);
+  transition: background 0.2s;
 }
 .card-title {
   font-size: 18px;
@@ -217,6 +254,7 @@ body {
   transition: border 0.15s, box-shadow 0.15s;
 }
 .input-field::placeholder { color: #b0aba2; }
+body.dark-theme .input-field::placeholder { color: #888; }
 .input-field:focus {
   border-color: var(--verde);
   box-shadow: 0 0 0 3px rgba(58, 95, 30, 0.12);
@@ -255,6 +293,10 @@ select.input-field {
 .btn-voltar {
   background: #e0ddd6;
   color: #333;
+}
+body.dark-theme .btn-voltar {
+  background: #3a3a3a;
+  color: #e0e0e0;
 }
 .btn-voltar:active { transform: scale(0.98); }
 .toast {
@@ -320,6 +362,12 @@ select.input-field {
   const API_BASE_URL = 'http://localhost:3000/api';
   const bodyDiv = document.getElementById('bodyContent');
   let tipoSelecionado = null;
+
+  // ========== APLICA TEMA ESCURO SALVO ==========
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (savedDarkMode) {
+    document.body.classList.add('dark-theme');
+  }
 
   // Mapeamento de cidades por UF (principais cidades)
   const cidadesPorUF = {

@@ -6,8 +6,10 @@
   <title>PlanoV - Perfil do Prestador</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* ===== ESTILOS (MESMOS DO ORIGINAL, COM AJUSTES PARA ESTRELAS E MENU) ===== */
+    /* ===== ESTILOS COM SUPORTE A TEMA ESCURO ===== */
     * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    
+    /* TEMA CLARO (padrão) */
     :root {
       --verde: #3a5f1e;
       --verde-btn: #2d5016;
@@ -20,7 +22,30 @@
       --texto: #1a1a1a;
       --muted: #888;
       --borda: #e0ddd6;
+      --card-bg: #ffffff;
+      --header-gradient-start: #3a5f1e;
+      --header-gradient-end: #2d5016;
     }
+    
+    /* TEMA ESCURO */
+    body.dark-theme {
+      --verde: #5a8530;
+      --verde-btn: #4a7020;
+      --verde-card: #7da050;
+      --verde-light: #2a2a2a;
+      --laranja: #f0a050;
+      --laranja-range:#c97a20;
+      --bg: #121212;
+      --branco: #1e1e1e;
+      --texto: #e0e0e0;
+      --muted: #aaa;
+      --borda: #333;
+      --card-bg: #1e1e1e;
+      --header-gradient-start: #1a3a0a;
+      --header-gradient-end: #0f2a05;
+      background: #0a0a0a;
+    }
+    
     body {
       font-family: 'Poppins', sans-serif;
       background: #cdc8bc;
@@ -29,7 +54,12 @@
       align-items: flex-start;
       min-height: 100vh;
       padding: 20px;
+      transition: background 0.2s, color 0.2s;
     }
+    body.dark-theme {
+      background: #0a0a0a;
+    }
+    
     .frame {
       width: 100%;
       max-width: 450px;
@@ -98,6 +128,9 @@
       stroke-linecap: round;
       fill: none;
       stroke-linejoin: round;
+    }
+    body.dark-theme .btn-icon svg {
+      stroke: #9bc46e;
     }
     .logo-wrap img {
       height: 55px;
@@ -188,7 +221,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 14px;
-      background: var(--branco);
+      background: var(--card-bg);
       padding: 10px 16px;
       border-radius: 40px;
       width: fit-content;
@@ -197,7 +230,7 @@
     .avaliacao-geral svg { width: 20px; height: 20px; fill: var(--laranja); stroke: none; }
     .avaliacao-geral span { font-size: 14px; font-weight: 500; color: var(--texto); }
     .review-card {
-      background: var(--branco);
+      background: var(--card-bg);
       border-radius: 14px;
       border: 1px solid var(--borda);
       padding: 14px;
@@ -230,7 +263,7 @@
     .stars svg { width: 14px; height: 14px; stroke: none; }
     .review-text { font-size: 12px; color: var(--texto); line-height: 1.6; padding-left: 46px; }
     .nova-avaliacao-section {
-      background: var(--branco);
+      background: var(--card-bg);
       border-radius: 16px;
       border: 1px solid var(--borda);
       overflow: hidden;
@@ -245,6 +278,7 @@
       transition: background 0.2s;
     }
     .avaliacao-header-click:hover { background: #f0ede7; }
+    body.dark-theme .avaliacao-header-click:hover { background: #2a2a2a; }
     .section-header {
       display: flex;
       align-items: center;
@@ -295,7 +329,8 @@
       border-radius: 12px;
       resize: vertical;
       margin-bottom: 16px;
-      background: #fefefe;
+      background: var(--branco);
+      color: var(--texto);
     }
     .btn-enviar-avaliacao {
       width: 100%;
@@ -351,7 +386,7 @@
       justify-content: center;
     }
     .modal-container {
-      background: white;
+      background: var(--card-bg);
       width: 85%;
       max-width: 320px;
       border-radius: 28px;
@@ -376,7 +411,6 @@
       height: 32px;
       cursor: pointer;
     }
-    /* CORREÇÃO: estrelas do modal usam apenas classes */
     .modal-star svg { fill: #ddd; stroke: none; transition: fill 0.1s; }
     .modal-star.selected svg { fill: var(--laranja); }
     .modal-container textarea {
@@ -388,6 +422,8 @@
       font-size: 13px;
       resize: vertical;
       margin: 8px 0 16px;
+      background: var(--branco);
+      color: var(--texto);
     }
     .modal-buttons {
       display: flex;
@@ -406,6 +442,10 @@
     .modal-btn.cancel {
       background: #e0ddd6;
       color: #333;
+    }
+    body.dark-theme .modal-btn.cancel {
+      background: #3a3a3a;
+      color: #e0e0e0;
     }
     .modal-btn.save {
       background: var(--verde-btn);
@@ -437,7 +477,7 @@
       width: min(280px, 85%);
       min-width: 260px;
       height: 100%;
-      background: #ffffff;
+      background: var(--branco);
       box-shadow: -8px 0 24px rgba(0,0,0,0.15);
       z-index: 101;
       transform: translateX(100%);
@@ -449,7 +489,7 @@
     .menu-overlay.open .menu-drawer { transform: translateX(0); }
     .menu-header {
       padding: 28px 20px 20px;
-      background: linear-gradient(135deg, #3a5f1e, #2d5016);
+      background: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
       color: white;
       border-bottom: 1px solid rgba(255,255,255,0.2);
     }
@@ -494,24 +534,25 @@
       padding: 12px 20px;
       font-size: 15px;
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--texto);
       transition: background 0.2s;
       cursor: pointer;
     }
     .menu-item:hover, .menu-item:active { background: #f0ede7; }
+    body.dark-theme .menu-item:hover, body.dark-theme .menu-item:active { background: #2a2a2a; }
     .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
     .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .menu-item .menu-text { flex: 1; }
-    .divider { height: 1px; background: #e0ddd6; margin: 8px 16px; }
+    .divider { height: 1px; background: var(--borda); margin: 8px 16px; }
     .section-title-menu {
       font-size: 13px;
       font-weight: 600;
-      color: #888;
+      color: var(--muted);
       letter-spacing: 0.5px;
       padding: 12px 20px 4px;
       text-transform: uppercase;
     }
-    .footer-menu { border-top: 1px solid #e0ddd6; margin-top: 8px; padding: 8px 0; }
+    .footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
     .menu-item[data-nav="excluir-conta"] .menu-text { color: #dc2626; font-weight: 600; }
     .menu-item[data-nav="excluir-conta"] .menu-icon svg { stroke: #dc2626; }
 
@@ -533,6 +574,9 @@
       font-weight: 500;
       color: var(--texto);
       border: 0.5px solid var(--borda);
+    }
+    body.dark-theme .maquina-chip {
+      background: #2a2a2a;
     }
     .maquina-chip svg {
       width: 16px;
@@ -711,6 +755,13 @@
   let loggedUser = JSON.parse(localStorage.getItem('user') || '{}');
   const urlParams = new URLSearchParams(window.location.search);
   const prestadorId = urlParams.get('id');
+  
+  // ========== APLICA TEMA ESCURO SALVO ==========
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (savedDarkMode) {
+    document.body.classList.add('dark-theme');
+  }
+  
   if (!prestadorId) {
     showMessage('Prestador não especificado.', 'error');
     setTimeout(() => { window.location.href = 'buscar-prestadores.html'; }, 1500);
@@ -811,7 +862,6 @@
       prestadorLocalizacao.innerText = cidadeEstado || 'Localização não informada';
       prestadorSobre.innerText = user.sobre || 'Sem descrição.';
       
-      // CORREÇÃO: exibir serviços de forma legível
       let servicosExibicao = 'Não informado';
       if (user.servicos) {
         try {
@@ -823,7 +873,6 @@
       }
       prestadorServicos.innerText = servicosExibicao;
 
-      // Máquinas
       const maquinasCard = document.getElementById('maquinas-card');
       const maquinasTagsContainer = document.getElementById('prestador-maquinas-tags');
       let maquinasList = [];
@@ -924,7 +973,6 @@
           reviewsContainer.appendChild(reviewDiv);
         });
 
-        // ========== CORREÇÃO DO MODAL DE EDIÇÃO ==========
         document.querySelectorAll('.edit-review').forEach(btn => {
           btn.addEventListener('click', () => {
             const id = btn.getAttribute('data-id');
@@ -998,7 +1046,6 @@
   });
   document.getElementById('cancelEditBtn')?.addEventListener('click', () => { document.getElementById('editModal').style.display = 'none'; });
 
-  // Nova avaliação
   const avaliacaoAccordion = document.getElementById('avaliacaoAccordion');
   const accordionHeader = document.getElementById('accordionHeader');
   const avaliacaoContent = document.getElementById('avaliacaoContent');
@@ -1062,7 +1109,6 @@
     avaliacaoAccordion.style.display = 'none';
   }
 
-  // Menu lateral
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
@@ -1074,7 +1120,6 @@
   menuOverlay?.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
   backButton?.addEventListener('click', () => window.history.back());
 
-  // Atualizar menu com dados do usuário logado
   const menuNome = document.getElementById('menuNome');
   const menuTipo = document.getElementById('menuTipo');
   const menuTextEmpresas = document.getElementById('menuTextEmpresas');
@@ -1119,9 +1164,9 @@
       else if (nav === 'empresas') window.location.href = (loggedUser.tipo_usuario === 'prestador') ? 'buscar-empresas.html' : 'buscar-prestadores.html';
       else if (nav === 'agenda') window.location.href = 'agenda.html';
       else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
-      else if (nav === 'configuracoes') showMessage('Tela de configurações em desenvolvimento', 'info');
+      else if (nav === 'configuracoes') window.location.href = 'configuracoes.html';
       else if (nav === 'excluir-conta') excluirConta();
-      else if (nav === 'ajuda') showMessage('Central de ajuda em breve', 'info');
+      else if (nav === 'ajuda') window.location.href = 'ajuda.html';
       closeMenu();
     });
   });

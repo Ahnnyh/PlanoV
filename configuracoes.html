@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>PlanoV – Prestadores</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PlanoV - Configurações</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
     
     /* TEMA CLARO (padrão) */
     :root {
       --verde: #3a5f1e;
       --verde-btn: #2d5016;
+      --verde-card: #4a7c28;
       --laranja: #e07a1c;
       --bg: #f7f4ee;
       --branco: #ffffff;
       --texto: #1a1a1a;
-      --muted: #777;
+      --muted: #888;
       --borda: #e0ddd6;
       --card-bg: #ffffff;
       --header-gradient-start: #3a5f1e;
@@ -27,6 +28,7 @@
     body.dark-theme {
       --verde: #5a8530;
       --verde-btn: #4a7020;
+      --verde-card: #7da050;
       --laranja: #f0a050;
       --bg: #121212;
       --branco: #1e1e1e;
@@ -49,6 +51,7 @@
       padding: 20px;
       transition: background 0.2s, color 0.2s;
     }
+    /* Ajustes para o tema escuro no body (fora do frame) */
     body.dark-theme {
       background: #0a0a0a;
     }
@@ -60,23 +63,23 @@
       border-radius: 44px;
       overflow: hidden;
       box-shadow: 0 40px 100px rgba(0,0,0,0.4);
-      position: relative;
       display: flex;
       flex-direction: column;
+      position: relative;
+      min-height: 700px;
+      margin: 0 auto;
     }
     .header {
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
-      height: 178px;
     }
     .header-bg {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 150%;
-      object-fit: cover;
-      display: block;
+      background-image: url('img/superior.png');
+      background-size: cover;
+      background-position: left;
     }
     .header-content {
       position: relative;
@@ -108,155 +111,102 @@
       fill: none;
       stroke-linejoin: round;
     }
+    /* Tema escuro para os ícones do header */
     body.dark-theme .btn-icon svg {
       stroke: #9bc46e;
     }
-    .logo-wrap img { height: 40px; display: block; content: url('IMG/logo.png'); }
-    .search-wrap {
-      position: relative;
-      z-index: 1;
-      padding: 0 20px 20px;
-    }
-    .search-bar {
-      background: var(--branco);
-      border-radius: 40px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--borda);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    .search-icon {
-      width: 20px;
-      height: 20px;
-      stroke: var(--muted);
-      stroke-width: 2.5;
-      flex-shrink: 0;
-    }
-    .search-bar input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      padding: 8px 0;
-      color: var(--texto);
-    }
-    .search-bar input::placeholder { color: var(--muted); }
+    .logo-wrap img { height: 40px; content: url('img/logo.png'); }
     .title-bar {
       background: var(--verde);
       padding: 14px 20px;
       text-align: center;
       flex-shrink: 0;
     }
-    .title-bar h2 { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 0.2px; }
+    .title-bar h1 { font-size: 18px; font-weight: 700; color: #fff; }
     .body {
       flex: 1;
-      background: var(--bg);
-      padding: 20px 16px 30px;
       overflow-y: auto;
+      scrollbar-width: none;
+      padding: 20px 16px 100px;
+      background: var(--bg);
     }
-    .cards-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .card-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .body::-webkit-scrollbar { display: none; }
     .card {
       background: var(--card-bg);
-      border-radius: 18px;
+      border-radius: 14px;
       border: 1px solid var(--borda);
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      transition: transform 0.1s, box-shadow 0.1s;
+      padding: 16px;
+      margin-bottom: 12px;
     }
-    .card:active { transform: scale(0.99); }
-    .card-foto-wrap {
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #c8a96e, #b58d4a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .avatar-inicial {
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-      text-transform: uppercase;
-    }
-    .card-foto-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .card-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .card-nome {
+    .card-title {
       font-size: 16px;
       font-weight: 700;
-      color: var(--texto);
-    }
-    .card-prod {
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .card-bottom {
+      color: var(--verde-card);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
+      gap: 8px;
+    }
+    .card-title svg { width: 20px; height: 20px; stroke: var(--verde-card); stroke-width: 2; fill: none; }
+    .config-item {
+      display: flex;
       justify-content: space-between;
-      margin-top: 6px;
-    }
-    .card-rating {
-      display: flex;
       align-items: center;
-      gap: 4px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--borda);
+      cursor: pointer;
     }
-    .star {
-      width: 16px;
-      height: 16px;
-      fill: var(--laranja);
-      stroke: none;
-    }
-    .card-nota {
-      font-size: 13px;
-      font-weight: 600;
+    .config-item:last-child { border-bottom: none; }
+    .config-label {
+      font-size: 14px;
+      font-weight: 500;
       color: var(--texto);
     }
-    .btn-visualizar {
-      background: var(--verde-btn);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 6px 18px;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-    }
-    .btn-visualizar:active { transform: scale(0.96); background: #3a6620; }
-    .empty-msg {
-      text-align: center;
-      padding: 40px 20px;
+    .config-value {
+      font-size: 13px;
       color: var(--muted);
-      font-size: 14px;
-      display: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.2s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.2s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--verde-btn);
+    }
+    input:checked + .slider:before {
+      transform: translateX(24px);
     }
     .toast {
       position: fixed;
@@ -278,7 +228,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       pointer-events: none;
     }
-    .toast.success { background: var(--verde); }
+    .toast.success { background: var(--verde-btn); }
     .toast.error { background: #c0392b; }
     .toast.info { background: var(--laranja); }
     .modal-overlay-confirm {
@@ -295,7 +245,7 @@
       justify-content: center;
     }
     .modal-container {
-      background: var(--branco);
+      background: white;
       width: 85%;
       max-width: 320px;
       border-radius: 28px;
@@ -303,22 +253,9 @@
       box-shadow: 0 20px 30px rgba(0,0,0,0.3);
       text-align: center;
     }
-    .modal-container h3 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--texto);
-      margin-bottom: 16px;
-    }
-    .modal-container p {
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: var(--muted);
-    }
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
+    .modal-container h3 { font-size: 20px; font-weight: 700; color: var(--texto); margin-bottom: 16px; }
+    .modal-container p { font-size: 14px; margin-bottom: 20px; color: #555; }
+    .modal-buttons { display: flex; gap: 12px; justify-content: center; }
     .modal-btn {
       flex: 1;
       padding: 10px;
@@ -328,14 +265,9 @@
       border: none;
       cursor: pointer;
     }
-    .modal-btn.cancel {
-      background: #e0ddd6;
-      color: #333;
-    }
-    .modal-btn.save {
-      background: var(--verde);
-      color: white;
-    }
+    .modal-btn.cancel { background: #e0ddd6; color: #333; }
+    .modal-btn.save { background: var(--verde); color: white; }
+    
     /* MENU LATERAL */
     .menu-overlay {
       position: absolute;
@@ -361,7 +293,7 @@
       box-shadow: -8px 0 24px rgba(0,0,0,0.15);
       z-index: 101;
       transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1);
+      transition: transform 0.3s;
       overflow-y: auto;
       border-radius: 20px 0 0 20px;
     }
@@ -382,8 +314,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
+    .menu-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .menu-avatar svg { width: 30px; height: 30px; stroke: white; stroke-width: 1.8; fill: none; }
     .menu-user-info h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
     .menu-user-info p { font-size: 12px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
@@ -409,90 +341,115 @@
       font-size: 15px;
       font-weight: 500;
       color: var(--texto);
-      transition: background 0.2s;
       cursor: pointer;
     }
-    .menu-item:hover, .menu-item:active { background: #f0ede7; }
-    body.dark-theme .menu-item:hover, body.dark-theme .menu-item:active { background: #2a2a2a; }
+    .menu-item:hover { background: #f0ede7; }
     .menu-item .menu-icon { width: 26px; display: flex; align-items: center; justify-content: center; }
-    .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .menu-item .menu-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; fill: none; }
     .menu-item .menu-text { flex: 1; }
     .divider { height: 1px; background: var(--borda); margin: 8px 16px; }
     .section-title {
       font-size: 13px;
       font-weight: 600;
-      color: var(--muted);
+      color: #888;
       letter-spacing: 0.5px;
       padding: 12px 20px 4px;
       text-transform: uppercase;
     }
-    .footer-menu { border-top: 1px solid var(--borda); margin-top: 8px; padding: 8px 0; }
     .menu-item[data-nav="excluir-conta"] .menu-text { color: #dc2626; font-weight: 600; }
     .menu-item[data-nav="excluir-conta"] .menu-icon svg { stroke: #dc2626; }
+    
     @media (max-width: 400px) {
-      .header-content { padding: 52px 16px 18px; }
-      .search-wrap { padding: 0 16px 16px; }
+      .header-content { padding: 52px 16px 14px; }
+      .btn-icon { width: 40px; height: 40px; }
+      .btn-icon svg { width: 22px; height: 22px; }
+      .logo-wrap img { height: 36px; }
       .title-bar { padding: 12px 16px; }
-      .title-bar h2 { font-size: 16px; }
-      .body { padding: 16px 12px 30px; }
-      .card { padding: 12px; gap: 10px; }
-      .card-foto-wrap { width: 52px; height: 52px; }
-      .avatar-inicial { font-size: 24px; }
-      .card-nome { font-size: 15px; }
-      .card-prod { font-size: 12px; }
-      .btn-visualizar { padding: 5px 14px; font-size: 11px; }
-      .star { width: 14px; height: 14px; }
-      .card-nota { font-size: 12px; }
-    }
-    @media (max-width: 340px) {
-      .card-bottom { flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
-      .btn-visualizar { padding: 5px 12px; }
+      .title-bar h1 { font-size: 16px; }
+      .body { padding: 16px 12px 100px; }
     }
   </style>
 </head>
 <body>
-
 <div class="frame">
   <div class="header">
-    <img src="IMG/superior.png" alt="" class="header-bg" />
+    <div class="header-bg"></div>
     <div class="header-content">
-      <button class="btn-icon" onclick="history.back()" aria-label="Voltar">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div class="logo-wrap"><img src="IMG/logo.png" alt="PlanoV Logo" /></div>
-      <button class="btn-icon" id="menuButton" aria-label="Menu">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
+      <button class="btn-icon" id="backButton"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="logo-wrap"><img alt="PlanoV"></div>
+      <button class="btn-icon" id="menuButton"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     </div>
-    <div class="search-wrap">
-      <div class="search-bar">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="search-input" placeholder="Buscar prestador..." autocomplete="off" />
+  </div>
+  <div class="title-bar"><h1>Configurações</h1></div>
+  <div class="body">
+    <div class="card">
+      <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Preferências</div>
+      <div class="config-item">
+        <span class="config-label">Notificações</span>
+        <div class="config-value">
+          <label class="toggle-switch">
+            <input type="checkbox" id="notificacoes-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="config-item">
+        <span class="config-label">Tema escuro</span>
+        <div class="config-value">
+          <label class="toggle-switch">
+            <input type="checkbox" id="tema-escuro-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="config-item">
+        <span class="config-label">Idioma</span>
+        <div class="config-value">
+          <span>Português (Brasil)</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Conta</div>
+      <div class="config-item" id="config-perfil">
+        <span class="config-label">Editar perfil</span>
+        <div class="config-value"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3l4 4-7 7H10v-4l7-7z"/><path d="M4 20h16"/></svg></div>
+      </div>
+      <div class="config-item" id="config-alterar-senha">
+        <span class="config-label">Alterar senha</span>
+        <div class="config-value"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      </div>
+      <div class="config-item" id="config-privacidade">
+        <span class="config-label">Privacidade</span>
+        <div class="config-value"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> Sobre</div>
+      <div class="config-item">
+        <span class="config-label">Versão do app</span>
+        <div class="config-value"><span>1.0.0</span></div>
+      </div>
+      <div class="config-item" id="termos-link">
+        <span class="config-label">Termos de uso</span>
+        <div class="config-value"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="config-item" id="privacidade-link">
+        <span class="config-label">Política de privacidade</span>
+        <div class="config-value"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
     </div>
   </div>
-  <div class="title-bar"><h2>Prestadores</h2></div>
-  <div class="body">
-    <div class="cards-wrap">
-      <ul class="card-list" id="card-list"></ul>
-      <div class="empty-msg" id="empty-msg">Nenhum prestador encontrado.</div>
-    </div>
-  </div>
-
   <div id="toast" class="toast" style="display: none;"><span id="toastMessage"></span></div>
-  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;">
-    <div class="modal-container"><h3 id="confirmTitle">Confirmar</h3><p id="confirmMessage">Tem certeza?</p><div class="modal-buttons"><button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button><button id="confirmOkBtn" class="modal-btn save">Confirmar</button></div></div>
-  </div>
-
-  <!-- MENU LATERAL COMPLETO -->
+  <div id="confirmModal" class="modal-overlay-confirm" style="display: none;"><div class="modal-container"><h3 id="confirmTitle">Confirmar</h3><p id="confirmMessage">Tem certeza?</p><div class="modal-buttons"><button id="confirmCancelBtn" class="modal-btn cancel">Cancelar</button><button id="confirmOkBtn" class="modal-btn save">Confirmar</button></div></div></div>
+  <!-- MENU LATERAL -->
   <div class="menu-overlay" id="menuOverlay">
     <div class="menu-drawer">
       <button class="menu-close" id="closeMenuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="menu-header">
         <div class="menu-user">
-          <div class="menu-avatar" id="menuAvatarContainer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg>
-          </div>
+          <div class="menu-avatar" id="menuAvatarContainer"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 2v4M12 6c-2.5 0-4 2-4 4h8c0-2-1.5-4-4-4z"/><path d="M12 10v10M8 20h8"/><path d="M5 18c1.5-1 3-1.5 5-1.5"/><path d="M19 18c-1.5-1-3-1.5-5-1.5"/></svg></div>
           <div class="menu-user-info"><h4 id="menuNome">Carregando...</h4><p><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3v6c0 2.5-2 4-4 4"/><path d="M12 9c2 0 4 1.5 4 4"/><path d="M6 21c2-2 4-3 6-3s4 1 6 3"/></svg><span id="menuTipo">Usuário</span></p></div>
         </div>
       </div>
@@ -512,17 +469,10 @@
     </div>
   </div>
 </div>
-
 <script>
   const API_BASE_URL = 'http://localhost:3000/api';
   let token = localStorage.getItem('token');
   let user = JSON.parse(localStorage.getItem('user') || '{}');
-
-  // ========== APLICA TEMA ESCURO SALVO ==========
-  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-  if (savedDarkMode) {
-    document.body.classList.add('dark-theme');
-  }
 
   function showMessage(text, type = 'info') {
     const toast = document.getElementById('toast');
@@ -555,11 +505,6 @@
     cancelBtn.addEventListener('click', handleCancel);
   }
 
-  if (!token || !user.id) {
-    showMessage('Você precisa estar logado para acessar esta página.', 'error');
-    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
-  }
-
   function atualizarFotoMenu() {
     const menuAvatarDiv = document.getElementById('menuAvatarContainer');
     if (!menuAvatarDiv) return;
@@ -583,82 +528,80 @@
   if (menuEmpresasText) menuEmpresasText.innerText = user.tipo_usuario === 'prestador' ? 'Empresas' : 'Prestadores';
   atualizarFotoMenu();
 
-  const cardList = document.getElementById('card-list');
-  const searchInput = document.getElementById('search-input');
-  const emptyMsg = document.getElementById('empty-msg');
-
-  async function fetchMediaAvaliacoes(usuarioId) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/reviews/${usuarioId}`);
-      if (!response.ok) return null;
-      const data = await response.json();
-      return data.media ? data.media.toFixed(1) : null;
-    } catch (err) { console.error(err); return null; }
-  }
-
-  async function carregarPrestadores(searchTerm = '') {
-    try {
-      let url = `${API_BASE_URL}/companies/providers`;
-      if (searchTerm) url += `?search=${encodeURIComponent(searchTerm)}`;
-      const response = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
-      if (!response.ok) throw new Error('Erro ao carregar prestadores');
-      const prestadores = await response.json();
-      if (!prestadores.length) {
-        cardList.innerHTML = '';
-        emptyMsg.style.display = 'block';
-        emptyMsg.innerText = 'Nenhum prestador encontrado.';
-        return;
-      }
-      emptyMsg.style.display = 'none';
-      cardList.innerHTML = '';
-      const cardsData = await Promise.all(prestadores.map(async (prov) => ({ prov, media: await fetchMediaAvaliacoes(prov.id) })));
-      cardsData.forEach(({ prov, media }) => {
-        const nomeCompleto = `${prov.nome} ${prov.sobrenome || ''}`.trim();
-        const inicial = prov.nome ? prov.nome.charAt(0).toUpperCase() : 'P';
-        let areaAtuacao = 'Profissional do agro';
-        if (prov.especialidade && prov.especialidade.trim() !== '') areaAtuacao = prov.especialidade;
-        else if (prov.servicos) {
-          let servicosRaw = prov.servicos;
-          if (typeof servicosRaw === 'string') {
-            if (servicosRaw.includes(',')) areaAtuacao = servicosRaw.split(',')[0].trim();
-            else areaAtuacao = servicosRaw.trim();
-          } else if (Array.isArray(servicosRaw) && servicosRaw.length) areaAtuacao = servicosRaw[0];
-        }
-        const nota = media ? `${media}` : '—';
-        const foto = prov.foto_perfil && (prov.foto_perfil.startsWith('data:image') || prov.foto_perfil.startsWith('http')) ? prov.foto_perfil : null;
-        const card = document.createElement('li');
-        card.className = 'card';
-        card.innerHTML = `<div class="card-foto-wrap">${foto ? `<img src="${foto}" alt="Avatar">` : `<span class="avatar-inicial">${inicial}</span>`}</div><div class="card-info"><span class="card-nome">${nomeCompleto}</span><span class="card-prod">${areaAtuacao}</span><div class="card-bottom"><div class="card-rating"><svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="card-nota">${nota}</span></div><button class="btn-visualizar" data-id="${prov.id}">Visualizar</button></div></div>`;
-        const btn = card.querySelector('.btn-visualizar');
-        btn.addEventListener('click', () => { window.location.href = `perfil-prestador.html?id=${prov.id}`; });
-        cardList.appendChild(card);
-      });
-    } catch (err) { console.error(err); cardList.innerHTML = ''; emptyMsg.style.display = 'block'; emptyMsg.innerText = 'Erro ao carregar prestadores. Tente novamente.'; showMessage('Erro ao carregar prestadores.', 'error'); }
-  }
-
-  let debounceTimeout;
-  searchInput.addEventListener('input', () => {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => carregarPrestadores(searchInput.value.trim()), 500);
-  });
-
   const menuOverlay = document.getElementById('menuOverlay');
   const menuBtn = document.getElementById('menuButton');
   const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const backButton = document.getElementById('backButton');
   function openMenu() { menuOverlay.classList.add('open'); }
   function closeMenu() { menuOverlay.classList.remove('open'); }
   menuBtn?.addEventListener('click', openMenu);
   closeMenuBtn?.addEventListener('click', closeMenu);
   menuOverlay?.addEventListener('click', (e) => { if (e.target === menuOverlay) closeMenu(); });
+  backButton?.addEventListener('click', () => window.history.back());
 
+  // ========== FUNÇÕES DE PREFERÊNCIAS COM LOCALSTORAGE ==========
+  // Carregar e aplicar tema escuro
+  const darkModeToggle = document.getElementById('tema-escuro-toggle');
+  const notificacoesToggle = document.getElementById('notificacoes-toggle');
+
+  // Carregar preferências salvas
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  const savedNotificacoes = localStorage.getItem('notificacoes') === 'true';
+
+  if (savedDarkMode) {
+    document.body.classList.add('dark-theme');
+    if (darkModeToggle) darkModeToggle.checked = true;
+  }
+  if (savedNotificacoes && notificacoesToggle) notificacoesToggle.checked = true;
+
+  // Evento do tema escuro
+  darkModeToggle?.addEventListener('change', (e) => {
+    const isDark = e.target.checked;
+    if (isDark) {
+      document.body.classList.add('dark-theme');
+      localStorage.setItem('darkMode', 'true');
+      showMessage('Tema escuro ativado', 'success');
+    } else {
+      document.body.classList.remove('dark-theme');
+      localStorage.setItem('darkMode', 'false');
+      showMessage('Tema claro ativado', 'success');
+    }
+  });
+
+  // Evento das notificações (apenas simulação, salva no localStorage)
+  notificacoesToggle?.addEventListener('change', (e) => {
+    const isEnabled = e.target.checked;
+    localStorage.setItem('notificacoes', isEnabled);
+    showMessage(`Notificações ${isEnabled ? 'ativadas' : 'desativadas'}`, 'info');
+    // Aqui futuramente você pode integrar com a API de notificações push
+  });
+
+  // ========== REDIRECIONAMENTOS ==========
+  document.getElementById('config-perfil')?.addEventListener('click', () => {
+    window.location.href = 'meu_perfil.html';
+  });
+  document.getElementById('config-alterar-senha')?.addEventListener('click', () => {
+    window.location.href = 'recuperar-senha.html';
+  });
+  document.getElementById('config-privacidade')?.addEventListener('click', () => {
+    window.location.href = 'privacidade.html';
+  });
+  document.getElementById('termos-link')?.addEventListener('click', () => {
+    window.location.href = 'termos.html';
+  });
+  document.getElementById('privacidade-link')?.addEventListener('click', () => {
+    window.location.href = 'privacidade.html';
+  });
+
+  // Exclusão de conta (já existente)
   async function excluirConta() {
-    confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente? Todos os seus dados serão removidos.', async () => {
+    confirmAction('Excluir conta', 'Tem certeza que deseja excluir sua conta permanentemente?', async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/user/delete`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         if (!response.ok) { const err = await response.json(); throw new Error(err.error || 'Erro ao excluir conta'); }
         showMessage('Conta excluída com sucesso.', 'success');
         localStorage.removeItem('token'); localStorage.removeItem('user');
-        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+        setTimeout(() => { window.location.href = 'cadastro.html'; }, 1500);
       } catch (err) { showMessage(err.message, 'error'); }
     });
   }
@@ -673,14 +616,12 @@
       else if (nav === 'empresas') window.location.href = user.tipo_usuario === 'prestador' ? 'buscar-empresas.html' : 'buscar-prestadores.html';
       else if (nav === 'agenda') window.location.href = 'agenda.html';
       else if (nav === 'perfil') window.location.href = 'meu_perfil.html';
-      else if (nav === 'configuracoes') window.location.href = 'configuracoes.html';
+      else if (nav === 'configuracoes') closeMenu();
       else if (nav === 'excluir-conta') excluirConta();
       else if (nav === 'ajuda') window.location.href = 'ajuda.html';
       else closeMenu();
     });
   });
-
-  carregarPrestadores();
 </script>
 </body>
 </html>
