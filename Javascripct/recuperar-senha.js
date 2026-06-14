@@ -1,5 +1,5 @@
 // ===== RECUPERAR SENHA – INTEGRAÇÃO COM BACKEND =====
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://planov.onrender.com/api';
 
 const emailInput     = document.getElementById('email');
 const btnSend        = document.getElementById('btn-send');

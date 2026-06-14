@@ -1,5 +1,5 @@
 // ===== REDEFINIÇÃO DE SENHA – INTEGRAÇÃO COM BACKEND =====
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://planov.onrender.com/api';
 
 // ===== ELEMENTOS DO DOM =====
 const novaSenhaInput     = document.getElementById('nova-senha');
