@@ -73,8 +73,12 @@ exports.login = async (req, res) => {
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+    console.log(`Solicitação de recuperação para: ${email}`);
+
     const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(404).json({ error: 'Email não encontrado' });
+    if (!user) {
+      return res.status(404).json({ error: 'Email não encontrado' });
+    }
 
     const token = crypto.randomBytes(32).toString('hex');
     const expiracao = new Date(Date.now() + resetTokenExpiresIn);
@@ -85,11 +89,16 @@ exports.forgotPassword = async (req, res) => {
       expiracao
     });
 
-    // ✅ Link público para redefinição
+    // Link público (corrigido)
     const link = `https://planov.onrender.com/redefinir-senha.html?token=${token}`;
+    console.log(`Link gerado: ${link}`);
 
-    await enviarEmail(email, 'Recuperação de senha - PlanoV',
-      `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`);
+    // Tenta enviar o email
+    await enviarEmail(
+      email,
+      'Recuperação de senha - PlanoV',
+      `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`
+    );
 
     res.json({ message: 'Email enviado com sucesso' });
   } catch (err) {
@@ -102,16 +111,22 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const { token, novaSenha } = req.body;
+    console.log(`Tentativa de redefinição com token: ${token}`);
+
     const reset = await PasswordReset.findOne({
       where: {
         token,
         expiracao: { [Op.gt]: new Date() }
       }
     });
-    if (!reset) return res.status(400).json({ error: 'Token inválido ou expirado' });
+    if (!reset) {
+      return res.status(400).json({ error: 'Token inválido ou expirado' });
+    }
 
     const user = await User.findByPk(reset.usuario_id);
-    if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+    if (!user) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
 
     user.senha = novaSenha;
     await user.save();
