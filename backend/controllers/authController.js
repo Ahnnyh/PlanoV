@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 const { jwtSecret, jwtExpiresIn, resetTokenExpiresIn } = require('../config/auth');
 const { enviarEmail } = require('../utils/emailService');
 
-// Registro
+// ========== REGISTRO ==========
 exports.register = async (req, res) => {
   try {
     const { nome, sobrenome, email, senha, tipo_usuario, endereco, cidade, estado, whatsapp } = req.body;
@@ -33,11 +33,12 @@ exports.register = async (req, res) => {
       }
     });
   } catch (err) {
+    console.error('Erro no register:', err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// Login
+// ========== LOGIN ==========
 exports.login = async (req, res) => {
   try {
     const { email, senha } = req.body;
@@ -63,11 +64,12 @@ exports.login = async (req, res) => {
       }
     });
   } catch (err) {
+    console.error('Erro no login:', err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// Esqueci a senha - gera token e salva na tabela recuperacao_senha
+// ========== ESQUECI A SENHA ==========
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -85,7 +87,7 @@ exports.forgotPassword = async (req, res) => {
 
     // ✅ Link público para redefinição
     const link = `https://planov.onrender.com/redefinir-senha.html?token=${token}`;
-    
+
     await enviarEmail(email, 'Recuperação de senha - PlanoV',
       `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`);
 
@@ -96,7 +98,7 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// Redefinir senha
+// ========== REDEFINIR SENHA ==========
 exports.resetPassword = async (req, res) => {
   try {
     const { token, novaSenha } = req.body;
@@ -119,6 +121,7 @@ exports.resetPassword = async (req, res) => {
 
     res.json({ message: 'Senha redefinida com sucesso' });
   } catch (err) {
+    console.error('Erro no resetPassword:', err);
     res.status(500).json({ error: err.message });
   }
 };
