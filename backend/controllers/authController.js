@@ -84,7 +84,7 @@ exports.forgotPassword = async (req, res) => {
       expiracao
     });
 
-    const link = `http://localhost:5500/redefinir-senha.html?token=${token}`;
+    const link = `https://planov.onrender.com/redefinir-senha.html?token=${token}`;
     await enviarEmail(email, 'Recuperação de senha - PlanoV',
       `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`);
 
