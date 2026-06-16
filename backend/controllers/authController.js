@@ -84,7 +84,33 @@ exports.forgotPassword = async (req, res) => {
       expiracao
     });
 
+    exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email } });
+    if (!user) return res.status(404).json({ error: 'Email não encontrado' });
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiracao = new Date(Date.now() + resetTokenExpiresIn);
+
+    await PasswordReset.create({
+      usuario_id: user.id,
+      token,
+      expiracao
+    });
+
+    // ✅ CORREÇÃO: link público
     const link = `https://planov.onrender.com/redefinir-senha.html?token=${token}`;
+    
+    await enviarEmail(email, 'Recuperação de senha - PlanoV',
+      `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`);
+
+    res.json({ message: 'Email enviado com sucesso' });
+  } catch (err) {
+    console.error('Erro no forgotPassword:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
     await enviarEmail(email, 'Recuperação de senha - PlanoV',
       `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`);
 

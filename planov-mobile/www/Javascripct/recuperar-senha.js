@@ -47,7 +47,6 @@ async function handleSend() {
     body: JSON.stringify({ email }),
     signal: abortController.signal
   });
-
     const data = await response.json();
 
     if (!response.ok) {
