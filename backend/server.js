@@ -40,6 +40,10 @@ app.delete('/api/user/delete', authenticateToken, async (req, res) => {
   }
 });
 
+console.log('EMAIL_USER:', process.env.EMAIL_USER);
+console.log('EMAIL_PASS existe?', !!process.env.EMAIL_PASS);
+console.log('JWT_SECRET existe?', !!process.env.JWT_SECRET);
+
 // Sincronizar banco de dados (sem alterar estrutura existente)
 sequelize.sync({ alter: false }).then(() => {
   console.log('Banco de dados sincronizado');
