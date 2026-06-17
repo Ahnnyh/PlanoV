@@ -1,38 +1,25 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-  console.error('Variáveis de email não configuradas!');
+if (!process.env.RESEND_API_KEY) {
+  console.error('⚠️ RESEND_API_KEY não configurada!');
 }
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: parseInt(process.env.EMAIL_PORT) || 587,
-  secure: process.env.EMAIL_SECURE === 'true', // false para porta 587
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  // 🔥 FORÇA IPv4 – resolve o ENETUNREACH
-  family: 4,
-  // Aumenta timeouts
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const enviarEmail = async (to, subject, html) => {
   try {
-    console.log(`Enviando email para ${to}...`);
-    const info = await transporter.sendMail({
-      from: `"PlanoV" <${process.env.EMAIL_USER}>`,
+    console.log(`Enviando email para ${to} via Resend...`);
+    const { data, error } = await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'onboarding@resend.dev', // domínio padrão – não precisa verificar!
       to,
       subject,
-      html
+      html,
     });
-    console.log(`Email enviado: ${info.messageId}`);
-    return info;
+    if (error) throw new Error(error.message);
+    console.log(`Email enviado: ${data.id}`);
+    return data;
   } catch (err) {
-    console.error('Erro ao enviar email:', err);
+    console.error('Erro ao enviar email via Resend:', err);
     throw err;
   }
 };
