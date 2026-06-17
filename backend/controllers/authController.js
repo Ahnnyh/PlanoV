@@ -69,27 +69,40 @@ exports.login = async (req, res) => {
 };
 
 // Esqueci a senha - gera token e salva na tabela recuperacao_senha
+// Esqueci a senha - versão simplificada (sem envio de e-mail)
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(404).json({ error: 'Email não encontrado' });
+    console.log(`[forgotPassword] Solicitação para: ${email}`);
 
+    // 1. Verifica se o usuário existe
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ error: 'Email não encontrado' });
+    }
+
+    // 2. Gera token de redefinição
     const token = crypto.randomBytes(32).toString('hex');
     const expiracao = new Date(Date.now() + resetTokenExpiresIn);
 
+    // 3. Salva no banco
     await PasswordReset.create({
       usuario_id: user.id,
       token,
       expiracao
     });
 
-    const link = `http://localhost:4000/redefinir-senha.html?token=${token}`;
-    await enviarEmail(email, 'Recuperação de senha - PlanoV',
-      `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`);
+    console.log(`[forgotPassword] Token gerado: ${token}`);
 
-    res.json({ message: 'Email enviado com sucesso' });
+    // 4. Retorna o token para o frontend (NÃO envia e-mail)
+    res.json({
+      message: 'Token gerado com sucesso',
+      token: token,
+      redirect: `https://planov.onrender.com/redefinir-senha.html?token=${token}`
+    });
+
   } catch (err) {
+    console.error('[forgotPassword] Erro:', err);
     res.status(500).json({ error: err.message });
   }
 };
