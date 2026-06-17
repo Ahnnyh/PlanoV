@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-  console.error('⚠️ Variáveis de email não configuradas!');
+  console.error('Variáveis de email não configuradas!');
 }
 
 const transporter = nodemailer.createTransport({
@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
   },
   // 🔥 FORÇA IPv4 – resolve o ENETUNREACH
   family: 4,
-  // Aumenta timeouts para evitar falhas prematuras
+  // Aumenta timeouts
   connectionTimeout: 30000,
   greetingTimeout: 30000,
   socketTimeout: 30000,
@@ -22,17 +22,17 @@ const transporter = nodemailer.createTransport({
 
 const enviarEmail = async (to, subject, html) => {
   try {
-    console.log(`📧 Enviando email para ${to}...`);
+    console.log(`Enviando email para ${to}...`);
     const info = await transporter.sendMail({
       from: `"PlanoV" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html
     });
-    console.log(`✅ Email enviado: ${info.messageId}`);
+    console.log(`Email enviado: ${info.messageId}`);
     return info;
   } catch (err) {
-    console.error('❌ Erro ao enviar email:', err);
+    console.error('Erro ao enviar email:', err);
     throw err;
   }
 };
