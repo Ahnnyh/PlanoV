@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>PlanoV - Boas-vindas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --verde: #3a5f1e;
+  --verde-btn: #2d5016;
+  --laranja: #e07a1c;
+  --bg: #f7f4ee;
+  --branco: #ffffff;
+  --texto: #1a1a1a;
+  --borda: #e0ddd6;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #cdc8bc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100dvh; /* usa a altura dinâmica da viewport */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* elimina scroll horizontal */
+}
+
+.frame {
+  width: 100%;
+  min-height: 100dvh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* elimina scroll horizontal */
+}
+
+/* FUNDO */
+.bg-full {
+  position: absolute;
+  inset: 0;
+  background-image: url('img/primeira_imagem.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.08) 0%,
+    rgba(0,0,0,0.10) 40%,
+    rgba(0,0,0,0.45) 65%,
+    rgba(0,0,0,0.62) 100%
+  );
+  z-index: 1;
+}
+
+/* CONTEÚDO PRINCIPAL - FLEX COLUMN */
+.content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(60px, 10vh, 100px) 28px clamp(30px, 5vh, 40px);
+  justify-content: space-between; /* distribui espaço entre logo, texto e botões */
+  min-height: 100dvh; /* garante que o conteúdo ocupe toda a altura */
+}
+
+/* LOGO - no topo, centralizada */
+.logo-area {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.logo-area img {
+  height: clamp(60px, 15vw, 86px);
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+}
+
+/* BLOCO CENTRAL (texto + botões) - centralizado verticalmente */
+.center-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(40px, 12vw, 70px);
+  padding: 20px 0;
+}
+
+.hero-text {
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: clamp(20px, 6vw, 28px);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  margin-bottom: 8px;
+}
+
+.hero-text p {
+  font-size: clamp(12px, 4vw, 14px);
+  color: rgba(255,255,255,0.92);
+  font-weight: 400;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  line-height: 1.4;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.btn-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s, background 0.15s;
+  letter-spacing: 0.2px;
+  background: rgba(25, 70, 15, 0.50);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.btn:active { transform: scale(0.97); }
+.btn:hover { background: rgba(25, 70, 15, 0.70); }
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 400px) {
+  .content {
+    padding: 70px 20px 25px;
+  }
+  .btn-group {
+    gap: 10px;
+  }
+  .btn {
+    padding: 12px;
+  }
+}
+@media (max-width: 340px) {
+  .hero-text h1 {
+    font-size: 18px;
+  }
+  .hero-text p {
+    font-size: 11px;
+  }
+  .btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="bg-full"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="content">
+    <div class="logo-area">
+      <img src="img/logo.png" alt="PlanoV">
+    </div>
+
+    <div class="center-block">
+      <div class="hero-text">
+        <h1>Bem-vindo ao Plano V</h1>
+        <p>Conectando serviços e oportunidades no campo.</p>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-criar" id="btn-criar-conta">Criar Conta</button>
+        <button class="btn btn-login" id="btn-login">Fazer login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Se o usuário já estiver logado, redireciona para a página inicial interna
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  if (token && user.id) {
+    window.location.href = 'home.html';
+  }
+
+  document.getElementById('btn-criar-conta').addEventListener('click', () => {
+    window.location.href = 'cadastro.html';
+  });
+
+  document.getElementById('btn-login').addEventListener('click', () => {
+    window.location.href = 'login.html';
+  });
+</script>
+</body>
+</html>

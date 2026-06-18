@@ -6,7 +6,8 @@ const { Op } = require('sequelize');
 const { jwtSecret, jwtExpiresIn, resetTokenExpiresIn } = require('../config/auth');
 const { enviarEmail } = require('../utils/emailService');
 
-// ========== REGISTRO ==========
+// Registro
+// Registro
 exports.register = async (req, res) => {
   try {
     const { nome, sobrenome, email, senha, tipo_usuario, endereco, cidade, estado, whatsapp } = req.body;
@@ -33,12 +34,11 @@ exports.register = async (req, res) => {
       }
     });
   } catch (err) {
-    console.error('Erro no register:', err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// ========== LOGIN ==========
+// Login
 exports.login = async (req, res) => {
   try {
     const { email, senha } = req.body;
@@ -64,76 +64,63 @@ exports.login = async (req, res) => {
       }
     });
   } catch (err) {
-    console.error('Erro no login:', err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// ========== ESQUECI A SENHA ==========
+// Esqueci a senha - gera token e salva na tabela recuperacao_senha
+// Esqueci a senha - versão simplificada (sem envio de e-mail)
 exports.forgotPassword = async (req, res) => {
   try {
-    console.log('1. Iniciando forgotPassword');
     const { email } = req.body;
-    console.log('2. Email recebido:', email);
+    console.log(`[forgotPassword] Solicitação para: ${email}`);
 
+    // 1. Verifica se o usuário existe
     const user = await User.findOne({ where: { email } });
-    console.log('3. Usuário encontrado:', user ? 'sim' : 'não');
-    
     if (!user) {
       return res.status(404).json({ error: 'Email não encontrado' });
     }
 
+    // 2. Gera token de redefinição
     const token = crypto.randomBytes(32).toString('hex');
-    console.log('4. Token gerado:', token);
-
     const expiracao = new Date(Date.now() + resetTokenExpiresIn);
-    console.log('5. Data de expiração:', expiracao);
 
+    // 3. Salva no banco
     await PasswordReset.create({
       usuario_id: user.id,
       token,
       expiracao
     });
-    console.log('6. Token salvo no banco');
 
-    const link = `https://planov.onrender.com/redefinir-senha.html?token=${token}`;
-    console.log('7. Link gerado:', link);
+    console.log(`[forgotPassword] Token gerado: ${token}`);
 
-    console.log('8. Tentando enviar email...');
-    await enviarEmail(
-      email,
-      'Recuperação de senha - PlanoV',
-      `<p>Clique no link para redefinir sua senha: <a href="${link}">${link}</a></p>`
-    );
-    console.log('9. Email enviado com sucesso');
+    // 4. Retorna o token para o frontend (NÃO envia e-mail)
+    res.json({
+      message: 'Token gerado com sucesso',
+      token: token,
+      redirect: `https://planov.onrender.com/redefinir-senha.html?token=${token}`
+    });
 
-    res.json({ message: 'Email enviado com sucesso' });
   } catch (err) {
-    console.error('❌ ERRO NO forgotPassword:', err);
+    console.error('[forgotPassword] Erro:', err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// ========== REDEFINIR SENHA ==========
+// Redefinir senha
 exports.resetPassword = async (req, res) => {
   try {
     const { token, novaSenha } = req.body;
-    console.log(`Tentativa de redefinição com token: ${token}`);
-
     const reset = await PasswordReset.findOne({
       where: {
         token,
         expiracao: { [Op.gt]: new Date() }
       }
     });
-    if (!reset) {
-      return res.status(400).json({ error: 'Token inválido ou expirado' });
-    }
+    if (!reset) return res.status(400).json({ error: 'Token inválido ou expirado' });
 
     const user = await User.findByPk(reset.usuario_id);
-    if (!user) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
 
     user.senha = novaSenha;
     await user.save();
@@ -143,7 +130,6 @@ exports.resetPassword = async (req, res) => {
 
     res.json({ message: 'Senha redefinida com sucesso' });
   } catch (err) {
-    console.error('Erro no resetPassword:', err);
     res.status(500).json({ error: err.message });
   }
 };

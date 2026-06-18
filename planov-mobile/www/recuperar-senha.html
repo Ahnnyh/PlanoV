@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>PlanoV – Recuperar Senha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --bg-card: rgba(255,255,255,0.95);
+      --texto: #1a1a1a;
+      --muted: #666;
+      --borda: #e0ddd6;
+      --input-bg: #fff;
+      --btn-bg: #2d5016;
+      --btn-hover: #3a6620;
+      --modal-bg: #ffffff;
+      --overlay-bg: rgba(0,0,0,0.6);
+      --placeholder: #999;
+    }
+
+    body.dark-theme {
+      --bg-card: #1e1e1e;
+      --texto: #e0e0e0;
+      --muted: #aaa;
+      --borda: #333;
+      --input-bg: #2a2a2a;
+      --btn-bg: #4a7020;
+      --btn-hover: #5a8530;
+      --modal-bg: #1e1e1e;
+      --overlay-bg: rgba(0,0,0,0.8);
+      --placeholder: #888;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #cdc8bc;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme { background: #0a0a0a; }
+
+    .frame {
+      width: 100%;
+      max-width: 480px;
+      background: #000;
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .bg-image-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(env(safe-area-inset-top, 20px) + 20px) 20px calc(env(safe-area-inset-bottom, 20px) + 20px);
+    }
+
+    .back-btn {
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.2s, transform 0.1s;
+      flex-shrink: 0;
+    }
+    .back-btn:active {
+      background: rgba(0,0,0,0.7);
+      transform: scale(0.96);
+    }
+    .back-btn svg {
+      stroke: white;
+      width: 22px;
+      height: 22px;
+    }
+
+    .logo-wrap {
+      text-align: center;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+    }
+    .logo-wrap img {
+      height: 60px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+    }
+
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(8px);
+      border-radius: 32px;
+      padding: 32px 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.2);
+      width: 100%;
+    }
+
+    .card-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--texto);
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .field {
+      margin-bottom: 1.5rem;
+    }
+    .field label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--texto);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 0 16px;
+      transition: border 0.2s;
+    }
+    .input-wrap:focus-within {
+      border-color: #e07a1c;
+    }
+    .input-icon {
+      stroke: var(--muted);
+      margin-right: 12px;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+    }
+    .input-wrap input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      padding: 16px 0;
+      color: var(--texto);
+    }
+    .input-wrap input::placeholder {
+      color: var(--placeholder);
+    }
+
+    .helper-text {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-align: center;
+      margin: 1rem 0 1.5rem;
+      line-height: 1.5;
+    }
+
+    .btn-send {
+      width: 100%;
+      background: var(--btn-bg);
+      color: white;
+      border: none;
+      border-radius: 60px;
+      padding: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-send:active {
+      transform: scale(0.98);
+      background: var(--btn-hover);
+    }
+    .btn-send:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--overlay-bg);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.2s, opacity 0.2s;
+    }
+    .modal-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-card {
+      background: var(--modal-bg);
+      border-radius: 32px;
+      width: 85%;
+      max-width: 300px;
+      padding: 32px 24px 28px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 1px solid var(--borda);
+      margin: 16px;
+    }
+    .modal-logo-img {
+      height: 50px;
+      width: auto;
+      margin-bottom: 20px;
+    }
+    .modal-text {
+      font-size: 0.875rem;
+      color: var(--texto);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .modal-btn-fechar {
+      background: var(--btn-bg);
+      color: white;
+      border: none;
+      border-radius: 60px;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 1100;
+      white-space: normal;
+      max-width: 90%;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      pointer-events: none;
+    }
+    .toast.error { background: #c0392b; }
+    .toast.success { background: #2d5016; }
+
+    @media (max-width: 400px) {
+      .content { padding: calc(env(safe-area-inset-top,16px)+16px) 16px calc(env(safe-area-inset-bottom,16px)+16px); }
+      .card { padding: 24px 20px; }
+      .card-title { font-size: 1.5rem; }
+      .input-wrap input { font-size: 0.9375rem; padding: 14px 0; }
+      .btn-send { font-size: 0.9375rem; padding: 12px; }
+      .back-btn { width: 40px; height: 40px; margin-bottom: 16px; }
+      .back-btn svg { width: 20px; height: 20px; }
+      .logo-wrap img { height: 50px; }
+    }
+    input, button { font-size: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="bg-image-wrap">
+    <img src="img/fundo_Splash-Screen.png" alt="Fundo" class="bg-image" />
+  </div>
+  <div class="content">
+    <button class="back-btn" onclick="history.back()" title="Voltar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="logo-wrap">
+      <img src="img/logo.png" alt="PlanoV Logo" />
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Recuperar senha</h2>
+      <div class="field">
+        <label for="email">Confirme seu email de cadastro:</label>
+        <div class="input-wrap">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <input type="email" id="email" placeholder="Digite seu email..." autocomplete="email" />
+        </div>
+      </div>
+      <p class="helper-text">Enviaremos um email para<br/>redefinição de senha.</p>
+      <button class="btn-send" id="btn-send">Enviar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast" style="display: none;"><span id="toastMessage"></span></div>
+
+<!-- MODAL SUCESSO -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-card">
+    <img src="img/logo.png" alt="PlanoV Logo" class="modal-logo-img" />
+    <p class="modal-text">
+      Te enviamos um email<br>
+      para redefinição de<br>
+      senha!<br><br>
+      Confira seu email e<br>
+      caixa de spam.
+    </p>
+    <button class="modal-btn-fechar" id="modal-btn-fechar">OK, entendi</button>
+  </div>
+</div>
+
+<script>
+  // ========== CONFIGURAÇÃO ==========
+  const API_BASE_URL = 'https://planov.onrender.com/api';
+
+  // ========== TEMA ESCURO ==========
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (savedDarkMode) document.body.classList.add('dark-theme');
+
+  // ========== ELEMENTOS ==========
+  const emailInput = document.getElementById('email');
+  const btnSend = document.getElementById('btn-send');
+  const modal = document.getElementById('modal-overlay');
+  const modalBtn = document.getElementById('modal-btn-fechar');
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMessage');
+
+  let abortController = null;
+
+  function showToast(text, type = 'error') {
+    toastMsg.innerText = text;
+    toast.className = `toast ${type}`;
+    toast.style.display = 'block';
+    clearTimeout(window.toastTimeout);
+    window.toastTimeout = setTimeout(() => { toast.style.display = 'none'; }, 4000);
+  }
+
+  function showModal() { modal.classList.add('show'); }
+  function hideModal() {
+    modal.classList.remove('show');
+    setTimeout(() => window.location.href = 'login.html', 300);
+  }
+
+  modalBtn.addEventListener('click', hideModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
+
+  // ========== FUNÇÃO PRINCIPAL ==========
+async function sendResetEmail() {
+  const email = emailInput.value.trim();
+
+  if (!email) {
+    showToast('Digite seu email.', 'error');
+    emailInput.focus();
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast('Digite um email válido.', 'error');
+    emailInput.focus();
+    return;
+  }
+
+  btnSend.disabled = true;
+  btnSend.textContent = 'Verificando...';
+
+  try {
+    const response = await fetch('https://planov.onrender.com/api/auth/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Erro ao verificar email.');
+    }
+
+    // ✅ Sucesso: redireciona para a página de redefinição com o token
+    if (data.token) {
+      window.location.href = `redefinir-senha.html?token=${data.token}`;
+    } else {
+      throw new Error('Token não gerado.');
+    }
+
+  } catch (err) {
+    showToast(err.message, 'error');
+  } finally {
+    btnSend.disabled = false;
+    btnSend.textContent = 'Enviar';
+  }
+}
+
+  btnSend.addEventListener('click', sendResetEmail);
+  emailInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendResetEmail();
+  });
+</script>
+</body>
+</html>
